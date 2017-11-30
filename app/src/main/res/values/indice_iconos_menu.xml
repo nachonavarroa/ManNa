@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="indice_icono_ayuda"> 10</integer>
+    <integer name="indice_icono_camara">20</integer>
+    <integer name="indice_icono_ir_atras">30</integer>
+    <integer name="indice_icono_ir_siguiente">35</integer>
+    <integer name="indice_icono_oup_app">40</integer>
+    <integer name="indice_icono_ir_generar_orden">50</integer>
+    <integer name="indice_icono_editar_orden">60</integer>
+    <integer name="indice_icono_borrar_orden">70</integer>
+    <integer name="indice_icono_guardar_orden">80</integer>
+    <integer name="indice_icono_editar_usuario">90</integer>
+    <integer name="indice_icono_borrar_usuario">100</integer>
+    <integer name="indice_icono_guardar_usuario">110</integer>
+    <integer name="indice_icono_crear_usuario">120</integer>
+    <integer name="indice_icono_guardar_usuario_editado">130</integer>
+
+</resources>

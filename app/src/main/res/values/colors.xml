@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF9B00</color>
+    <color name="colorPrimaryDark">#FF5F00</color>
+    <color name="colorAccent">#FF5F00</color>
+    <!-- -->
+    <color name="colorFondoBotones">#FF5F00</color>
+    <color name="colorFondo">#FFF1E6</color>
+    <color name="colorFondo2">#F8ECE0</color>
+    <color name="colorBlanco">#FFf</color>
+    <color name="colorRojo">#FF0000</color>
+    <color name="colorVerde">#00FF00</color>
+    <color name="colorVerdeDark">#009846</color>
+    <color name="colorVerdeClaro">#99FFAA</color>
+    <color name="colorAmarillo">#FFFF00</color>
+    <color name="colorMarron">#763C28</color>
+    <color name="colorAzul">#0000FF</color>
+    <color name="colorNegro">#000</color>
+
+
+    <!--
+ <color name="colorPrimary">#3F51B5</color>
+ <color name="colorPrimaryDark">#303F9F</color>
+ <color name="colorAccent">#FF4081</color>
+ -->
+
+</resources>

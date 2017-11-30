@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android=
+          "http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_generar_orden"
+            android:icon="@drawable/ic_mantenimiento2"
+            android:title="@string/generar_ordende_trabajo" />
+        <item
+            android:id="@+id/nav_ver_ordenes"
+            android:icon="@drawable/ic_ver"
+            android:title="@string/ver_ordenes" />
+        <item
+            android:id="@+id/nav_generar_empleado"
+            android:icon="@drawable/ic_add_people"
+            android:title="@string/subtitulo_crear_empleados" />
+
+        <item
+            android:id="@+id/nav_ver_empleados"
+            android:icon="@drawable/ic_empleados"
+            android:title="@string/ver_usuarios" />
+
+        <item
+            android:id="@+id/nav_ayuda"
+            android:icon="@drawable/ic_help_black_24dp"
+            android:title="Ayuda" />
+        <item
+            android:id="@+id/nav_autor"
+            android:icon="@drawable/ic_nacho"
+            android:title="@string/subtitulo_autor" />
+
+    </group>
+
+</menu>
