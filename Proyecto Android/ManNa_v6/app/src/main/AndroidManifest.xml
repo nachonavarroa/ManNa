@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.nacho.manna">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:name="com.example.nacho.manna.aplication.AppController"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <provider
+            android:name="com.example.nacho.manna.proveedorDeContenido.ProveedorContenido"
+            android:authorities="com.example.nacho.manna.proveedorDeContenido.ProveedorContenido"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name="com.example.nacho.manna.activity.SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name="com.example.nacho.manna.activity.MainActivityDrawer"
+            android:configChanges="screenSize|orientation"
+            android:label="@string/title_activity_drawe"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name="com.example.nacho.manna.activity.AyudaActivity"
+            android:configChanges="screenSize|orientation"
+            android:parentActivityName="com.example.nacho.manna.activity.MainActivityDrawer">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.nacho.manna.activity.SplashActivity" />
+        </activity>
+
+        <activity
+            android:name="com.example.nacho.manna.activity.AutorActivity"
+            android:configChanges="screenSize|orientation"
+            android:parentActivityName="com.example.nacho.manna.activity.MainActivityDrawer">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.nacho.manna.activity.MainActivityDrawer" />
+        </activity>
+
+        <activity
+            android:name="com.example.nacho.manna.activity.CrearOrdenActivity"
+            android:configChanges="screenSize|orientation"
+            android:parentActivityName="com.example.nacho.manna.activity.MainActivityDrawer">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.nacho.manna.activity.MainActivityDrawer" />
+        </activity>
+
+        <activity
+            android:name="com.example.nacho.manna.activity.DescripcionOrdenActivity"
+            android:configChanges="screenSize|orientation"
+            android:finishOnTaskLaunch="true"
+            android:parentActivityName="com.example.nacho.manna.activity.MainActivityDrawer">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.nacho.manna.activity.MainActivityDrawer" />
+        </activity>
+
+        <activity
+            android:name="com.example.nacho.manna.activity.OrdenGeneradaActivity"
+            android:configChanges="screenSize|orientation"
+            android:parentActivityName="com.example.nacho.manna.activity.MainActivityDrawer">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.nacho.manna.activity.MainActivityDrawer" />
+        </activity>
+        <activity
+            android:name="com.example.nacho.manna.activity.VerOrdenesActivity"
+            android:configChanges="screenSize|orientation"
+            android:parentActivityName="com.example.nacho.manna.activity.MainActivityDrawer">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.nacho.manna.activity.MainActivityDrawer" />
+        </activity>
+
+        <activity
+            android:name="com.example.nacho.manna.activity.EditOrdenActivity"
+            android:configChanges="screenSize|orientation"
+            android:parentActivityName="com.example.nacho.manna.activity.MainActivityDrawer"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.nacho.manna.activity.VerOrdenesActivity" />
+        </activity>
+        <activity
+            android:name="com.example.nacho.manna.activity.VerUsuariosActivity"
+            android:configChanges="screenSize|orientation"
+            android:parentActivityName="com.example.nacho.manna.activity.MainActivityDrawer">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.nacho.manna.activity.MainActivityDrawer" />
+        </activity>
+
+        <activity
+            android:name="com.example.nacho.manna.activity.CrearUsuarioActivity"
+            android:configChanges="screenSize|orientation"
+            android:parentActivityName="com.example.nacho.manna.activity.MainActivityDrawer">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.nacho.manna.activity.MainActivityDrawer" />
+        </activity>
+
+        <activity
+            android:name="com.example.nacho.manna.activity.EditUsuarioActivity"
+            android:configChanges="screenSize|orientation">
+
+
+        </activity>
+
+        <activity
+            android:name="com.example.nacho.manna.activity.LoginActivity"
+            android:configChanges="screenSize|orientation">
+
+        </activity>
+
+        <service
+            android:name="com.example.nacho.manna.authenticator.AuthenticatorService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+        <service
+            android:name="com.example.nacho.manna.sync.SyncService"
+            android:exported="false"
+            android:process=":sync">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter" />
+        </service>
+
+    </application>
+
+</manifest>

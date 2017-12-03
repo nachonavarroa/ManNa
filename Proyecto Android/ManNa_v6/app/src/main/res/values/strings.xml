@@ -1,0 +1,181 @@
+<resources>
+    <string name="app_name">ManNa</string>
+    <string name="app_name_version">ManNa.v.6</string>
+    <string name="title_activity_drawe">ManNa</string>
+
+    <!--Subtititulos actividades -->
+    <string name="subtititulo_login"> Login</string>
+    <string name="subtititulo_menu"> Menú</string>
+    <string name="subtitulo_datos_empleado"> Datos de usuario</string>
+    <string name="subtitulo_titulo_crear_orden"> Crear orden</string>
+    <string name="subtitulo_descripcion_orden"> Descripción de la orden</string>
+    <string name="subtitulo_orden_generada"> Orden generada</string>
+    <string name="subtitulo_autor"> Autor</string>
+    <string name="subtitulo_ayuda"> Ayuda</string>
+    <string name="subtitulo_ver"> Ver ordenes</string>
+    <string name="subtitulo_ver_empleados"> Ver usuarios</string>
+    <string name="subtitulo_crear_empleados"> Crear usuario</string>
+    <string name="subtitulo_editar_empleado"> Editar usuario</string>
+    <string name="subtitulo_editar_orden"> Editar orden</string>
+
+    <!-- Prioridad-->
+    <string name="prioridad">Prioridad</string>
+    <string name="prioridad_muy_alta">Muy alta</string>
+    <string name="prioridad_alta">Alta</string>
+    <string name="prioridad_media">Media</string>
+    <string name="prioridad_baja">Baja</string>
+
+    <!-- Estado-->
+    <string name="estado">Estado</string>
+    <string name="estado_pendiente">Pendiente</string>
+    <string name="estado_proceso">Proceso</string>
+    <string name="estado_realizado">Realizado</string>
+
+    <!--Síntomas-->
+    <string name="sintoma_parado">Parado</string>
+    <string name="sintoma_rotura">Rotura</string>
+    <string name="sintoma_ruido">Ruido</string>
+    <string name="sintoma_agua">Agua</string>
+    <string name="sintoma_parado_rotura">Parado, Rotura</string>
+    <string name="sintoma_parado_rotura_ruido">Parado, Rotura, Ruido</string>
+    <string name="sintoma_parado_ruido">Parado, Ruido</string>
+    <string name="sintoma_rotura_ruido">"Rotura, Ruido</string>
+
+
+
+    <!--Autor -->
+    <string name="copy">© 2017 Nacho Navarro Arranz</string>
+    <string name="nombre_autor">Nacho Navarro Arranz</string>
+    <string name="email_autor">nachonavarroa@hotmail.com</string>
+    <string name="web_autor">http://www.nachonavarro.esy.es</string>
+
+    <!--Botones -->
+    <string name="boton_entrar"> Entrar </string>
+    <string name="boton_continuar"> Continuar </string>
+    <string name="boton_confirmar"> Confirma r</string>
+    <string name="boton_volver"> Volver </string>
+    <string name="string_ayuda"> Ayuda </string>
+    <string name="string_camara"> Cámara </string>
+    <string name="string_ir_atras"> Ir atras</string>
+    <string name="string_ir_generar_ordenes"> Ir generar orden</string>
+    <string name="string_ir_generar_usuario"> Ir generar usuario</string>
+    <string name="string_ir_ver_ordenes"> Ir ver ordenes</string>
+    <string name="string_borrar"> Borrar</string>
+    <string name="string_editar"> Editar</string>
+    <string name="string_guardar"> Guardar</string>
+    <string name="string_siguiente"> Siguiente</string>
+
+    <!-- -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="fecha">Fecha</string>
+    <string name="codigo">Código</string>
+    <string name="nombre_usuario">Nombre de usuario</string>
+    <string name="codigo_ususario">Código de usuario (4 dígitos max.)</string>
+    <string name="sintoma">Síntoma</string>
+    <string name="img_descripcion_logo">logo</string>
+    <string name="descripcion">Descripción</string>
+    <string name="generar_ordende_trabajo">Generar Orden de Trabajo</string>
+    <string name="ubicacion">Ubicación</string>
+    <string name="mostrarPdf"> Generar y mostrar PDF</string>
+    <string name="out_app"> Salir</string>
+    <string name="ver_ordenes"> Ver ordenes</string>
+    <string name="ver_usuarios"> Ver usuarios</string>
+    <string name="sin_datos">No existen datos.</string>
+    <string name="progress_cargando_datos">Cargando datos&#8230;</string>
+    <string name="admin">Administrador</string>
+    <string name="string_si"> Si</string>
+    <string name="string_no"> No</string>
+    <string name="string_usuario">.  Usuario: </string>
+    <string name="string_sincronizacion">Sincronizar</string>
+
+    <string name="usuario">Usuario: </string>
+    <string name="usuario_administrador">Usuario administrador</string>
+
+    <string name="imagen">Imagen</string>
+
+
+    <!--Titulos -->
+
+    <string name="titulo1">» Fecha de creación: </string>
+    <string name="titulo2">» Código orden: </string>
+    <string name="titulo3">» Nombre usuario: </string>
+    <string name="titulo4">» Código usuario: </string>
+    <string name="titulo5">» Prioridad: </string>
+    <string name="titulo6">» Síntoma: </string>
+    <string name="titulo7">» Ubicación: </string>
+    <string name="titulo8">» Descripción: </string>
+
+    <!--avisos-->
+    <string name="elegir_tipo_ciudad">Tienes que elegir PRIORIDAD y SÍNTOMA"</string>
+    <string name="validar_sintoma">Tienes que elegir SÍNTOMA"</string>
+    <string name="valores_no_validos">Valor no válido, el código ha se ser mayor de 0"</string>
+    <string name="campo_vacio">No se puede dejar este campo vacío"</string>
+    <string name="orden_generada_correcta">Orden generada correctamente"</string>
+    <string name="orden_ya_generada">Esta orden ya está generada"</string>
+    <string name="seleccionado"> seleccionado</string>
+    <string name="deseleccionado"> deseleccionado</string>
+    <string name="title_activity_drawer">Drawer</string>
+    <string name="toast_mostrarPdf">Se abrira fichero PDF despues de crearse</string>
+    <string name="toast_no_mostrarPdf">No se abrira fichero PDF despues de crearse</string>
+    <string name="toas_error_crear_fichero">Se ha producido un error el crear el fichero,
+        no se tiene permiso de escritura: </string>
+    <string name="toast_app_close">La aplicación se cerrará</string>
+    <string name="toast_error_login">Error nombre de usuario o código. Usuario no existe.
+     Debe registrarse</string>
+    <string name="toast_permiso_admin">No tiene permiso de "ADMINISTRADOR"</string>
+    <string name="no_aplicacion_pdf">No tienes ninguna aplicación para poder abrir ficheros .pdf"</string>
+
+
+    <!--ayuda-->
+    <string name="contenido_ayuda_menu">
+        Para poder acceder a los diferentes apartados debes seleccionar
+        la etiqueta con el nombre del apartado y cliclear en la imagen.\n
+        Recuerda que para poder editar a los usuarios tienes que ser usuario administrador
+
+    </string>
+
+    <string name="contenido_ayuda_datos_usuario">
+        En estos campos introducimos los datos
+        del usuario que solocita la orden.\n\n
+        Nombre de usuario.\n
+        Introducimos el nombre del usuario.\n
+        Recuerda que este campo es obligatorio.\n\n
+        Código de usuario.\n
+        Introducimos el código de usuario, ha de ser como máximo de
+        cuatro cifras y no puede ser 0.\n
+        Recuerda que este campo es obligatorio.\n
+    </string>
+
+    <string name="contenido_ayuda_orden_trabajo">
+        En estos campos introducimos los datos
+        de la orden de trabajo.\n\n
+        Debes ejegir una Prioridad y ademas tienes que elegir el
+        Estado  en el cual, puedes elegir de uno a tres campos.\n\n
+        Recuerda que este campo es obligatorio.\n\n
+        En la ubicación debes de introducir el lugar en donde es necesrio la
+        intervención.\n
+        En la descripción de la orden puedes realizar una breve descripcion de lo ocurrido.\n
+        Recuerda que este campo es obligatorio.\n\n
+        Al confirmar la orden se graban todos los datos y de genera un documento PDF.\n
+        Tambien puedes realizar una foto ,que se guardará en la carpeta de la aplicación
+        con los ficheros .pdf.\n\n
+        Los ficheros generados .jpg y .pdf tendran el mismo nombre, que será el código de la orden
+        y su respectiva extension .jpg o .pdf .\n
+    </string>
+
+    <string name="contenido_ayuda_codigo">
+        El código de la orden se genera automaticamente.\n\n
+        Es el instante en que se genera la orden transformado
+        en milisegundos, con lo cual nunca se podrá generar dos ordenres repetidas.\n
+    </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_edit">EditActivity</string>
+    <string name="title_activity_ver_estado_ordenes">VerEstadoOrdenesActivity</string>
+
+
+</resources>
