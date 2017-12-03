@@ -43,6 +43,8 @@ public class AyudaActivity extends AppCompatActivity
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs_app_bar_ayuda);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setSelectedTabIndicatorHeight(15);
+
 
         //------------------------------------------------------------------------------------------
         FloatingActionButton floatingActionButton =

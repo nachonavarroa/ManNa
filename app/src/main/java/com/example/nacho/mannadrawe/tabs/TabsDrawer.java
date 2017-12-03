@@ -13,7 +13,7 @@ public class TabsDrawer {
         autor = "Autor";
         ayuda = "Ir a ayuda";
         verOrdenes = "Órdenes de trabajo";
-        verEmpleados = "Usarios";
+        verEmpleados = "Usuarios";
 
     }
 

@@ -73,7 +73,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + " (" + Contrato.Usuario.CODIGO_USUARIO + ","
                 + Contrato.Usuario.NOMBRE_USUARIO + ","
                 + Contrato.Usuario.ADMIN_USUARIO + ") "
-                + " VALUES (1112,'Admin', 'Si')");
+                + " VALUES (1234,'Admin', 'Si')");
 
 
 //        db.execSQL("INSERT INTO " + Contrato.BitacoraUsuario.NOMBRE_TABLA

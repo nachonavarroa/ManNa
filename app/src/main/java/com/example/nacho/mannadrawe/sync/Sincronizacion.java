@@ -14,7 +14,6 @@ import com.example.nacho.mannadrawe.pojos.BitacoraOrden;
 import com.example.nacho.mannadrawe.pojos.BitacoraUsuario;
 import com.example.nacho.mannadrawe.pojos.OrdenDeTrabajo;
 import com.example.nacho.mannadrawe.pojos.Usuario;
-import com.example.nacho.mannadrawe.proveedorDeContenido.Contrato;
 import com.example.nacho.mannadrawe.volley.OrdenVolley;
 import com.example.nacho.mannadrawe.volley.UsuarioVolley;
 
@@ -29,6 +28,7 @@ public class Sincronizacion {
     private static ContentResolver resolvedor;
     private static Context contexto;
     private static boolean esperandoRespuestaDeServidor = false;
+
 
     public Sincronizacion(Context contexto) {
         this.resolvedor = contexto.getContentResolver();
@@ -48,14 +48,18 @@ public class Sincronizacion {
     }
 
     public synchronized boolean sincronizar() {
-     //   Log.i("sincronizacion", "SINCRONIZAR");
+        //   Log.i("sincronizacion", "SINCRONIZAR");
 
         if (isEsperandoRespuestaDeServidor()) {
             return true;
         }
-        recibirActualizacionesDelServidor();
         enviarActualizacionesAlServidor();
-
+        recibirActualizacionesDelServidor();
+        try {
+            Thread.sleep(Constantes.RETARDO );
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 
@@ -64,6 +68,11 @@ public class Sincronizacion {
         enviarActualizacionesOrdenAlServidor();
         enviarActualizacionesUsuarioAlServidor();
 
+    }
+
+    public static void recibirActualizacionesDelServidor() {
+        recibirActualizacionesOrdenDelServidor();
+        recibirActualizacionesUsuarioDelServidor();
     }
 
     public static void enviarActualizacionesUsuarioAlServidor() {
@@ -91,7 +100,7 @@ public class Sincronizacion {
                     UsuarioVolley.deleteUsuario(bitacora.getID_usuario(), true, bitacora.getID());
                     break;
             }
-          //  Log.i(LOGTAG, "acabo de enviar");
+            //  Log.i(LOGTAG, "acabo de enviar");
         }
 
     }
@@ -121,34 +130,29 @@ public class Sincronizacion {
                     OrdenVolley.deleteOrden(bitacora.getID_Orden(), true, bitacora.getID());
                     break;
             }
-         //   Log.i(LOGTAG, "acabo de enviar");
+            //   Log.i(LOGTAG, "acabo de enviar");
         }
 
 
     }
 
-    public static void recibirActualizacionesDelServidor() {
-        recibirActualizacionesOrdenDelServidor();
-        recibirActualizacionesUsuarioDelServidor();
-
-    }
 
     public static void recibirActualizacionesOrdenDelServidor() {
         ArrayList<BitacoraOrden> bitacora;
         bitacora = CrudBitacoraOrden.readAll(resolvedor);
-       // Log.i("nachito", "size bitacora" + String.valueOf(bitacora.size()));
+        // Log.i("nachito", "size bitacora" + String.valueOf(bitacora.size()));
         OrdenVolley.getAllOrden();
     }
 
     public static void recibirActualizacionesUsuarioDelServidor() {
         ArrayList<BitacoraUsuario> bitacora;
         bitacora = CrudBitacoraUsuario.readAll(resolvedor);
-       // Log.i("nachito", "size bitacora" + String.valueOf(bitacora.size()));
+        // Log.i("nachito", "size bitacora" + String.valueOf(bitacora.size()));
         UsuarioVolley.getAllUsuario();
     }
 
     public static void actulizaTablaOrdenSqliteConRespuestaServidor(JSONArray jsonArray) {
-      //  Log.i("sincronizacion", "recibirActualizacionesOrdenDelServidor");
+        //  Log.i("sincronizacion", "recibirActualizacionesOrdenDelServidor");
 
         try {
             ArrayList<Long> identificadoresDeRegistrosViejos = new ArrayList<>();
@@ -159,7 +163,7 @@ public class Sincronizacion {
 
             for (OrdenDeTrabajo orden : registrosViejos) {
                 identificadoresDeRegistrosViejos.add(orden.getId());
-               // Log.i("sincronizacion", " identificadoresDeRegistrosOrdenViejos:-->"
+                // Log.i("sincronizacion", " identificadoresDeRegistrosOrdenViejos:-->"
                 //        + orden.getId());
             }
 
@@ -200,7 +204,7 @@ public class Sincronizacion {
 //                                    " Esto se podría controlar mejor con una Bitácora.");
                 }
 
-              //  Log.i("sincronizacion", " identificadoresDeRegistrosNuevosOrden:-->" + orden.getId());
+                //  Log.i("sincronizacion", " identificadoresDeRegistrosNuevosOrden:-->" + orden.getId());
             }
 
             for (OrdenDeTrabajo orden : registrosViejos) {
@@ -233,11 +237,15 @@ public class Sincronizacion {
 //            Log.i("sincronizacion", "Nombre--usuario: *" + registrosViejos.get(0).getNombre());
 //            Log.i("sincronizacion", "admin--usuario: *" + registrosViejos.get(0).getAdmin());
 
+            //identificadoresDeRegistrosViejos-----------------------------------------------------
+
             for (Usuario i : registrosViejos) {
                 identificadoresDeRegistrosViejos.add(i.getId());
                 //   Log.i("sincronizacion", " identificadoresDeRegistrosViejosUsuarioNombre Usuario:-->" + i.getNombre());
 
             }
+
+            //registrosNuevos -----------------------------------------------------------------------
 
             JSONObject obj = null;
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -251,6 +259,8 @@ public class Sincronizacion {
 
 
             }
+
+            //CrudUsuarios--------------------------------------------------------------------------
 
             for (Usuario usuario : registrosNuevos) {
                 try {
@@ -270,7 +280,9 @@ public class Sincronizacion {
                 //   Log.i("sincronizacion", " identificadoresDeRegistrosNuevosUsuario:-->" + usuario.getId());
             }
 
+            //registrosViejos-----------------------------------------------------------------------
             for (Usuario usuario : registrosViejos) {
+
                 if (!identificadoresDeRegistrosActualizados.contains(usuario.getId())) {
                     try {
                         CrudUsuarios.delete(resolvedor, usuario.getId());

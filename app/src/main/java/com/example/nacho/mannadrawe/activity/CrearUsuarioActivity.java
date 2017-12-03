@@ -19,8 +19,10 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.nacho.mannadrawe.R;
+import com.example.nacho.mannadrawe.aplication.AppController;
 import com.example.nacho.mannadrawe.crud.CrudUsuarios;
 import com.example.nacho.mannadrawe.pojos.Usuario;
+import com.example.nacho.mannadrawe.sync.Sincronizacion;
 
 public class CrearUsuarioActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -104,6 +106,9 @@ public class CrearUsuarioActivity extends AppCompatActivity
                 int numeroAleatorio = (int) (Math.random()*99999999+1);
                 empleado.setId(numeroAleatorio);
                 CrudUsuarios.insertUsuarioConBitacora(getContentResolver(), empleado);
+                Sincronizacion sin = new Sincronizacion(getApplicationContext());
+                sin.sincronizar();
+                Sincronizacion.recibirActualizacionesDelServidor();
                 Intent intent = new Intent(contexto, VerUsuariosActivity.class);
                 intent.putExtra("datosDeEmpleado", datosEmpleado);
                 startActivity(intent);

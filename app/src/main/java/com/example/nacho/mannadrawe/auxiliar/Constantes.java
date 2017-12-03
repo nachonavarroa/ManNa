@@ -8,10 +8,11 @@ package com.example.nacho.mannadrawe.auxiliar;
 
 public  class Constantes  {
 
-    public static final long SYNC_INTERVAL = 60; // Cada 90 segundos
+    public static final long SYNC_INTERVAL =10; // Cada 10 minutos
    // public static boolean ADMINISTRADOR = true ;
 
-    public static final String RUTA_SERVIDOR = "http://95.123.184.36/ManNa/webresources";
+    public static final String RUTA_SERVIDOR = "http://manna.3utilities.com/ManNa/webresources";
+
 
     public static final int SIN_VALOR_INT = -1;
     public static final String SIN_VALOR_STRING = "";
@@ -23,6 +24,8 @@ public  class Constantes  {
     public static final int OPERACION_INSERTAR = 0;
     public static final int OPERACION_MODIFICAR = 1;
     public static final int OPERACION_BORRAR = 2;
+
+    public  static  final int RETARDO = 800;
 
 
 

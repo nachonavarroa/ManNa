@@ -27,6 +27,7 @@ import com.example.nacho.mannadrawe.crud.CrudUsuarios;
 import com.example.nacho.mannadrawe.pojos.Usuario;
 import com.example.nacho.mannadrawe.proveedorDeContenido.Contrato;
 import com.example.nacho.mannadrawe.aplication.AppController;
+import com.example.nacho.mannadrawe.sync.Sincronizacion;
 
 public class VerUsuariosFragmentList extends ListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -157,6 +158,9 @@ public class VerUsuariosFragmentList extends ListFragment
                     AppController empleado = (AppController) getActivity().getApplication();
                     if (empleado.getCodigo() != datosEmpleado.getCodigo()) {
                         CrudUsuarios.deleteUsuarioConBitacora(getActivity().getContentResolver(), empleId);
+                        Sincronizacion sin = new Sincronizacion(getContext());
+                        sin.sincronizar();
+                        Sincronizacion.recibirActualizacionesDelServidor();
                         mActionMode.finish();
                     } else {
                         Toast.makeText(getContext(),

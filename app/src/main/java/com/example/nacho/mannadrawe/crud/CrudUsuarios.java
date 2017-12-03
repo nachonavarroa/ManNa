@@ -10,6 +10,8 @@ import com.example.nacho.mannadrawe.auxiliar.Constantes;
 import com.example.nacho.mannadrawe.pojos.BitacoraUsuario;
 import com.example.nacho.mannadrawe.pojos.Usuario;
 import com.example.nacho.mannadrawe.proveedorDeContenido.Contrato;
+import com.example.nacho.mannadrawe.sync.Sincronizacion;
+import com.example.nacho.mannadrawe.volley.UsuarioVolley;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,8 @@ public class CrudUsuarios {
 
         Uri uriResult = resolvedor.insert(uri, values);
 
+
+
         return uriResult;
     }
 
@@ -41,6 +45,7 @@ public class CrudUsuarios {
         bitacora.setOperacion(Constantes.OPERACION_INSERTAR);
 
         CrudBitacoraUsuario.insert(resolvedor, bitacora);
+
     }
 
     static public void delete(ContentResolver resolver, int usuarioId) {

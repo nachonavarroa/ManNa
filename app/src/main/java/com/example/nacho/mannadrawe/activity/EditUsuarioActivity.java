@@ -22,6 +22,7 @@ import com.example.nacho.mannadrawe.crud.CrudUsuarios;
 import com.example.nacho.mannadrawe.pojos.Usuario;
 import com.example.nacho.mannadrawe.proveedorDeContenido.Contrato;
 import com.example.nacho.mannadrawe.aplication.AppController;
+import com.example.nacho.mannadrawe.sync.Sincronizacion;
 
 public class EditUsuarioActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -146,6 +147,9 @@ public class EditUsuarioActivity extends AppCompatActivity
             }
             if(datosEmpleadoEncontrado.getCodigo() == codigoEmpleadoInt){
                 CrudUsuarios.updateUsuarioSincodigoConBitacora(getContentResolver(), empleado);
+                Sincronizacion sin = new Sincronizacion(getApplicationContext());
+                sin.sincronizar();
+                Sincronizacion.recibirActualizacionesDelServidor();
                 Intent intent = new Intent(contexto, MainActivityDrawer.class);
                 intent.putExtra("datosDeEmpleado", datosEmpleado);
                 startActivity(intent);

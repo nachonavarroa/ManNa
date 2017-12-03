@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.design.widget.CoordinatorLayout
     android:layout_height="match_parent"
     android:layout_width="match_parent"
@@ -15,11 +16,11 @@
          android:id="@+id/tabs_app_bar_ayuda"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         app:tabIndicatorColor="@color/colorVerdeClaro"
-         app:tabTextColor="@color/colorBlanco"
+         app:tabIndicatorColor="@color/colorFondo2"
+         app:tabSelectedTextColor="@color/colorBlanco"
+         app:tabTextColor="@color/colorMarron"
          android:background="@drawable/side_nav_bar"
          app:tabMode="scrollable"/>
-
 
       </android.support.design.widget.AppBarLayout>
 

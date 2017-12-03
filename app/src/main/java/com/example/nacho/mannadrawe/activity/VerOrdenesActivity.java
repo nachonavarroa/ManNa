@@ -45,6 +45,7 @@ public class VerOrdenesActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), CrearOrdenActivity.class);
                 startActivity(intent);
+                finish();
 
 
             }

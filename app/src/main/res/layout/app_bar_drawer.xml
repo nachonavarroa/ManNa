@@ -25,8 +25,9 @@
             android:id="@+id/tabs_layout_app_bar_drawer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/colorVerdeClaro"
-            app:tabTextColor="@color/colorBlanco"
+            app:tabSelectedTextColor="@color/colorFondo"
+            app:tabIndicatorColor="@color/colorFondo2"
+            app:tabTextColor="@color/colorMarron"
             android:background="@drawable/side_nav_bar"
             app:tabMode="scrollable"/>
 

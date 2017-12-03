@@ -21,14 +21,17 @@ public class CrudBitacoraOrden {
         values.put(Contrato.BitacoraOrden.ID_ORDEN, bitacora.getID_Orden());
         values.put(Contrato.BitacoraOrden.OPERACION, bitacora.getOperacion());
 
-         resolvedor.insert(uri, values);
+        resolvedor.insert(uri, values);
 
     }
 
     static public void delete(ContentResolver resolver, int bitacoraId) {
-
-        Uri uri = Uri.parse(Contrato.BitacoraOrden.CONTENT_URI + "/" + bitacoraId);
-        resolver.delete(uri, null, null);
+        try {
+            Uri uri = Uri.parse(Contrato.BitacoraOrden.CONTENT_URI + "/" + bitacoraId);
+            resolver.delete(uri, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -51,7 +54,7 @@ public class CrudBitacoraOrden {
         String[] projection = {
                 Contrato.BitacoraOrden.ID_ORDEN,
                 Contrato.BitacoraOrden.OPERACION,
-             };
+        };
 
         Cursor cursor = resolver.query(uri, projection, null, null, null);
 
@@ -70,6 +73,7 @@ public class CrudBitacoraOrden {
 
     static public ArrayList<BitacoraOrden> readAll(ContentResolver resolver) {
         Uri uri = Contrato.BitacoraOrden.CONTENT_URI;
+        ArrayList<BitacoraOrden> bitacoras = new ArrayList<>();
 
         String[] projection = {
                 Contrato.BitacoraOrden._ID,
@@ -77,18 +81,18 @@ public class CrudBitacoraOrden {
                 Contrato.BitacoraOrden.OPERACION
         };
 
-        Cursor cursor = resolver.query(uri, projection, null, null, null);
-
-        ArrayList<BitacoraOrden> bitacoras = new ArrayList<>();
-
-        while (cursor.moveToNext()){
-            BitacoraOrden bitacora = new BitacoraOrden();
-            bitacora.setID(cursor.getInt(cursor.getColumnIndex(Contrato.BitacoraOrden._ID)));
-            bitacora.setID_Orden(cursor.getLong(cursor.getColumnIndex(Contrato.BitacoraOrden.ID_ORDEN)));
-            bitacora.setOperacion(cursor.getInt(cursor.getColumnIndex(Contrato.BitacoraOrden.OPERACION)));
-            bitacoras.add(bitacora);
+        try {
+            Cursor cursor = resolver.query(uri, projection, null, null, null);
+            while (cursor.moveToNext()) {
+                BitacoraOrden bitacora = new BitacoraOrden();
+                bitacora.setID(cursor.getInt(cursor.getColumnIndex(Contrato.BitacoraOrden._ID)));
+                bitacora.setID_Orden(cursor.getLong(cursor.getColumnIndex(Contrato.BitacoraOrden.ID_ORDEN)));
+                bitacora.setOperacion(cursor.getInt(cursor.getColumnIndex(Contrato.BitacoraOrden.OPERACION)));
+                bitacoras.add(bitacora);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
         return bitacoras;
 
     }

@@ -27,6 +27,7 @@ import com.example.nacho.mannadrawe.R;
 import com.example.nacho.mannadrawe.crud.CrudOrdenes;
 import com.example.nacho.mannadrawe.adapter.VerOrdenesAdapter;
 import com.example.nacho.mannadrawe.aplication.AppController;
+import com.example.nacho.mannadrawe.sync.Sincronizacion;
 
 public class VerOrdenesFragmentList extends ListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -149,6 +150,9 @@ public class VerOrdenesFragmentList extends ListFragment
                 public void onClick(DialogInterface dialog, int which) {
                     long ordenId = (Long) viewselect.getTag();
                     CrudOrdenes.deleteOrdenConBitacora(getActivity().getContentResolver(), ordenId);
+                    Sincronizacion sin = new Sincronizacion(getContext());
+                    sin.sincronizar();
+                    Sincronizacion.recibirActualizacionesDelServidor();
                     mActionMode.finish();
                 }
             });
@@ -192,7 +196,6 @@ public class VerOrdenesFragmentList extends ListFragment
                 Contrato.Orden._ID,
                 Contrato.Orden.CODIGO_EMPLEADO,
                 Contrato.Orden.FECHA,
-               // Contrato.Orden.CODIGO_ORDEN,
                 Contrato.Orden.PRIORIDAD,
                 Contrato.Orden.SINTOMA,
                 Contrato.Orden.UBICACION,

@@ -30,6 +30,7 @@ import com.example.nacho.mannadrawe.auxiliar.Utilidades;
 import com.example.nacho.mannadrawe.crud.CrudOrdenes;
 import com.example.nacho.mannadrawe.pojos.Usuario;
 import com.example.nacho.mannadrawe.pojos.OrdenDeTrabajo;
+import com.example.nacho.mannadrawe.sync.Sincronizacion;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Paragraph;
@@ -236,6 +237,9 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
 
             Toast.makeText(contexto, getResources().
                     getText(R.string.orden_generada_correcta), Toast.LENGTH_SHORT).show();
+            Sincronizacion sin = new Sincronizacion(getApplicationContext());
+            sin.sincronizar();
+            Sincronizacion.recibirActualizacionesDelServidor();
 
             finish();
         }
@@ -244,6 +248,7 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
                     getText(R.string.orden_ya_generada), Toast.LENGTH_SHORT).show();
             //  Intent intent = new Intent(getApplicationContext(), MainActivityDrawer.class);
             //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
             startActivity(intent);
             finish();
         }

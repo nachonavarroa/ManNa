@@ -36,6 +36,7 @@ import com.example.nacho.mannadrawe.pojos.OrdenDeTrabajo;
 import com.example.nacho.mannadrawe.pojos.Usuario;
 import com.example.nacho.mannadrawe.proveedorDeContenido.Contrato;
 import com.example.nacho.mannadrawe.aplication.AppController;
+import com.example.nacho.mannadrawe.sync.Sincronizacion;
 
 import java.io.FileNotFoundException;
 
@@ -445,6 +446,9 @@ public class EditOrdenActivity extends AppCompatActivity {
             orden.setImagen(foto);
             CrudOrdenes.updateOrdenConBitacora(getContentResolver(), orden,contexto);
             intent = new Intent(contexto, MainActivityDrawer.class);
+            Sincronizacion sin = new Sincronizacion(getApplicationContext());
+            sin.sincronizar();
+            Sincronizacion.recibirActualizacionesDelServidor();
             startActivity(intent);
             finish();
         }

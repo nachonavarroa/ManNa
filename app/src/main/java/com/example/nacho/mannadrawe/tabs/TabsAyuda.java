@@ -10,7 +10,7 @@ public class TabsAyuda {
 
     public TabsAyuda() {
         tabMenu ="Menú";
-        tabDatosEmpleado = "Datos de empleado";
+        tabDatosEmpleado = "Datos de usuario";
         tabGenerarOrden  = "Generar Orden";
         tabCodigoOrden   = "Código  Orden";
     }

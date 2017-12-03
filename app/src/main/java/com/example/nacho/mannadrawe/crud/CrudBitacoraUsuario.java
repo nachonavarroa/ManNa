@@ -5,8 +5,10 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+
 import com.example.nacho.mannadrawe.pojos.BitacoraUsuario;
 import com.example.nacho.mannadrawe.proveedorDeContenido.Contrato;
+
 import java.util.ArrayList;
 
 public class CrudBitacoraUsuario {
@@ -24,9 +26,12 @@ public class CrudBitacoraUsuario {
     }
 
     static public void delete(ContentResolver resolver, int bitacoraId) {
-
-        Uri uri = Uri.parse(Contrato.BitacoraUsuario.CONTENT_URI + "/" + bitacoraId);
-        resolver.delete(uri, null, null);
+        try {
+            Uri uri = Uri.parse(Contrato.BitacoraUsuario.CONTENT_URI + "/" + bitacoraId);
+            resolver.delete(uri, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -79,7 +84,7 @@ public class CrudBitacoraUsuario {
 
         ArrayList<BitacoraUsuario> bitacoras = new ArrayList<>();
 
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             BitacoraUsuario bitacora = new BitacoraUsuario();
             bitacora.setID(cursor.getInt(cursor.getColumnIndex(Contrato.BitacoraUsuario._ID)));
             bitacora.setID_usuario(cursor.getInt(cursor.getColumnIndex(Contrato.BitacoraUsuario.ID_USUARIO)));

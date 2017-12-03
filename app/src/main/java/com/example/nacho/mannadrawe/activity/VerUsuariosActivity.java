@@ -50,6 +50,7 @@ public class VerUsuariosActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), CrearUsuarioActivity.class);
                     startActivity(intent);
+                    finish();
                 }
 
             }

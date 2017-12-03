@@ -27,6 +27,10 @@ public class SplashActivity extends AppCompatActivity {
         actionBar.hide();
         //-------------------------------------
         contexto = this;
+        Sincronizacion sin = new Sincronizacion(getApplicationContext());
+        sin.sincronizar();
+        Sincronizacion.recibirActualizacionesDelServidor();
+
                 new Handler().postDelayed(new Runnable() {
             public void run() {
                 // Cuando pasen los 2 segundos, pasamos a la actividad menú

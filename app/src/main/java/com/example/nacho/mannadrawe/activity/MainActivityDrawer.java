@@ -2,9 +2,11 @@ package com.example.nacho.mannadrawe.activity;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -21,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.nacho.mannadrawe.R;
 import com.example.nacho.mannadrawe.adapter.DrawerAdapter;
 import com.example.nacho.mannadrawe.auxiliar.Constantes;
@@ -36,7 +39,7 @@ public class MainActivityDrawer extends AppCompatActivity
 
     private final int RETARDO_SALIDA = 2200; // 2.2segundos
     private final int RETARDO_VER_DATOS = 700; // 2.2segundos
-    final int MY_PERMISSIONS_REQUEST =1;
+    final int MY_PERMISSIONS_REQUEST = 1;
     boolean permisoAdministrador;
 
     @Override
@@ -92,10 +95,11 @@ public class MainActivityDrawer extends AppCompatActivity
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs_layout_app_bar_drawer);
         tabLayout.setupWithViewPager(viewPager);
-
-        if(permisoAdministrador()){
+        tabLayout.setSelectedTabIndicatorHeight(15);
+        if (permisoAdministrador()) {
             int col = Color.parseColor("#FF0000");
             tabLayout.setBackgroundColor(col);
+            tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorVerdeDark));
         }
 
 
@@ -104,12 +108,11 @@ public class MainActivityDrawer extends AppCompatActivity
                 viewPager.setAdapter(drawerAdapter);
 
             }
-
-            ;
-        },RETARDO_VER_DATOS);
+        }, RETARDO_VER_DATOS);
 
 
     }
+
     //-Pide permisos--------------------------------------------------------------------------------
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -153,15 +156,13 @@ public class MainActivityDrawer extends AppCompatActivity
                 .setIcon(R.drawable.ic_help_outline_black_24dp)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
-//        menu.add(Menu.NONE, R.integer.indice_icono_crear_usuario, Menu.NONE, "Sincronizar")
-//                .setIcon(R.drawable.ic_actualizar)
-//                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+        menu.add(Menu.NONE, R.integer.indice_icono_crear_usuario, Menu.NONE, "Sincronizar")
+                .setIcon(R.drawable.ic_actualizar)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
         menu.add(Menu.NONE, R.integer.indice_icono_oup_app, Menu.NONE, R.string.out_app)
                 .setIcon(R.drawable.ic_boton_apagado)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-
-
 
 
         return true;
@@ -181,13 +182,9 @@ public class MainActivityDrawer extends AppCompatActivity
                 break;
 
             case R.integer.indice_icono_crear_usuario:
-                try {
-                    Sincronizacion.recibirActualizacionesDelServidor();
-                    Sincronizacion.enviarActualizacionesAlServidor();
-                }
-                    catch(Exception  e){
-
-                    }
+                Sincronizacion sin = new Sincronizacion(getApplicationContext());
+                sin.sincronizar();
+                Sincronizacion.recibirActualizacionesDelServidor();
 
 
 
@@ -275,7 +272,7 @@ public class MainActivityDrawer extends AppCompatActivity
         return permisoAdministrador;
     }
 
-   public String usuario() {
+    public String usuario() {
         AppController de = (AppController) getApplication();
         String usuario = de.getNombre();
         return usuario;
