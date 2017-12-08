@@ -108,7 +108,7 @@ public class CrearOrdenActivity extends AppCompatActivity
             datosLogin();
             Intent intent = new Intent(contexto, DescripcionOrdenActivity.class);
 
-            intent.putExtra("datosEmpleado", datosEmpleado);
+            intent.putExtra("datosUsuario", datosEmpleado);
 
             intent.putExtra("ordenDeTrabajo", setPrioridadEstadoOrdenDeTrabajo
                     (prioridad, estado));
@@ -152,11 +152,11 @@ public class CrearOrdenActivity extends AppCompatActivity
                 if (checkBoxSintoma0.isChecked()) {
                     siSintoma0 = true;
                     sintoma0 = sintoma;
-                    mensajeSeleccionado(sintoma);
+                  //  mensajeSeleccionado(sintoma);
                 } else {
                     siSintoma0 = false;
                     sintoma0 = "";
-                    mensajeDeseleccionado(sintoma);
+                   // mensajeDeseleccionado(sintoma);
                 }
             }
         });
@@ -169,11 +169,11 @@ public class CrearOrdenActivity extends AppCompatActivity
                 if (checkBoxSintoma1.isChecked()) {
                     siSintoma1 = true;
                     sintoma1 = sintoma;
-                    mensajeSeleccionado(sintoma);
+                   // mensajeSeleccionado(sintoma);
                 } else {
                     siSintoma1 = false;
                     sintoma1 = "";
-                    mensajeDeseleccionado(sintoma);
+                  //  mensajeDeseleccionado(sintoma);
                 }
 
             }
@@ -190,11 +190,11 @@ public class CrearOrdenActivity extends AppCompatActivity
                 if (checkBoxSintoma2.isChecked()) {
                     sintoma2 = sintoma;
                     siSintoma2 = true;
-                    mensajeSeleccionado(sintoma);
+                  //  mensajeSeleccionado(sintoma);
                 } else {
                     siSintoma2 = false;
                     sintoma2 = "";
-                    mensajeDeseleccionado(sintoma);
+                   // mensajeDeseleccionado(sintoma);
                 }
             }
         });
@@ -223,7 +223,7 @@ public class CrearOrdenActivity extends AppCompatActivity
                         siPrioridad = true;
                         break;
                 }
-                mensajeSeleccionado(prioridad);
+              //  mensajeSeleccionado(prioridad);
 
             }
         });

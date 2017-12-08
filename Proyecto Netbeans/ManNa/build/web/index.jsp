@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ManNa</title>
     </head>
-    <body style="background: #FFF1E6">
+    <body style="background: #FFF1E8">
         <h1 style = "color: #FF5F00; text-align:center; font-size:36px">Bienvenido</h1>
 			
 		<marquee bgcolor="FFF1E6" width="90%" scrolldelay="100" scrollamount="5" direction="left" loop="infinite">
@@ -21,7 +21,11 @@
 		
 		<br>
 		<center>
-		<img src="mantenimiento.png" width="275" height="269">
+		<img  style="border-radiux:50%"src="img/mantenimiento.png" width="275" height="269">
+           
+   
+                    
+           
 		</center>
 		<br><br>
 

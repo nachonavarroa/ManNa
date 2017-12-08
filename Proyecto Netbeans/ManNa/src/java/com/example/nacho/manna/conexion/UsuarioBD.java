@@ -137,14 +137,6 @@ public class UsuarioBD {
                     + "'" + usuario.getAdmin() + "' "
                     + ");";
 
-//            query = "INSERT INTO " + NOMBRE_TABLA + " (_id,Codigo_Usuario, Nombre_Usuario, "
-//                    + "Administrador) "
-//                    + "VALUES ("
-//                    + usuario.getId() + ", "
-//                    + usuario.getCodigoUsuario()
-//                    + ", '" + usuario.getNombre() + "' ,"
-//                    + "'" + usuario.getAdmin() + "' "
-//                    + " )";
 
             ps = conexion.prepareStatement(query);
             ps.executeUpdate();

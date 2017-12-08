@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class OrdenDeTrabajo {
     
     private long id;
-    private int codigoEmpleado;
+    private int idEmpleado;
     private String fecha;
     private String prioridad;
     private String sintoma;
@@ -23,11 +23,11 @@ public class OrdenDeTrabajo {
     public OrdenDeTrabajo() {
     }
 
-    public OrdenDeTrabajo(long id, int codigoEmpleado, String fecha,
+    public OrdenDeTrabajo(long id, int idEmpleado, String fecha,
              String prioridad, String sintoma,String ubicacion, 
              String descripcion, String estado) {
         this.id = id;
-        this.codigoEmpleado = codigoEmpleado;
+        this.idEmpleado = idEmpleado;
         this.fecha = fecha;
         this.prioridad = prioridad;
         this.sintoma = sintoma;
@@ -44,12 +44,12 @@ public class OrdenDeTrabajo {
         this.id = id;
     }
 
-    public int getCodigoEmpleado() {
-        return codigoEmpleado;
+    public int getIdEmpleado() {
+        return idEmpleado;
     }
 
-    public void setCodigoEmpleado(int codigoEmpleado) {
-        this.codigoEmpleado = codigoEmpleado;
+    public void setIdEmpleado(int idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     public String getFecha() {

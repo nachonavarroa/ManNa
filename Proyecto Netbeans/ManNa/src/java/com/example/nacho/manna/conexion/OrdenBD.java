@@ -32,7 +32,7 @@ public class OrdenBD {
                 OrdenDeTrabajo registro = new OrdenDeTrabajo();
 
                 registro.setId(rs.getLong("_id"));
-                registro.setCodigoEmpleado(rs.getInt("Codigo_empleado"));
+                registro.setIdEmpleado(rs.getInt("id_empleado"));
                 registro.setFecha(rs.getString("Fecha"));
                 registro.setPrioridad(rs.getString("Prioridad"));
                 registro.setSintoma(rs.getString("Sintoma"));
@@ -76,7 +76,7 @@ public class OrdenBD {
                 OrdenDeTrabajo registro = new OrdenDeTrabajo();
 
                 registro.setId(rs.getLong("_id"));
-                registro.setCodigoEmpleado(rs.getInt("Codigo_empleado"));
+                registro.setIdEmpleado(rs.getInt("id_empleado"));
                 registro.setFecha(rs.getString("Fecha"));
                 registro.setPrioridad(rs.getString("Prioridad"));
                 registro.setSintoma(rs.getString("Sintoma"));
@@ -112,13 +112,12 @@ public class OrdenBD {
         try {
             String query;
 
-            query = "INSERT INTO orden (_id,Codigo_empleado, Fecha, "
+            query = "INSERT INTO orden (_id,id_empleado, Fecha, "
                     + "Prioridad, Sintoma, Ubicacion, Descripcion, Estado) "
                     + "VALUES ("
                     + orden.getId() + ", "
-                    + orden.getCodigoEmpleado()
+                    + orden.getIdEmpleado()
                     + ", '" + orden.getFecha() + "' ,"
-                    // + orden.getCodigo() + ", "
                     + "'" + orden.getPrioridad() + "', "
                     + "'" + orden.getSintoma() + "', "
                     + "'" + orden.getUbicacion() + "', "
@@ -151,7 +150,7 @@ public class OrdenBD {
         try {
             String query;
             query = "UPDATE orden SET "
-                    + "Codigo_empleado = " + orden.getCodigoEmpleado() + ", "
+                    + "id_empleado = " + orden.getIdEmpleado() + ", "
                     + "Fecha = '" + orden.getFecha() + "' , "
                     + "Prioridad = '" + orden.getPrioridad() + "' , "
                     + "Sintoma = '" + orden.getSintoma() + "', "

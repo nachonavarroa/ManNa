@@ -137,26 +137,50 @@ public class EditUsuarioActivity extends AppCompatActivity
             AppController datosLogin = (AppController) getApplication();
             int codUsuarioLogin = CrudUsuarios.login(getContentResolver(),
                     String.valueOf(datosLogin.getCodigo()), datosLogin.getNombre()).getCodigo();
-            int codUsuarioEditado = CrudUsuarios.readRecord(getContentResolver(),
+            int codUsuarioEditado=-1;
+            try{
+            codUsuarioEditado = CrudUsuarios.readRecord(getContentResolver(),
                     empleadoId).getCodigo();
+            }catch (Exception e){
+                Toast.makeText(contexto, "No existe eluusuario seleccionado", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(contexto, MainActivityDrawer.class);
+                startActivity(intent);
+                finish();
+
+            }
+
 
             if (codUsuarioLogin == codUsuarioEditado) {
                 datosLogin.setCodigo(empleado.getCodigo());
                 datosLogin.setNombre(nombreEmpleado);
 
             }
-            if(datosEmpleadoEncontrado.getCodigo() == codigoEmpleadoInt){
-                CrudUsuarios.updateUsuarioSincodigoConBitacora(getContentResolver(),
-                        empleado,contexto);
+            if (datosEmpleadoEncontrado.getCodigo() == codigoEmpleadoInt) {
+                try {
+                    CrudUsuarios.updateUsuarioSincodigoConBitacora(getContentResolver(),
+                            empleado, contexto);
+                } catch (Exception e) {
+                    Toast.makeText(contexto, "No existe eluusuario seleccionado", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(contexto, MainActivityDrawer.class);
+                    startActivity(intent);
+                    finish();
 
+                }
                 Intent intent = new Intent(contexto, MainActivityDrawer.class);
                 intent.putExtra("datosDeEmpleado", datosEmpleado);
                 startActivity(intent);
                 finish();
 
-            }
-            else if (!comprobarUsuario(codigoEmpleadoString)) {
-                CrudUsuarios.updateUsuarioConBitacora(getContentResolver(), empleado,contexto);
+            } else if (!comprobarUsuario(codigoEmpleadoString)) {
+                try {
+                    CrudUsuarios.updateUsuarioConBitacora(getContentResolver(), empleado, contexto);
+                } catch (Exception e) {
+                    Toast.makeText(contexto, "No existe eluusuario seleccionado", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(contexto, MainActivityDrawer.class);
+                    startActivity(intent);
+                    finish();
+                }
+
                 Intent intent = new Intent(contexto, MainActivityDrawer.class);
                 intent.putExtra("datosDeEmpleado", datosEmpleado);
                 startActivity(intent);

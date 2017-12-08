@@ -1,6 +1,8 @@
 package com.example.nacho.manna.activity;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -12,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.annotation.IdRes;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,8 +26,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +41,10 @@ import com.example.nacho.manna.pojos.OrdenDeTrabajo;
 import com.example.nacho.manna.pojos.Usuario;
 import com.example.nacho.manna.proveedorDeContenido.Contrato;
 import com.example.nacho.manna.aplication.AppController;
+import com.example.nacho.manna.sync.Sincronizacion;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class EditOrdenActivity extends AppCompatActivity {
 
@@ -47,10 +54,16 @@ public class EditOrdenActivity extends AppCompatActivity {
 
     Activity contexto;
     Intent intent;
+
     RadioGroup radioGroupPrioridad;
     RadioGroup radioGroupEstado;
 
+    RadioButton radioButtonPendiente;
+    RadioButton radioButtonProceso;
+    RadioButton radioButtonRealizado;
+
     TextView textViewEstado;
+
     EditText editTextUbicacion;
     EditText editTextDescripcion;
     EditText editTextSintoma;
@@ -62,6 +75,7 @@ public class EditOrdenActivity extends AppCompatActivity {
     String prioridad = "";
     String estado = null;
     Boolean validadarOk;
+
     int xOffset;
     int yOffset;
     long ordenId;
@@ -70,10 +84,15 @@ public class EditOrdenActivity extends AppCompatActivity {
     int colorVerde ;
     int colorNegro ;
     int colorAul;
+    ScrollView scrollViewPather;
+    LinearLayout linearLayoutPather;
     boolean permisoAdministrador;
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_orden);
@@ -86,12 +105,13 @@ public class EditOrdenActivity extends AppCompatActivity {
 
         textViewEstado = (TextView) findViewById(R.id.textViewEstadoEditOrden) ;
 
-
         colorRojo = Color.parseColor("#FF0000");
         colorMarron = Color.parseColor("#763C28");
         colorVerde = Color.parseColor("#009846");
         colorAul = Color.parseColor("#0000FF");
         colorNegro = Color.parseColor("#000000");
+        ordenId = this.getIntent().getExtras().getLong(Contrato.Orden._ID);
+
 
         //ActionBar----------------------------
         ActionBar actionBar = getSupportActionBar();
@@ -114,6 +134,13 @@ public class EditOrdenActivity extends AppCompatActivity {
 
         radioGroupPrioridad = (RadioGroup) findViewById(R.id.radioGroupPrioridadEdit);
         radioGroupEstado = (RadioGroup) findViewById(R.id.radioGroupEstadoEdit);
+
+        radioButtonPendiente = (RadioButton) findViewById(R.id.radioButtonEstado0Edit);
+        radioButtonProceso = (RadioButton) findViewById(R.id.radioButtonEstado1Edit);
+        radioButtonRealizado = (RadioButton) findViewById(R.id.radioButtonEstado2Edit);
+
+
+
         editTextUbicacion = (EditText) findViewById(R.id.editTextUbicacionEdit);
         editTextDescripcion = (EditText) findViewById(R.id.editTextDescripcionEdit);
         editTextSintoma = (EditText) findViewById(R.id.editTextSintoma2EditOrden);
@@ -122,14 +149,16 @@ public class EditOrdenActivity extends AppCompatActivity {
         imageButtonGaleria = (ImageButton) findViewById(R.id.imageButton_galeria_content_edit_orden);
         imageButtonCamara = (ImageButton) findViewById(R.id.imageButton_camara_content_edit_orden);
 
-        ordenId = this.getIntent().getExtras().getLong(Contrato.Orden._ID);
+
         OrdenDeTrabajo orden = CrudOrdenes.readRecord(getContentResolver(), ordenId);
 
         try {
+
             Utilidades.loadImageFromStorage(this,"img_"+ ordenId +".jpg"
                     ,imageViewFoto);
         } catch (FileNotFoundException e) {
             //no existe imagen
+
         }
 
 
@@ -139,24 +168,47 @@ public class EditOrdenActivity extends AppCompatActivity {
 
         prioridadRadioButton(orden);
         estadoRadioButton(orden);
-        if(!permisoAdministrador()){
 
-            radioGroupPrioridad.setVisibility(View.INVISIBLE);
+        if(!permisoAdministrador()){
+            radioGroupPrioridad.setVisibility(View.GONE);
+
+            View viewDivisionCodigo =(View) findViewById(R.id.viewDivisionCodigo);
+            viewDivisionCodigo.setVisibility(View.GONE);
+            View viewDivisionPrioridad =(View) findViewById(R.id.viewDivisionEditOrdenPrioridad);
+            viewDivisionPrioridad.setVisibility(View.GONE);
+            View viewDivisionDescripcion =(View) findViewById(R.id.viewDivisionDescripcionEditOrden);
+            viewDivisionDescripcion.setVisibility(View.GONE);
+
             TextView textViewPrioridad = (TextView) findViewById(R.id.textViewPrioridadEditOrden);
             textViewPrioridad.setText(getResources().getString(R.string.prioridad)+": "+orden.getPrioridad());
 
-            editTextSintoma.setVisibility(View.INVISIBLE);
+           // editTextSintoma.setVisibility(View.INVISIBLE);
+            TextInputLayout textInputLayoutSintoma =(TextInputLayout)
+                    findViewById(R.id.textInputLayoutSintoma2EditOrden);
+            textInputLayoutSintoma.removeAllViews();
             TextView textViewSintoma = (TextView) findViewById(R.id.textViewSintomadEditOrden);
             textViewSintoma.setText(getResources().getString(R.string.sintoma)+": "+orden.getSintoma());
 
-            editTextUbicacion.setVisibility(View.INVISIBLE);
+            TextInputLayout textInputLayoutUbicacion =(TextInputLayout)
+                    findViewById(R.id.textInputLayoutUbicacionEdit);
+            textInputLayoutUbicacion.removeAllViews();
+
+            //editTextUbicacion.setVisibility(View.GONE);
             TextView textViewUbicacion = (TextView) findViewById(R.id.textViewUbicacionEditOrden);
             textViewUbicacion.setText(getResources().getString(R.string.ubicacion)+": "+orden.getUbicacion());
 
-            editTextDescripcion.setVisibility(View.INVISIBLE);
+
+            TextInputLayout textInputLayoutDescripcion =(TextInputLayout)
+                    findViewById(R.id.textInputLayoutDescripcionEdit);
+            textInputLayoutDescripcion.removeAllViews();
+
+           // editTextDescripcion.setVisibility(View.GONE);
             TextView textViewDescripcion = (TextView) findViewById(R.id.textViewDescripcionEditOrden);
             textViewDescripcion.setText(getResources().getString(R.string.descripcion)+": "+orden.getDescripcion());
 
+            linearLayoutPather = (LinearLayout) findViewById(R.id.LLPrincipalEditOrden);
+            linearLayoutPather.setScaleY(0.95f);
+            linearLayoutPather.setScaleX(0.95f);
 
         }
 
@@ -186,7 +238,7 @@ public class EditOrdenActivity extends AppCompatActivity {
 
                         break;
                 }
-                mensajeSeleccionado(prioridad);
+              //  mensajeSeleccionado(prioridad);
 
             }
         });
@@ -203,25 +255,54 @@ public class EditOrdenActivity extends AppCompatActivity {
                         estado = (String) getResources().getText(R.string.estado_pendiente);
                         textViewEstado.setTextColor(colorRojo);
 
+                        radioButtonPendiente.setBackgroundColor(colorRojo);
+                        radioButtonPendiente.setTextColor(getResources().getColor(R.color.colorFondo));
+
+
+                        radioButtonProceso.setBackgroundColor(getResources().getColor(R.color.colorFondo));
+                        radioButtonProceso.setTextColor(getResources().getColor(R.color.colorNegro));
+
+                        radioButtonRealizado.setBackgroundColor(getResources().getColor(R.color.colorFondo));
+                        radioButtonRealizado.setTextColor(getResources().getColor(R.color.colorNegro));
 
                         break;
+
                     case R.id.radioButtonEstado1Edit:
                         estado = (String) getResources().getText(R.string.estado_proceso);
                         textViewEstado.setTextColor(colorAul);
 
+                        radioButtonProceso.setBackgroundColor(colorAul);
+                        radioButtonProceso.setTextColor(getResources().getColor(R.color.colorFondo));
+
+                        radioButtonPendiente.setBackgroundColor(getResources().getColor(R.color.colorFondo));
+                        radioButtonPendiente.setTextColor(getResources().getColor(R.color.colorNegro));
+
+                        radioButtonRealizado.setBackgroundColor(getResources().getColor(R.color.colorFondo));
+                        radioButtonRealizado.setTextColor(getResources().getColor(R.color.colorNegro));
 
                         break;
+
                     case R.id.radioButtonEstado2Edit:
                         estado = (String) getResources().getText(R.string.estado_realizado);
                         textViewEstado.setTextColor(colorVerde);
 
+                        radioButtonRealizado.setBackgroundColor(colorVerde);
+                        radioButtonRealizado.setTextColor(getResources().getColor(R.color.colorFondo));
+
+                        radioButtonPendiente.setBackgroundColor(getResources().getColor(R.color.colorFondo));
+                        radioButtonPendiente.setTextColor(getResources().getColor(R.color.colorNegro));
+
+                        radioButtonProceso.setBackgroundColor(getResources().getColor(R.color.colorFondo));
+                        radioButtonProceso.setTextColor(getResources().getColor(R.color.colorNegro));
+
                         break;
 
                 }
-                mensajeSeleccionado(estado);
+               // mensajeSeleccionado(estado);
 
             }
         });
+
         //-foto---------------------------------------------------------------
         imageViewFoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,9 +324,11 @@ public class EditOrdenActivity extends AppCompatActivity {
 
         });
 
-
-
+        Utilidades.loadDesdeServidor(contexto,imageViewFoto,ordenId);
+        cabecera(orden);
     }
+
+
 
     private boolean permisoAdministrador() {
         permisoAdministrador = false;
@@ -315,6 +398,22 @@ public class EditOrdenActivity extends AppCompatActivity {
 
     //Metodos actulizan estados de checkBox y Radiobutton con respecto a la orden editada-----------
 
+
+    private void cabecera(OrdenDeTrabajo orden){
+        TextView textViewCodigo;
+        TextView textViewRef;
+        TextView textViewFecha;
+
+        textViewCodigo =(TextView) findViewById(R.id.textViewCodigoEditOrden);
+        textViewRef =(TextView) findViewById(R.id.textViewReferenciaEditOrden);
+        textViewFecha =(TextView) findViewById(R.id.textViewFechaEditOrden);
+
+        textViewCodigo.setText("Código: "+String.valueOf(orden.getId()));
+        textViewRef.setText("Referencia: "+String.valueOf(orden.getId()%9999));
+        textViewFecha.setText("Fecha: "+orden.getFecha());
+
+    }
+
     private void prioridadRadioButton(OrdenDeTrabajo orden) {
         String prioridadExtraida = orden.getPrioridad();
 
@@ -363,6 +462,9 @@ public class EditOrdenActivity extends AppCompatActivity {
             radioButton.setChecked(true);
             estado = estadoExtraido;
             textViewEstado.setTextColor(colorRojo);
+            radioButton.setBackgroundColor(colorRojo);
+            radioButton.setTextColor(getResources().getColor(R.color.colorFondo));
+
 
 
 
@@ -371,6 +473,8 @@ public class EditOrdenActivity extends AppCompatActivity {
             radioButton.setChecked(true);
             estado = estadoExtraido;
             textViewEstado.setTextColor(colorAul);
+            radioButton.setBackgroundColor(colorAul);
+            radioButton.setTextColor(getResources().getColor(R.color.colorFondo));
 
 
 
@@ -379,6 +483,8 @@ public class EditOrdenActivity extends AppCompatActivity {
             radioButton.setChecked(true);
             estado = estadoExtraido;
             textViewEstado.setTextColor(colorVerde);
+            radioButton.setBackgroundColor(colorVerde);
+            radioButton.setTextColor(getResources().getColor(R.color.colorFondo));
 
 
         }
@@ -443,7 +549,16 @@ public class EditOrdenActivity extends AppCompatActivity {
             orden.setDescripcion(editTextDescripcion.getText().toString());
             orden.setEstado(estado);
             orden.setImagen(foto);
-            CrudOrdenes.updateOrdenConBitacora(getContentResolver(), orden,contexto);
+            try{
+                CrudOrdenes.updateOrdenConBitacora(getContentResolver(), orden,contexto);
+            }catch(Exception e){
+                Toast.makeText(contexto,"No existe la orden seleccionada",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(contexto,MainActivityDrawer.class);
+                startActivity(intent);
+                finish();
+            }
+
+
             intent = new Intent(contexto, MainActivityDrawer.class);
 
             startActivity(intent);

@@ -101,7 +101,9 @@ public class VerUsuariosActivity extends AppCompatActivity {
                         getResources ().getString (R.string.string_ayuda),
                         Toast.LENGTH_SHORT).show ();
                 intent = new Intent (getApplicationContext (),AyudaActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity (intent);
+                finish();
 
              case R.integer.indice_icono_crear_usuario:
                  if(permisoAdministrador()){
@@ -109,7 +111,9 @@ public class VerUsuariosActivity extends AppCompatActivity {
                         getResources ().getString (R.string.string_ir_generar_usuario),
                         Toast.LENGTH_SHORT).show ();
                 intent = new Intent (getApplicationContext (),CrearUsuarioActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity (intent);
+                finish();
                  }
                 break;
         }

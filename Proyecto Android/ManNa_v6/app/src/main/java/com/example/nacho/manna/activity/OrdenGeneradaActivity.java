@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -14,7 +15,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,23 +24,22 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.nacho.manna.R;
 import com.example.nacho.manna.auxiliar.Utilidades;
 import com.example.nacho.manna.crud.CrudOrdenes;
-import com.example.nacho.manna.pojos.Usuario;
+import com.example.nacho.manna.crud.CrudUsuarios;
 import com.example.nacho.manna.pojos.OrdenDeTrabajo;
+import com.example.nacho.manna.pojos.Usuario;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
+
 
 public class OrdenGeneradaActivity extends AppCompatActivity {
 
@@ -71,7 +70,7 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
     String ubicacion;
     String descripcion;
     OrdenDeTrabajo ordenDeTrabajo;
-    Usuario datosEmpleado;
+    Usuario datosUsuario;
     Boolean OrdenConfirmada = false;
     Boolean generarPdf = false;
     String nombreApp;
@@ -98,7 +97,7 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
         //-----------------------------------------
         iniciarViews();
         introducirFechaId();
-        extraeDatosEmpleado();
+        extraeDatosUsuario();
         extraeDatosOrdenDeTrabajo();
         generarOrden();
         checkBoxMostrarPdf();
@@ -126,6 +125,8 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
         });
 
         //Botón imagen------------------------------------------------------------------------------
+
+
         imageViewFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,6 +201,7 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
     //----------------------------------------------------------------------------------------------
 
     private void checkBoxMostrarPdf() {
+        checkBoxMostrarPdf.setTextColor(getResources().getColor(R.color.colorAzul));
         checkBoxMostrarPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,7 +228,8 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
 
         if (!OrdenConfirmada) {
             ordenDeTrabajo.setEstado(getResources().getString(R.string.estado_pendiente));
-            ordenDeTrabajo.setCodigoEmpleado(datosEmpleado.getCodigo());
+            Usuario usuario = CrudUsuarios.buscar(getContentResolver(),codigoOperarioString);
+            ordenDeTrabajo.setIdEmpleado(usuario.getId());
 
             if (foto != null) {
                 ordenDeTrabajo.setImagen(foto);
@@ -246,7 +249,7 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
             //  Intent intent = new Intent(getApplicationContext(), MainActivityDrawer.class);
             //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-            startActivity(intent);
+           // startActivity(intent);
             finish();
         }
 
@@ -270,10 +273,10 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
         descripcion = ordenDeTrabajo.getDescripcion();
     }
 
-    private void extraeDatosEmpleado() {
-        datosEmpleado = intent.getParcelableExtra("datosEmplea");
-        nombreOperario = datosEmpleado.getNombre();
-        int codigoOperario = datosEmpleado.getCodigo();
+    private void extraeDatosUsuario() {
+        datosUsuario = intent.getParcelableExtra("datosEmplea");
+        nombreOperario = datosUsuario.getNombre();
+        int codigoOperario = datosUsuario.getCodigo();
         codigoOperarioString = Integer.toString(codigoOperario);
     }
 
@@ -326,7 +329,6 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
         String fecha = textViewFecha.getText().toString();
         String id = textViewCodigo.getText().toString();
         String nombre = textViewNombreEmpleado.getText().toString();
-        // String codigoEmpl = textViewCodigoEmpleado.getText().toString();
         String prioridad = textViewPrioridad.getText().toString();
         String estado = textViewEstado.getText().toString();
         String ubicacion = textViewUbicacion.getText().toString();
@@ -455,6 +457,9 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+    //subir foto--------
+
 
 }
 

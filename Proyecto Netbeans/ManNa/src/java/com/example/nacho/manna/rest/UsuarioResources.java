@@ -30,7 +30,7 @@ import javax.ws.rs.core.Response;
  * @author Nacho
  */
 @Path("usuario")
-public class UsuarioResource {
+public class UsuarioResources {
 
     @Context
     private UriInfo context;
@@ -38,7 +38,7 @@ public class UsuarioResource {
     /**
      * Creates a new instance of UauarioResource
      */
-    public UsuarioResource() {
+    public UsuarioResources() {
     }
 
     /**
@@ -47,6 +47,7 @@ public class UsuarioResource {
      *
      * @return an instance of java.lang.String
      */
+    
     @GET
     @Path("prueba")
     @Produces(MediaType.TEXT_PLAIN)

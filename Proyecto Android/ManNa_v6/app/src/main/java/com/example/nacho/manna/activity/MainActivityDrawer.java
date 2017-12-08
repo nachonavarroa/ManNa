@@ -2,30 +2,30 @@ package com.example.nacho.manna.activity;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nacho.manna.R;
 import com.example.nacho.manna.adapter.DrawerAdapter;
-import com.example.nacho.manna.crud.CrudUsuarios;
-import com.example.nacho.manna.pojos.Usuario;
 import com.example.nacho.manna.aplication.AppController;
+import com.example.nacho.manna.auxiliar.Utilidades;
 import com.example.nacho.manna.sync.Sincronizacion;
 
 
@@ -33,7 +33,7 @@ public class MainActivityDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private final int RETARDO_SALIDA = 2200; // 2.2segundos
-    private final int RETARDO_VER_DATOS = 700; // 2.2segundos
+    private final int RETARDO_VER_DATOS = 250; // 2.2segundos
     final int MY_PERMISSIONS_REQUEST = 1;
     boolean permisoAdministrador;
 
@@ -46,6 +46,7 @@ public class MainActivityDrawer extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         toolbar.setLogo(R.mipmap.ic_launcher);
+        permisoAdministrador= Utilidades.permisoAdministrador(this);
 
         //FloatingButton----------------------------------------------------------------------------
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_app_bar_drawe);
@@ -80,28 +81,36 @@ public class MainActivityDrawer extends AppCompatActivity
         nammeApp.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorBlanco));
         textViewUsuario.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorBlanco));
 
-        textViewUsuario.setText(getResources().getString(R.string.string_usuario)
-                .substring(2, 10) + " " + usuario());
-        textViewUsuario.setTextSize(18);
+        if (permisoAdministrador) {
+            textViewUsuario.setText("Administrador: " + nombreUsuario());
 
-        //---------------------------------------------------------------------------------
+            textViewUsuario.setTextColor(getResources().getColor(R.color.colorAzul));
+
+        } else {
+            textViewUsuario.setText(getResources().getString(R.string.string_usuario)
+                    .substring(2, 10) + " " + nombreUsuario());
+
+
+        }
+
+        //------------------------------------------------------------------------------------------
         final DrawerAdapter drawerAdapter = new DrawerAdapter(getSupportFragmentManager());
         final ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager_activity_drawer);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs_layout_app_bar_drawer);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorHeight(15);
-        if (permisoAdministrador()) {
-            int col = Color.parseColor("#FF0000");
-            tabLayout.setBackgroundColor(col);
-            tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorVerdeDark));
-        }
+        if (permisoAdministrador) {
 
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setSubtitle(Html.fromHtml("<font color='#0000ff'>Administrador</font>"));
+            tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorFondo));
+        }
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 viewPager.setAdapter(drawerAdapter);
-
             }
         }, RETARDO_VER_DATOS);
 
@@ -151,7 +160,7 @@ public class MainActivityDrawer extends AppCompatActivity
                 .setIcon(R.drawable.ic_help_outline_black_24dp)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
-        menu.add(Menu.NONE, R.integer.indice_icono_sincronizacion, Menu.NONE,R.string.string_sincronizacion)
+        menu.add(Menu.NONE, R.integer.indice_icono_sincronizacion, Menu.NONE, R.string.string_sincronizacion)
                 .setIcon(R.drawable.ic_actualizar)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
@@ -177,7 +186,7 @@ public class MainActivityDrawer extends AppCompatActivity
                 break;
 
             case R.integer.indice_icono_sincronizacion:
-                 Sincronizacion.forzarSincronizacion(getApplicationContext());
+                Sincronizacion.forzarSincronizacion(getApplicationContext());
 
                 break;
 
@@ -205,6 +214,7 @@ public class MainActivityDrawer extends AppCompatActivity
         if (id == R.id.nav_generar_orden) {
 
             Intent intent = new Intent(getApplicationContext(), CrearOrdenActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
 
         } else if (id == R.id.nav_ver_ordenes) {
@@ -228,7 +238,7 @@ public class MainActivityDrawer extends AppCompatActivity
 
         } else if (id == R.id.nav_generar_empleado) {
 
-            if (permisoAdministrador()) {
+            if (permisoAdministrador) {
                 Toast.makeText(getApplicationContext(),
                         getResources().getString(R.string.string_ir_generar_usuario),
                         Toast.LENGTH_SHORT).show();
@@ -244,28 +254,9 @@ public class MainActivityDrawer extends AppCompatActivity
         return true;
     }
 
-    private boolean permisoAdministrador() {
-        permisoAdministrador = false;
-        AppController empleado = (AppController) getApplication();
-        Usuario empleadoAdmin = CrudUsuarios.login(getContentResolver(),
-                String.valueOf(empleado.getCodigo()), empleado.getNombre());
-        String admin = empleadoAdmin.getAdmin();
-        if (admin.equals(getResources().getString(R.string.string_si))) {
-            permisoAdministrador = true;
 
-
-        } else {
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_permiso_admin),
-                    Toast.LENGTH_SHORT).show();
-            permisoAdministrador = false;
-
-        }
-        return permisoAdministrador;
-    }
-
-    public String usuario() {
-        AppController de = (AppController) getApplication();
-        String usuario = de.getNombre();
-        return usuario;
+    public String nombreUsuario() {
+               String nombreUsuario = AppController.getInstance().getNombre();
+        return nombreUsuario;
     }
 }

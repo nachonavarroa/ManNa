@@ -8,7 +8,7 @@ import com.example.nacho.manna.auxiliar.Constantes;
 
 public class OrdenDeTrabajo implements Parcelable {
     private long id;
-    private int codigoEmpleado;
+    private int idEmpleado;
     private String fecha;
     private String prioridad;
     private String sintoma;
@@ -18,11 +18,11 @@ public class OrdenDeTrabajo implements Parcelable {
     private Bitmap imagen;
 
 
-    public OrdenDeTrabajo(long id, int codigoEmpleado, String fecha,
+    public OrdenDeTrabajo(long id, int idEmpleado, String fecha,
                           String prioridad, String sintoma, String ubicacion,
                           String descripcion, String estado) {
         this.id = id;
-        this.codigoEmpleado = codigoEmpleado;
+        this.idEmpleado = idEmpleado;
         this.fecha = fecha;
         this.prioridad = prioridad;
         this.sintoma = sintoma;
@@ -33,7 +33,7 @@ public class OrdenDeTrabajo implements Parcelable {
 
     public OrdenDeTrabajo() {
         this.id = Constantes.SIN_VALOR_INT;
-        this.codigoEmpleado = Constantes.SIN_VALOR_INT;
+        this.idEmpleado = Constantes.SIN_VALOR_INT;
         this.fecha = Constantes.SIN_VALOR_STRING;
         this.prioridad =  Constantes.SIN_VALOR_STRING;
         this.sintoma =  Constantes.SIN_VALOR_STRING;
@@ -47,7 +47,7 @@ public class OrdenDeTrabajo implements Parcelable {
 
     protected OrdenDeTrabajo(Parcel in) {
         id = in.readLong();
-        codigoEmpleado = in.readInt();
+        idEmpleado = in.readInt();
         fecha = in.readString();
         prioridad = in.readString();
         sintoma = in.readString();
@@ -85,12 +85,12 @@ public class OrdenDeTrabajo implements Parcelable {
         this.estado = estado;
     }
 
-    public int getCodigoEmpleado() {
-        return codigoEmpleado;
+    public int getIdEmpleado() {
+        return idEmpleado;
     }
 
-    public void setCodigoEmpleado(int codigoEmpleado) {
-        this.codigoEmpleado = codigoEmpleado;
+    public void setIdEmpleado(int idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     public long getId() {
@@ -149,7 +149,7 @@ public class OrdenDeTrabajo implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
-        dest.writeInt(codigoEmpleado);
+        dest.writeInt(idEmpleado);
         dest.writeString(fecha);
         dest.writeString(prioridad);
         dest.writeString(sintoma);

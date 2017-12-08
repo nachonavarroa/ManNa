@@ -26,8 +26,8 @@ public class CrudOrdenes {
 
         Uri uri = Contrato.Orden.CONTENT_URI;
         ContentValues values = new ContentValues();
-        values.put(Contrato.Orden._ID,orden.getId());
-        values.put(Contrato.Orden.CODIGO_EMPLEADO, orden.getCodigoEmpleado());
+        values.put(Contrato.Orden._ID, orden.getId());
+        values.put(Contrato.Orden.ID_EMPLEADO, orden.getIdEmpleado());
         values.put(Contrato.Orden.FECHA, orden.getFecha());
         values.put(Contrato.Orden.PRIORIDAD, orden.getPrioridad());
         values.put(Contrato.Orden.SINTOMA, orden.getSintoma());
@@ -36,33 +36,34 @@ public class CrudOrdenes {
         values.put(Contrato.Orden.ESTADO, orden.getEstado());
 
         Uri uriResult = resolvedor.insert(uri, values);
-       // String ordenId = uriResult.getLastPathSegment();
+        // String ordenId = uriResult.getLastPathSegment();
 
-         String ordenId = String.valueOf(orden.getId());
-        Log.i("Nachito","ordenId :"+ordenId);
+        String ordenId = String.valueOf(orden.getId());
+        Log.i("Nachito", "ordenId :" + ordenId);
         if (orden.getImagen() != null) {
             try {
 
                 Utilidades.storeImage(orden.getImagen(), context, "img_" + ordenId + ".jpg");
+                Log.i("Nachito", "****--**ordenId :" + ordenId);
 
             } catch (IOException e) {
                 Toast.makeText(context, "No se puede guardar imagen", Toast.LENGTH_SHORT).show();
             }
         }
-     return uriResult;
+        return uriResult;
     }
 
     static public void insertOrdenConBitacora(ContentResolver resolvedor
             , OrdenDeTrabajo orden, Context contexto) {
 
-        Uri uri = insert(resolvedor, orden,contexto);
+        Uri uri = insert(resolvedor, orden, contexto);
 
         BitacoraOrden bitacora = new BitacoraOrden();
         bitacora.setID_Orden(orden.getId());
         bitacora.setOperacion(Constantes.OPERACION_INSERTAR);
 
-        CrudBitacoraOrden.insert(resolvedor,bitacora);
-      //  Log.i("Nachito","Uri :"+uri);
+        CrudBitacoraOrden.insert(resolvedor, bitacora);
+        //  Log.i("Nachito","Uri :"+uri);
 
         Sincronizacion.forzarSincronizacion(contexto);
 
@@ -93,13 +94,13 @@ public class CrudOrdenes {
         bitacora.setID_Orden(ordenId);
         bitacora.setOperacion(Constantes.OPERACION_BORRAR);
 
-        CrudBitacoraOrden.insert(resolvedor,bitacora);
+        CrudBitacoraOrden.insert(resolvedor, bitacora);
 
         Sincronizacion.forzarSincronizacion(contexto);
     }
 
 
-    static public void update(ContentResolver resolver, OrdenDeTrabajo orden,Context context) {
+    static public void update(ContentResolver resolver, OrdenDeTrabajo orden, Context context) {
 
         Uri uri = Uri.parse(Contrato.Orden.CONTENT_URI + "/" + orden.getId());
 
@@ -114,9 +115,9 @@ public class CrudOrdenes {
 
         resolver.update(uri, values, null, null);
 
-        if(orden.getImagen()!=null){
+        if (orden.getImagen() != null) {
             try {
-                Utilidades.storeImage(orden.getImagen(),context,"img_"+orden.getId()+".jpg");
+                Utilidades.storeImage(orden.getImagen(), context, "img_" + orden.getId() + ".jpg");
             } catch (IOException e) {
                 Toast.makeText(context, "No se puede guardar imagen", Toast.LENGTH_SHORT).show();
             }
@@ -127,13 +128,13 @@ public class CrudOrdenes {
 
     static public void updateOrdenConBitacora(ContentResolver resolvedor,
                                               OrdenDeTrabajo orden, Context contexto) {
-        update( resolvedor, orden, contexto);
+        update(resolvedor, orden, contexto);
 
         BitacoraOrden bitacora = new BitacoraOrden();
         bitacora.setID_Orden(orden.getId());
         bitacora.setOperacion(Constantes.OPERACION_MODIFICAR);
 
-        CrudBitacoraOrden.insert(resolvedor,bitacora);
+        CrudBitacoraOrden.insert(resolvedor, bitacora);
         Sincronizacion.forzarSincronizacion(contexto);
     }
 
@@ -144,7 +145,7 @@ public class CrudOrdenes {
 
         String[] projection = {
                 Contrato.Orden._ID,
-                Contrato.Orden.CODIGO_EMPLEADO,
+                Contrato.Orden.ID_EMPLEADO,
                 Contrato.Orden.FECHA,
                 Contrato.Orden.PRIORIDAD,
                 Contrato.Orden.SINTOMA,
@@ -160,7 +161,7 @@ public class CrudOrdenes {
             OrdenDeTrabajo orden = new OrdenDeTrabajo();
 
             orden.setId(ordenId);
-            orden.setCodigoEmpleado(cursor.getInt(cursor.getColumnIndex(Contrato.Orden.CODIGO_EMPLEADO)));
+            orden.setIdEmpleado(cursor.getInt(cursor.getColumnIndex(Contrato.Orden.ID_EMPLEADO)));
             orden.setFecha(cursor.getString(cursor.getColumnIndex(Contrato.Orden.FECHA)));
             orden.setPrioridad(cursor.getString(cursor.getColumnIndex(Contrato.Orden.PRIORIDAD)));
             orden.setSintoma(cursor.getString(cursor.getColumnIndex(Contrato.Orden.SINTOMA)));
@@ -174,13 +175,13 @@ public class CrudOrdenes {
         return null;
     }
 
-    static public ArrayList<OrdenDeTrabajo> readAll(ContentResolver resolver)  throws Exception{
+    static public ArrayList<OrdenDeTrabajo> readAll(ContentResolver resolver) throws Exception {
         Uri uri = Contrato.Orden.CONTENT_URI;
 
 
         String[] projection = {
                 Contrato.Orden._ID,
-                Contrato.Orden.CODIGO_EMPLEADO,
+                Contrato.Orden.ID_EMPLEADO,
                 Contrato.Orden.FECHA,
                 Contrato.Orden.PRIORIDAD,
                 Contrato.Orden.SINTOMA,
@@ -194,11 +195,11 @@ public class CrudOrdenes {
 
         ArrayList<OrdenDeTrabajo> registros = new ArrayList<>();
 
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             OrdenDeTrabajo orden = new OrdenDeTrabajo();
 
             orden.setId(cursor.getLong(cursor.getColumnIndex(Contrato.Orden._ID)));
-            orden.setCodigoEmpleado(cursor.getInt(cursor.getColumnIndex(Contrato.Orden.CODIGO_EMPLEADO)));
+            orden.setIdEmpleado(cursor.getInt(cursor.getColumnIndex(Contrato.Orden.ID_EMPLEADO)));
             orden.setFecha(cursor.getString(cursor.getColumnIndex(Contrato.Orden.FECHA)));
             orden.setPrioridad(cursor.getString(cursor.getColumnIndex(Contrato.Orden.PRIORIDAD)));
             orden.setSintoma(cursor.getString(cursor.getColumnIndex(Contrato.Orden.SINTOMA)));
@@ -208,16 +209,13 @@ public class CrudOrdenes {
             registros.add(orden);
 
         }
-        for(int i = 0; i<registros.size();i++){
-      //  Log.i("sincronizacion","CrudOrden_readAll Id: "+ String.valueOf(registros.get(i).getId()));
-      //  Log.i("sincronizacion","CrudOrden_readAll Codigo emple: "+String.valueOf(registros.get(i).getCodigoEmpleado()));
+        for (int i = 0; i < registros.size(); i++) {
+            //  Log.i("sincronizacion","CrudOrden_readAll Id: "+ String.valueOf(registros.get(i).getId()));
+            //  Log.i("sincronizacion","CrudOrden_readAll Codigo emple: "+String.valueOf(registros.get(i).getIdEmpleado()));
         }
         return registros;
 
     }
-
-
-
 
 
 }

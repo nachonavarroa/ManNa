@@ -20,7 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE "
                 + Contrato.Orden.NOMBRE_TABLA
                 + "(_id LONG PRIMARY KEY ON CONFLICT ROLLBACK, "
-                + Contrato.Orden.CODIGO_EMPLEADO + " INTEGER ,"
+                + Contrato.Orden.ID_EMPLEADO + " INTEGER ,"
                 + Contrato.Orden.FECHA + " TEXT ,"
                 + Contrato.Orden.PRIORIDAD + " TEXT , "
                 + Contrato.Orden.SINTOMA + " TEXT , "

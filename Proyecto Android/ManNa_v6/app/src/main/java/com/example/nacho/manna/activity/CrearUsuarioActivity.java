@@ -108,7 +108,10 @@ public class CrearUsuarioActivity extends AppCompatActivity
                 CrudUsuarios.insertUsuarioConBitacora(getContentResolver(), empleado,contexto);
                 Intent intent = new Intent(contexto, VerUsuariosActivity.class);
                 intent.putExtra("datosDeEmpleado", datosEmpleado);
+
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
+
                 finish();
             }
         }

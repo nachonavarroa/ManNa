@@ -4,6 +4,7 @@ package com.example.nacho.manna.sync;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.nacho.manna.auxiliar.Constantes;
 import com.example.nacho.manna.crud.CrudBitacoraOrden;
@@ -56,31 +57,36 @@ public class Sincronizacion {
 
         enviarActualizacionesAlServidor();
         recibirActualizacionesDelServidor();
+        //filtro
         try {
-            Thread.sleep(Constantes.RETARDO );
+            Thread.sleep(800);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         return true;
-        }
+    }
 
-    public static void forzarSincronizacion(Context contexto){
+    public static void forzarSincronizacion(Context contexto) {
         Sincronizacion sync = new Sincronizacion(contexto);
         sync.sincronizar();
-        recibirActualizacionesDelServidor();
-
     }
 
     public static void enviarActualizacionesAlServidor() {
         enviarActualizacionesOrdenAlServidor();
         enviarActualizacionesUsuarioAlServidor();
-
     }
 
     public static void recibirActualizacionesDelServidor() {
         recibirActualizacionesOrdenDelServidor();
         recibirActualizacionesUsuarioDelServidor();
+
+
+    }
+
+    public static void enviarActualizacionesImagenAlServidor() {
+
+
     }
 
     public static void enviarActualizacionesUsuarioAlServidor() {
@@ -122,6 +128,7 @@ public class Sincronizacion {
                     try {
                         orden = CrudOrdenes.readRecord(resolvedor, bitacora.getID_Orden());
                         OrdenVolley.addOrden(orden, true, bitacora.getID());
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -149,18 +156,21 @@ public class Sincronizacion {
         ArrayList<BitacoraOrden> bitacora;
         bitacora = CrudBitacoraOrden.readAll(resolvedor);
         // Log.i("nachito", "size bitacora" + String.valueOf(bitacora.size()));
-        OrdenVolley.getAllOrden();
+        if (bitacora.size() == 0)
+            OrdenVolley.getAllOrden();
     }
 
     public static void recibirActualizacionesUsuarioDelServidor() {
         ArrayList<BitacoraUsuario> bitacora;
         bitacora = CrudBitacoraUsuario.readAll(resolvedor);
         // Log.i("nachito", "size bitacora" + String.valueOf(bitacora.size()));
-        UsuarioVolley.getAllUsuario();
+        if (bitacora.size() == 0)
+            UsuarioVolley.getAllUsuario();
     }
 
     public static void actulizaTablaOrdenSqliteConRespuestaServidor(JSONArray jsonArray) {
         //  Log.i("sincronizacion", "recibirActualizacionesOrdenDelServidor");
+
 
         try {
             ArrayList<Long> identificadoresDeRegistrosViejos = new ArrayList<>();
@@ -183,7 +193,7 @@ public class Sincronizacion {
 
                 registrosNuevos.add(new OrdenDeTrabajo(
                         objJson.getLong("id"),
-                        objJson.getInt("codigoEmpleado"),
+                        objJson.getInt("idEmpleado"),
                         objJson.getString("fecha"),
                         objJson.getString("prioridad"),
                         objJson.getString("sintoma"),
@@ -229,6 +239,7 @@ public class Sincronizacion {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // actulizaTablaOrdenSqliteConRespuestaServidor(jsonArray);
     }
 
     public static void actulizaTablaUsuarioSqliteConRespuestaServidor(JSONArray jsonArray) {

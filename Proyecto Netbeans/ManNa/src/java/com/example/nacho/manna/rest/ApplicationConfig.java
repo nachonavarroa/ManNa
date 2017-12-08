@@ -7,6 +7,7 @@ package com.example.nacho.manna.rest;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
 /**
  * REST Web Service
@@ -21,12 +22,14 @@ public class ApplicationConfig extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources = new java.util.HashSet<>();
         addRestResourceClasses(resources);
+        resources.add(MultiPartFeature.class);
         return resources;
     }
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(com.example.nacho.manna.rest.ImagenesResources.class);
         resources.add(com.example.nacho.manna.rest.OrdenResources.class);
-        resources.add(com.example.nacho.manna.rest.UsuarioResource.class);
+        resources.add(com.example.nacho.manna.rest.UsuarioResources.class);
     }
     
 }

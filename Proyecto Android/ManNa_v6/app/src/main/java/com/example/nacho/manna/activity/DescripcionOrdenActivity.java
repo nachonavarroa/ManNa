@@ -49,7 +49,7 @@ public class DescripcionOrdenActivity extends AppCompatActivity
 
         contexto = this;
         Intent intent = this.getIntent();
-        datosEmpleados = intent.getParcelableExtra("datosEmpleado");
+        datosEmpleados = intent.getParcelableExtra("datosUsuario");
         ordenDeTrabajo = intent.getParcelableExtra("ordenDeTrabajo");
 
         iciciarTextAndButton();

@@ -42,7 +42,6 @@
     <string name="sintoma_rotura_ruido">"Rotura, Ruido</string>
 
 
-
     <!--Autor -->
     <string name="copy">© 2017 Nacho Navarro Arranz</string>
     <string name="nombre_autor">Nacho Navarro Arranz</string>
@@ -176,6 +175,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_edit">EditActivity</string>
     <string name="title_activity_ver_estado_ordenes">VerEstadoOrdenesActivity</string>
+    <string name="title_activity_ver_imagen">VerImagen</string>
 
 
 </resources>

@@ -1,29 +1,40 @@
 package com.example.nacho.manna.volley;
 
 
-import com.example.nacho.manna.aplication.AppController;
-import com.example.nacho.manna.auxiliar.Constantes;
-import com.example.nacho.manna.crud.CrudBitacoraOrden;
-import com.example.nacho.manna.pojos.OrdenDeTrabajo;
-import com.example.nacho.manna.sync.Sincronizacion;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.nacho.manna.aplication.AppController;
+import com.example.nacho.manna.auxiliar.Constantes;
+import com.example.nacho.manna.auxiliar.Utilidades;
+import com.example.nacho.manna.crud.CrudBitacoraOrden;
+import com.example.nacho.manna.pojos.OrdenDeTrabajo;
+import com.example.nacho.manna.sync.Sincronizacion;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class OrdenVolley {
 
     final static String ruta = Constantes.RUTA_SERVIDOR + "/orden";
 
+
+
+
+
     public static void getAllOrden() {
         String tag_json_obj = "getAllOrden";
         String url = ruta;
+
 
         AppController.getInstance().getSincronizacion().setEsperandoRespuestaDeServidor(true);
 
@@ -31,6 +42,7 @@ public class OrdenVolley {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+
                         Sincronizacion.actulizaTablaOrdenSqliteConRespuestaServidor(response);
                         AppController.getInstance().getSincronizacion().setEsperandoRespuestaDeServidor(false);
                     }
@@ -47,15 +59,16 @@ public class OrdenVolley {
         AppController.getInstance().addToRequestQueue(getRequest, tag_json_obj);
     }
 
-    public static void addOrden(OrdenDeTrabajo orden, final boolean conBitacora,
+    public static void addOrden(final OrdenDeTrabajo orden, final boolean conBitacora,
                                 final int idBitacora) {
         String tag_json_obj = "addOrden";
         String url = ruta;
 
+
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("id", orden.getId());
-            jsonObject.put("codigoEmpleado", orden.getCodigoEmpleado());
+            jsonObject.put("idEmpleado", orden.getIdEmpleado());
             jsonObject.put("fecha", orden.getFecha());
             jsonObject.put("prioridad", orden.getPrioridad());
             jsonObject.put("sintoma", orden.getSintoma());
@@ -70,6 +83,7 @@ public class OrdenVolley {
 
         AppController.getInstance().getSincronizacion().setEsperandoRespuestaDeServidor(true);
 
+
         JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -80,6 +94,7 @@ public class OrdenVolley {
                         AppController.getInstance().getSincronizacion().setEsperandoRespuestaDeServidor(false);
                     }
                 },
+
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -89,8 +104,41 @@ public class OrdenVolley {
                 }
         );
 
+        //---------
+        final String urlPostImg = Constantes.RUTA_SERVIDOR + "/imagenes/subir/";
+        final String fieldName = "fichero";
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlPostImg,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }
+        )
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> map = new HashMap<>();
+                map.put(fieldName, Utilidades.bitmapToString(orden.getImagen()));
+
+                return super.getParams();
+            }
+        };
+
+
+        //---------
+
         AppController.getInstance().addToRequestQueue(postRequest, tag_json_obj);
     }
+
 
     public static void updateOrden(OrdenDeTrabajo orden, final boolean conBitacora,
                                    final int idBitacora) {
@@ -100,7 +148,7 @@ public class OrdenVolley {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("id", orden.getId());
-            jsonObject.put("codigoEmpleado", orden.getCodigoEmpleado());
+            jsonObject.put("idEmpleado", orden.getIdEmpleado());
             jsonObject.put("fecha", orden.getFecha());
             jsonObject.put("prioridad", orden.getPrioridad());
             jsonObject.put("sintoma", orden.getSintoma());

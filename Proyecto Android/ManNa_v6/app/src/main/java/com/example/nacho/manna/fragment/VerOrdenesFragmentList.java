@@ -27,7 +27,6 @@ import com.example.nacho.manna.R;
 import com.example.nacho.manna.crud.CrudOrdenes;
 import com.example.nacho.manna.adapter.VerOrdenesAdapter;
 import com.example.nacho.manna.aplication.AppController;
-import com.example.nacho.manna.sync.Sincronizacion;
 
 public class VerOrdenesFragmentList extends ListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -193,7 +192,7 @@ public class VerOrdenesFragmentList extends ListFragment
 
         String[] campos = {
                 Contrato.Orden._ID,
-                Contrato.Orden.CODIGO_EMPLEADO,
+                Contrato.Orden.ID_EMPLEADO,
                 Contrato.Orden.FECHA,
                 Contrato.Orden.PRIORIDAD,
                 Contrato.Orden.SINTOMA,

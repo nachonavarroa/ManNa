@@ -3,6 +3,7 @@ package com.example.nacho.manna.fragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,12 +52,17 @@ public class AyudaFragment extends Fragment {
         TextView textViewfragmentoContenido =
                 view.findViewById(R.id.textView_fragmen_ayuda_contenido);
 
+
         switch (mPosition){
             case 0:
-                textViewfragmentoTitulo.setText(getResources().getString(R.string
-                        .subtititulo_menu));
-                textViewfragmentoContenido.setText(getResources()
-                        .getString(R.string.contenido_ayuda_menu));
+                //textViewfragmentoTitulo.setText(getResources().getString(R.string
+                //       .subtititulo_menu));
+                //  textViewfragmentoContenido.setText(getResources()
+                //          .getString(R.string.contenido_ayuda_menu));
+
+                view = inflater.inflate(R.layout.fragment_ayuda_uno, container, false);
+                FragmentTransaction transactionAyuda = getFragmentManager().beginTransaction();
+                transactionAyuda.commit();
                 break;
             case 1:
                 textViewfragmentoTitulo.setText(getResources().getString(R.string

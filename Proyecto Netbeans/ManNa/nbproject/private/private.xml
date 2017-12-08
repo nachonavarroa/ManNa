@@ -5,12 +5,10 @@
         <group>
             <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/conexion/OrdenBD.java</file>
             <file>file:/C:/xampp/htdocs/ManNa/ManNa/web/index.jsp</file>
-            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/rest/ApplicationConfig.java</file>
-            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/rest/UsuarioResource.java</file>
-            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/conexion/UsuarioBD.java</file>
             <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/pojos/OrdenDeTrabajo.java</file>
-            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/pojos/Usuario.java</file>
             <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/rest/OrdenResources.java</file>
+            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/pojos/Usuario.java</file>
+            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/rest/ImagenesResources.java</file>
             <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/conexion/ConexionBD.java</file>
         </group>
     </open-files>

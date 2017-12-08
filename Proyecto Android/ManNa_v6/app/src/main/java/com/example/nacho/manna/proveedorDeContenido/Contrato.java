@@ -18,7 +18,7 @@ public class Contrato {
                 Uri.parse("content://" + AUTHORITY + "/" + NOMBRE_TABLA);
         // Table column
 
-        public final static String CODIGO_EMPLEADO = "Codigo_empleado";
+        public final static String ID_EMPLEADO = "id_empleado";
         public final static String FECHA = "Fecha";
         public final static String PRIORIDAD = "Prioridad";
         public final static String SINTOMA = "Sintoma";
