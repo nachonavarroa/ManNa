@@ -89,6 +89,7 @@ public class Sincronizacion {
 
     }
 
+
     public static void enviarActualizacionesUsuarioAlServidor() {
         ArrayList<BitacoraUsuario> registrosBitacora = CrudBitacoraUsuario.readAll(resolvedor);
         for (BitacoraUsuario bitacora : registrosBitacora) {
@@ -158,7 +159,9 @@ public class Sincronizacion {
         // Log.i("nachito", "size bitacora" + String.valueOf(bitacora.size()));
         if (bitacora.size() == 0)
             OrdenVolley.getAllOrden();
+
     }
+
 
     public static void recibirActualizacionesUsuarioDelServidor() {
         ArrayList<BitacoraUsuario> bitacora;

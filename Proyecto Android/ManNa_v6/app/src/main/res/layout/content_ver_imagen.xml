@@ -4,15 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorFondo"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.nacho.manna.activity.VerImagen"
+    tools:context="com.example.nacho.manna.activity.VerImagenActivity"
     tools:showIn="@layout/activity_ver_imagen">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="2dp">
 
     <ImageView
         android:id="@+id/imageViewOrden"
-        app:srcCompat="@drawable/mantenimiento"
+        app:srcCompat="@drawable/mantenimiento3"
         android:layout_height="match_parent"
         android:layout_width="match_parent" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

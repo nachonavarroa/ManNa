@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE"/>
 
     <application
         android:name=".aplication.AppController"
@@ -139,10 +140,9 @@
             android:configChanges="screenSize|orientation" />
 
         <activity
-            android:name=".activity.VerImagen"
+            android:name=".activity.VerImagenActivity"
             android:label="@string/title_activity_ver_imagen"
-            android:parentActivityName=".activity.MainActivityDrawer"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".activity.MainActivityDrawer">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data

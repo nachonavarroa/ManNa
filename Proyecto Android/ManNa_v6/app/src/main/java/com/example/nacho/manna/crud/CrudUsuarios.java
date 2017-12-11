@@ -1,15 +1,19 @@
 package com.example.nacho.manna.crud;
 
+
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import com.example.nacho.manna.auxiliar.Constantes;
 import com.example.nacho.manna.pojos.BitacoraUsuario;
 import com.example.nacho.manna.pojos.Usuario;
 import com.example.nacho.manna.proveedorDeContenido.Contrato;
+import com.example.nacho.manna.proveedorDeContenido.DBHelper;
+import com.example.nacho.manna.proveedorDeContenido.ProveedorContenido;
 import com.example.nacho.manna.sync.Sincronizacion;
 
 import java.util.ArrayList;
@@ -30,13 +34,12 @@ public class CrudUsuarios {
         Uri uriResult = resolvedor.insert(uri, values);
 
 
-
         return uriResult;
     }
 
 
     static public void insertUsuarioConBitacora(ContentResolver resolvedor,
-                                                Usuario usuario,Context contexto) {
+                                                Usuario usuario, Context contexto) {
 
         Uri uri = insert(resolvedor, usuario);
 
@@ -65,7 +68,7 @@ public class CrudUsuarios {
     }
 
     static public void deleteUsuarioConBitacora(ContentResolver resolvedor, int usuarioId
-            ,Context contexto) {
+            , Context contexto) {
 
         delete(resolvedor, usuarioId);
         BitacoraUsuario bitacora = new BitacoraUsuario();
@@ -73,7 +76,7 @@ public class CrudUsuarios {
         bitacora.setID_usuario(usuarioId);
         bitacora.setOperacion(Constantes.OPERACION_BORRAR);
 
-        CrudBitacoraUsuario.insert(resolvedor,bitacora);
+        CrudBitacoraUsuario.insert(resolvedor, bitacora);
         Sincronizacion.forzarSincronizacion(contexto);
     }
 
@@ -103,30 +106,31 @@ public class CrudUsuarios {
         resolver.update(uri, values, null, null);
 
     }
-    static public void updateUsuarioConBitacora(ContentResolver resolvedor,Usuario usuario,
+
+    static public void updateUsuarioConBitacora(ContentResolver resolvedor, Usuario usuario,
                                                 Context contexto) {
 
-        update( resolvedor,usuario);
+        update(resolvedor, usuario);
 
         BitacoraUsuario bitacora = new BitacoraUsuario();
         bitacora.setID_usuario(usuario.getId());
         bitacora.setOperacion(Constantes.OPERACION_MODIFICAR);
 
-        CrudBitacoraUsuario.insert(resolvedor,bitacora);
+        CrudBitacoraUsuario.insert(resolvedor, bitacora);
 
         Sincronizacion.forzarSincronizacion(contexto);
     }
 
-    static public void updateUsuarioSincodigoConBitacora(ContentResolver resolvedor,Usuario usuario,
+    static public void updateUsuarioSincodigoConBitacora(ContentResolver resolvedor, Usuario usuario,
                                                          Context contexto) {
 
-        updateSinCodigo( resolvedor,usuario);
+        updateSinCodigo(resolvedor, usuario);
 
         BitacoraUsuario bitacora = new BitacoraUsuario();
         bitacora.setID_usuario(usuario.getId());
         bitacora.setOperacion(Constantes.OPERACION_MODIFICAR);
 
-        CrudBitacoraUsuario.insert(resolvedor,bitacora);
+        CrudBitacoraUsuario.insert(resolvedor, bitacora);
 
         Sincronizacion.forzarSincronizacion(contexto);
     }
@@ -155,6 +159,7 @@ public class CrudUsuarios {
 
             return empleado;
         }
+        cursor.close();
         return null;
     }
 
@@ -184,6 +189,7 @@ public class CrudUsuarios {
             empleado.setAdmin(cursor.getString(cursor.getColumnIndex(Contrato.Usuario.ADMIN_USUARIO)));
             return empleado;
         }
+        cursor.close();
         return null;
     }
 
@@ -205,15 +211,40 @@ public class CrudUsuarios {
 
             Usuario empleado = new Usuario();
             empleado.setId(cursor.getInt(cursor.getColumnIndex(Contrato.Usuario._ID)));
-            empleado.setCodigo(cursor.getInt(cursor.getColumnIndex(Contrato.Usuario.CODIGO_USUARIO )));
-            empleado.setNombre(cursor.getString(cursor.getColumnIndex(Contrato.Usuario.NOMBRE_USUARIO )));
-            empleado.setAdmin(cursor.getString(cursor.getColumnIndex(Contrato.Usuario.ADMIN_USUARIO )));
+            empleado.setCodigo(cursor.getInt(cursor.getColumnIndex(Contrato.Usuario.CODIGO_USUARIO)));
+            empleado.setNombre(cursor.getString(cursor.getColumnIndex(Contrato.Usuario.NOMBRE_USUARIO)));
+            empleado.setAdmin(cursor.getString(cursor.getColumnIndex(Contrato.Usuario.ADMIN_USUARIO)));
             return empleado;
+
         }
+        cursor.close();
         return null;
     }
 
-    static public ArrayList<Usuario> readAll(ContentResolver resolver)  throws Exception{
+
+    static public String buscarUsuarioEnOrden(Context context, ContentResolver resolver, long idOrden) {
+
+        DBHelper dbHelper = new DBHelper(context, ProveedorContenido.DATABASE_NAME,
+                null, ProveedorContenido.DATABASE_VERSION);
+
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+
+        final String query = "select U.Nombre_usuario from Orden O,Usuario U "
+                + "where O.id_empleado = U._id and O._id =" + idOrden;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            String nombreColumna = Contrato.Usuario.NOMBRE_USUARIO;
+            int columna = cursor.getColumnIndex(nombreColumna);
+            String nombre = cursor.getString(columna);
+            return nombre;
+        }
+        cursor.close();
+        return null;
+    }
+
+    static public ArrayList<Usuario> readAll(ContentResolver resolver) throws Exception {
         Uri uri = Contrato.Usuario.CONTENT_URI;
 
         String[] projection = {
@@ -227,7 +258,7 @@ public class CrudUsuarios {
 
         ArrayList<Usuario> registros = new ArrayList<>();
 
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             Usuario usuario = new Usuario();
 
             usuario.setId(cursor.getInt(cursor.getColumnIndex(Contrato.Usuario._ID)));
@@ -237,7 +268,7 @@ public class CrudUsuarios {
 
             registros.add(usuario);
         }
-
+        cursor.close();
         return registros;
 
     }

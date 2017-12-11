@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
@@ -19,10 +20,7 @@ import com.example.nacho.manna.volley.Utils.LruBitmapCache;
 
 public class AppController extends Application {
 
-    public static String nombre;
-    public static int codigo;
-    public static int loginOk;
-    public static String admin;
+
     //-------------------------------------
 
     public static final String TAG = AppController.class.getSimpleName();
@@ -141,6 +139,12 @@ public class AppController extends Application {
         this.sincronizacion = sincronizacion;
     }
 
+
+    public static String nombre;
+    public static int codigo;
+    public static int loginOk;
+    public static String admin;
+
     public String getNombre() {
         return nombre;
     }
@@ -172,4 +176,5 @@ public class AppController extends Application {
     public void setAdmin(String admin) {
         this.admin = admin;
     }
+
 }

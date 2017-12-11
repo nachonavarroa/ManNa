@@ -1,47 +1,36 @@
 package com.example.nacho.manna.adapter;
 
-import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Matrix;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
-import com.example.nacho.manna.activity.CrearUsuarioActivity;
-import com.example.nacho.manna.activity.EditOrdenActivity;
-import com.example.nacho.manna.activity.EditUsuarioActivity;
-import com.example.nacho.manna.activity.VerImagen;
-import com.example.nacho.manna.auxiliar.Constantes;
-import com.example.nacho.manna.auxiliar.Utilidades;
-import com.example.nacho.manna.crud.CrudBitacoraOrden;
-import com.example.nacho.manna.crud.CrudOrdenes;
-import com.example.nacho.manna.pojos.OrdenDeTrabajo;
-import com.example.nacho.manna.proveedorDeContenido.Contrato;
 import com.example.nacho.manna.R;
+import com.example.nacho.manna.activity.EditOrdenActivity;
+import com.example.nacho.manna.activity.VerImagenActivity;
+import com.example.nacho.manna.auxiliar.Utilidades;
+import com.example.nacho.manna.crud.CrudUsuarios;
+import com.example.nacho.manna.proveedorDeContenido.Contrato;
 import com.example.nacho.manna.sync.Sincronizacion;
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 
 public class VerOrdenesAdapter extends CursorAdapter {
     int color;
-    PhotoViewAttacher mAttacher;
+    ProgressBar progressBar;
+    ImageView imageViewFoto;
 
     public VerOrdenesAdapter(Context context) {
         super(context, null, false);
@@ -57,6 +46,7 @@ public class VerOrdenesAdapter extends CursorAdapter {
         return v;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
 
     public void bindView(View view, final Context context, Cursor cursor) {
@@ -68,7 +58,8 @@ public class VerOrdenesAdapter extends CursorAdapter {
         String ubicacion = cursor.getString(cursor.getColumnIndex(Contrato.Orden.UBICACION));
         String descripcion = cursor.getString(cursor.getColumnIndex(Contrato.Orden.DESCRIPCION));
         String estado = cursor.getString(cursor.getColumnIndex(Contrato.Orden.ESTADO));
-        String referencia =String.valueOf ((int) (Id % 9999));
+        String referencia =  Utilidades.referencia(Id);
+        String nombre = CrudUsuarios.buscarUsuarioEnOrden(context,context.getContentResolver(),Id);
 
 
         TextView textViewRef = (TextView) view.findViewById(R.id.textView_item_orden_referencia);
@@ -76,6 +67,9 @@ public class VerOrdenesAdapter extends CursorAdapter {
 
         TextView textViewFecha = (TextView) view.findViewById(R.id.textView_item_orden_fecha);
         textViewFecha.setText(Contrato.Orden._fecha + ": " + fecha);
+
+        TextView textViewNombre = (TextView)  view.findViewById(R.id.textView_item_orden_nombreEmpleado);
+        textViewNombre.setText("Creado por: "+nombre);
 
         TextView textViewCodigo = (TextView) view.findViewById(R.id.textView_item_orden_codigo);
         textViewCodigo.setText(Contrato.Orden._codigoOrden + ": " + Long.toString(Id));
@@ -96,10 +90,11 @@ public class VerOrdenesAdapter extends CursorAdapter {
         TextView textViewEstado = (TextView) view.findViewById(R.id.textView_item_orden_estado);
         textViewEstado.setText(Contrato.Orden._estado + ": " + estado);
 
+        imageViewFoto = (ImageView) view.findViewById(R.id.imageView_item_orden_imgen);
 
         if (estado.equals("Pendiente")) {
             textViewEstado.setTextColor(ContextCompat.getColor(context, R.color.colorRojo));
-            color =  color = ContextCompat.getColor(context, R.color.colorRojo);
+            color = color = ContextCompat.getColor(context, R.color.colorRojo);
         }
         if (estado.equals("Proceso")) {
             textViewEstado.setTextColor(ContextCompat.getColor(context, R.color.colorAzul));
@@ -108,26 +103,52 @@ public class VerOrdenesAdapter extends CursorAdapter {
 
         if (estado.equals("Realizado")) {
             textViewEstado.setTextColor(ContextCompat.getColor(context, R.color.colorVerdeDark));
-            color =ContextCompat.getColor(context, R.color.colorVerdeDark);
+            color = ContextCompat.getColor(context, R.color.colorVerdeDark);
         }
 
 
+        int x = 0;
 
-        ImageView imageViewfoto = (ImageView) view.findViewById(R.id.imageView_item_orden_imgen);
+        progressBar= (ProgressBar) view.findViewById(R.id.progressBarImagenOrden);
+
 
         try {
-          //  Utilidades.loadImageFromStorage(context, "img_" + Id + ".jpg", imageViewfoto);
-              Utilidades.loadDesdeServidor(context,imageViewfoto,Id);
+            Utilidades.loadImageFromStorage(context, "img_" + Id + ".jpg", imageViewFoto);
+            Bitmap controlImagen = ((BitmapDrawable) imageViewFoto.getDrawable()).getBitmap();
+
+            if (controlImagen.getByteCount()>0){
+                x = 1;
+            }
+        } catch (Exception e) {
+            x = -1;
+        }
+        try {
+            if (x == -1){
+              //  Utilidades.loadImageFromStorage(context, "img_" + Id + ".jpg", imageViewfoto);
+
+                Utilidades.loadImageDesdeServidor(context, imageViewFoto, Id);
+                Bitmap bitmap = ((BitmapDrawable) imageViewFoto.getDrawable()).getBitmap();
+                Utilidades.storeImage(bitmap, context, "img_" + Id + ".jpg");
+                progressBar.setVisibility(View.VISIBLE);
+               // Toast.makeText(context,"Descargando imagen",Toast.LENGTH_SHORT).show();
+
+            }
+
+            Bitmap img =(Utilidades.loadImgeFromStorageReturnBitmap(context,"img_" + Id + ".jpg"));
+            if(img!=null) {
+                progressBar.setVisibility(View.GONE);
+            }
+
+
 
         } catch (Exception e) {
-            imageViewfoto.setImageDrawable(null);
-
+            imageViewFoto.setImageDrawable(null);
         }
 
-       int lenghtRef = referencia.length();
+        int lenghtRef = referencia.length();
 
         TextDrawable drawable = TextDrawable.builder()
-                .buildRound(referencia .substring(0, lenghtRef), color);
+                .buildRound(referencia.substring(0, lenghtRef), color);
 
         final ImageView image = (ImageView) view.findViewById(R.id.imageView_item_orden_abre_codigo);
         image.setImageDrawable(drawable);
@@ -137,23 +158,21 @@ public class VerOrdenesAdapter extends CursorAdapter {
             public void onClick(View view) {
                 Sincronizacion.forzarSincronizacion(context);
                 Intent intent = new Intent(context, EditOrdenActivity.class);
-                intent.putExtra(Contrato.Orden._ID,Id);
+                intent.putExtra(Contrato.Orden._ID, Id);
                 context.startActivity(intent);
-              }
+            }
         });
 
-        mAttacher = new PhotoViewAttacher(imageViewfoto);
 
-//        imageViewfoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(context, VerImagen.class);
-//                intent.putExtra(Contrato.Orden._ID,Id);
-//                context.startActivity(intent);
-//
-//            }
-//        });
+        imageViewFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, VerImagenActivity.class);
+                intent.putExtra(Contrato.Orden._ID, Id);
+                context.startActivity(intent);
 
+            }
+        });
 
         view.setTag(Id);
 

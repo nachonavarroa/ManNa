@@ -46,7 +46,7 @@ public class MainActivityDrawer extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         toolbar.setLogo(R.mipmap.ic_launcher);
-        permisoAdministrador= Utilidades.permisoAdministrador(this);
+        permisoAdministrador= Utilidades.permisoAdministrador(getApplicationContext());
 
         //FloatingButton----------------------------------------------------------------------------
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_app_bar_drawe);
@@ -83,7 +83,6 @@ public class MainActivityDrawer extends AppCompatActivity
 
         if (permisoAdministrador) {
             textViewUsuario.setText("Administrador: " + nombreUsuario());
-
             textViewUsuario.setTextColor(getResources().getColor(R.color.colorAzul));
 
         } else {
@@ -193,9 +192,11 @@ public class MainActivityDrawer extends AppCompatActivity
             case R.integer.indice_icono_oup_app:
                 Toast.makeText(getApplicationContext(), getResources()
                         .getString(R.string.toast_app_close), Toast.LENGTH_SHORT).show();
+                Utilidades.deleteCache(this);
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
                         // Cuando pasen los 2.2 segundo, se cierra la aplicación
+
                         finish();
                     }
                 }, RETARDO_SALIDA);

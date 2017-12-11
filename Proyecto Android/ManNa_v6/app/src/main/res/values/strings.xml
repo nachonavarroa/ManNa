@@ -76,7 +76,7 @@
     <string name="sintoma">Síntoma</string>
     <string name="img_descripcion_logo">logo</string>
     <string name="descripcion">Descripción</string>
-    <string name="generar_ordende_trabajo">Generar Orden de Trabajo</string>
+    <string name="generar_ordende_trabajo">Generar Orden</string>
     <string name="ubicacion">Ubicación</string>
     <string name="mostrarPdf"> Generar y mostrar PDF</string>
     <string name="out_app"> Salir</string>

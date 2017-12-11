@@ -33,7 +33,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/codigo"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorNegro"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -44,7 +44,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
                     android:text="Referencia"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorNegro"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -55,7 +55,17 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="16dp"
                     android:text="Fecha"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorNegro"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textViewFechaEditCreadoPor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Creado por"
+                    android:textColor="@color/colorNegro"
                     android:textSize="15dp"
                     android:textStyle="bold" />
 
@@ -73,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/LLPrioridadEditOrden"
@@ -87,7 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/prioridad"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@color/colorNegro"
                         android:textSize="16dp"
                         android:textStyle="bold" />
 
@@ -131,12 +141,19 @@
                     </RadioGroup>
 
                 </LinearLayout>
+                <View
+                    android:id="@+id/viewDivisionEstado"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorPrimaryDark" />
 
                 <LinearLayout
                     android:id="@+id/LLEstadoEditOrden"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginTop="16dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -144,7 +161,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/estado"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@color/colorNegro"
                         android:textSize="16dp"
                         android:textStyle="bold" />
 
@@ -159,23 +176,23 @@
 
                         <RadioButton
                             android:id="@+id/radioButtonEstado0Edit"
-                            android:layout_width="match_parent"
+                            android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="3dp"
+                            android:layout_marginLeft="10dp"
                             android:text="@string/estado_pendiente" />
 
                         <RadioButton
                             android:id="@+id/radioButtonEstado1Edit"
-                            android:layout_width="match_parent"
+                            android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="3dp"
+                            android:layout_marginLeft="10dp"
                             android:text="@string/estado_proceso" />
 
                         <RadioButton
                             android:id="@+id/radioButtonEstado2Edit"
-                            android:layout_width="match_parent"
+                            android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="3dp"
+                            android:layout_marginLeft="10dp"
                             android:text="@string/estado_realizado" />
 
 
@@ -203,7 +220,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/sintoma"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorNegro"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -300,7 +317,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/ubicacion"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorNegro"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -320,7 +337,7 @@
                         android:layout_margin="20dp"
                         android:maxLength="80"
                         android:maxLines="3"
-                        android:textColorHint="@color/colorPrimaryDark" />
+                        android:textColorHint="@color/colorNegro" />
 
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -344,7 +361,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="16dp"
                     android:text="@string/descripcion"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorNegro"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -367,7 +384,7 @@
                         android:overScrollMode="always"
                         android:scrollbarStyle="insideInset"
                         android:scrollbars="vertical"
-                        android:textColorHint="@color/colorPrimaryDark" />
+                        android:textColorHint="@color/colorNegro" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -393,7 +410,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/imagen"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorNegro"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 

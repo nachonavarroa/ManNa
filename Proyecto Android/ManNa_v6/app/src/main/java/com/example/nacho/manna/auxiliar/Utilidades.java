@@ -1,10 +1,15 @@
 package com.example.nacho.manna.auxiliar;
 
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
@@ -74,7 +79,7 @@ public class Utilidades {
         Picasso.with(contexto).load(f).into(img);
     }
 
-    static public void loadDesdeServidor(Context contexto, ImageView img, long Id) {
+    static public void loadImageDesdeServidor(Context contexto, ImageView img, long Id) {
         Picasso.with(contexto)
                 .load(Constantes.RUTA_SERVIDOR + "/imagenes/descarga/img_" + Id + ".jpg")
                 .into(img);
@@ -153,27 +158,73 @@ public class Utilidades {
         return fecha;
     }
 
-    //-Permiso Administrador------------------------------------------------------------------------
+    //Permiso Administrador------------------------------------------------------------------------
     public static boolean permisoAdministrador(Context context) {
-
         boolean permisoAdministrador = false;
-        int cofigoUsuario = AppController.getInstance().getCodigo();
-        String nombreUsuario = AppController.getInstance().getNombre();
+            int cofigoUsuario = AppController.getInstance().getCodigo();
+            String nombreUsuario = AppController.getInstance().getNombre();
+            Usuario usuarioConectado = CrudUsuarios.login(context.getContentResolver(),
+                    String.valueOf(cofigoUsuario), nombreUsuario);
 
-        Usuario usuarioConectado = CrudUsuarios.login(context.getContentResolver(),
-                String.valueOf(cofigoUsuario), nombreUsuario);
+            if (usuarioConectado.getAdmin().equals(context.getResources().getText(R.string.string_si))) {
+                permisoAdministrador = true;
 
-        if (usuarioConectado.getAdmin().equals(context.getResources().getText(R.string.string_si))) {
-            permisoAdministrador = true;
+            }
 
-        }
-// else {
-//            Toast.makeText(context,context.getResources().getText(R.string.toast_permiso_admin),
-//                    Toast.LENGTH_SHORT).show();
-//            permisoAdministrador = false;
-//
-//        }
         return permisoAdministrador;
+    }
+
+    public static String referencia(Long id) {
+        String referncia = String.valueOf((int) (id % 9999));
+        return referncia;
+
+    }
+//Pedir permiso de escritura-----------------------------------------------------------------------
+
+    public static  void pedirPermisos( Activity activity){
+        int permissionCheck = ContextCompat.checkSelfPermission
+                (activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (ContextCompat.checkSelfPermission(activity,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            } else {
+
+                ActivityCompat.requestPermissions(activity,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        1);
+
+            }
+        }
+    }
+
+    //borrar cache
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) {}
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
     }
 
 }

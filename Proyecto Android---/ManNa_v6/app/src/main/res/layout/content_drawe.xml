@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.nacho.manna.activity.MainActivityDrawer"
+    android:background="@color/colorFondo"
+    tools:showIn="@layout/app_bar_drawer">
+
+
+
+    <ImageButton
+        android:id="@+id/imageButtonGenerarOrden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="41dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="78dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:background="@color/colorFondoBotones"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:id="@+id/imageButtonAutor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageButtonGenerarOrden"
+        android:layout_alignStart="@+id/imageButtonGenerarOrden"
+        android:layout_below="@+id/imageButtonGenerarOrden"
+        android:layout_marginTop="45dp"
+        android:background="@color/colorFondoBotones"
+        app:srcCompat="@mipmap/ic_autor_color" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/generar_ordende_trabajo"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@+id/imageButtonAutor"
+        android:layout_toRightOf="@+id/imageButtonGenerarOrden"
+        android:layout_toEndOf="@+id/imageButtonGenerarOrden"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/subtitulo_autor"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginBottom="14dp"
+        android:layout_alignBottom="@+id/imageButtonAutor"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2" />
+
+</RelativeLayout>

@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.example.nacho.manna.activity.EditOrdenActivity;
+import com.example.nacho.manna.auxiliar.Utilidades;
 import com.example.nacho.manna.crud.CrudUsuarios;
 import com.example.nacho.manna.pojos.Usuario;
 import com.example.nacho.manna.proveedorDeContenido.Contrato;
@@ -37,26 +38,10 @@ public class VerOrdenesFragmentList extends ListFragment
 
     ActionMode mActionMode;
     View viewselect;
-    boolean permisoAdministrador;
 
     public VerOrdenesFragmentList() {
     }
-    private boolean permisoAdministrador() {
-        permisoAdministrador = false;
-        AppController empleado = (AppController) getActivity().getApplication();
-        Usuario empleadoAdmin = CrudUsuarios.login(getActivity().getContentResolver(),
-                String.valueOf(empleado.getCodigo()), empleado.getNombre());
-        String admin = empleadoAdmin.getAdmin();
-        if (admin.equals(getResources().getString(R.string.string_si))) {
-            permisoAdministrador = true;
 
-        } else {
-
-            permisoAdministrador = false;
-
-        }
-        return permisoAdministrador;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,7 +82,7 @@ public class VerOrdenesFragmentList extends ListFragment
 
         @Override
         public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-            if(permisoAdministrador()) {
+            if(Utilidades.permisoAdministrador(getContext())) {
                 menu.add(Menu.NONE, R.integer.indice_icono_borrar_orden, Menu.NONE, R.string.string_borrar)
                         .setIcon(R.drawable.ic_delete)
                         .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);

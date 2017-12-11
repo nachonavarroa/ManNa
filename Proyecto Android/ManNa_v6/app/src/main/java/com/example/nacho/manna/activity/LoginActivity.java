@@ -1,15 +1,11 @@
 package com.example.nacho.manna.activity;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Menu;
@@ -19,46 +15,32 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.nacho.manna.R;
+import com.example.nacho.manna.aplication.AppController;
+import com.example.nacho.manna.auxiliar.Utilidades;
 import com.example.nacho.manna.crud.CrudUsuarios;
 import com.example.nacho.manna.pojos.Usuario;
-import com.example.nacho.manna.aplication.AppController;
 
 public class LoginActivity extends AppCompatActivity {
-    Activity contexto;
-    EditText editTextNombreEmpleado;
-    EditText editTextCodigoEmpleado;
-    Usuario datosEmpleado;
-    AppController datosLogin;
-    Boolean validadarOk;
-    Intent intent;
+
+    private EditText editTextNombreEmpleado;
+    private EditText editTextCodigoEmpleado;
+    private AppController appController;
+    private Boolean validadarOk;
+    private Intent intent;
+    private String nombre;
+    private String codigoEmpleadoString;
+    private int codigoEmpleadoInt;
+    private Usuario usuarioRegistrado;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
 
-        //Verificar permisos-----------------------------------------------------------------------------------
-        int permissionCheck = ContextCompat.checkSelfPermission
-                (this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        Utilidades.pedirPermisos(this);
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-
-            } else {
-
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        1);
-
-            }
-        }
-
-        contexto = this;
         editTextNombreEmpleado = (EditText) findViewById(R.id.editText_nombre_empleado_login);
         editTextCodigoEmpleado = (EditText) findViewById(R.id.editText_codigo_empleado_login);
 
@@ -76,50 +58,46 @@ public class LoginActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 siguiente();
             }
         });
     }
 
-    //-----------------
+    //Verificar permisos----------------------------------------------------------------------------
 
-    private void siguiente(){
-        String nombreEmpleado = editTextNombreEmpleado.getText().toString();
-        String codigoEmpleadoString = editTextCodigoEmpleado.getText().toString();
-        validarEmpleado(nombreEmpleado,codigoEmpleadoString);
+
+    private void siguiente() {
+        nombre = editTextNombreEmpleado.getText().toString();
+        codigoEmpleadoString = editTextCodigoEmpleado.getText().toString();
+        codigoEmpleadoInt = Integer.parseInt(codigoEmpleadoString);
+        validarEmpleado(nombre, codigoEmpleadoString);
     }
 
-    private void controlSesion(){
-        String nombreEmpleado = editTextNombreEmpleado.getText().toString();
-        String codigoEmpleadoString = editTextCodigoEmpleado.getText().toString();
-        datosLogin = (AppController) getApplication();
-        datosLogin.setNombre(nombreEmpleado);
-        datosLogin.setCodigo(Integer.parseInt(codigoEmpleadoString));
-        datosLogin.setLoginOk(1);
-          }
+    private void controlSesion(String nombre, int codigoEmpleado) {
+        appController = (AppController) getApplication();
+        appController.setNombre(nombre);
+        appController.setCodigo(codigoEmpleado);
 
-    private  void validarEmpleado(String nombreEmpleado,String codigoEmpleadoString){
+    }
+
+
+    private void validarEmpleado(String nombreEmpleado, String codigoEmpleadoString) {
         if (validarCampos(nombreEmpleado, codigoEmpleadoString)) {
             try {
-                int codigoEmpleadoInt = Integer.parseInt(codigoEmpleadoString);
-                Usuario existeEmpleado = new Usuario();
+                usuarioRegistrado = CrudUsuarios.login(getContentResolver()
+                        , codigoEmpleadoString, nombreEmpleado);
 
-                existeEmpleado = CrudUsuarios.login(getContentResolver()
-                        ,codigoEmpleadoString,nombreEmpleado);
-
-                if ( existeEmpleado.getCodigo() == codigoEmpleadoInt) {
-
-                    controlSesion();
-                    intent = new Intent(contexto, MainActivityDrawer.class);
+                if (usuarioRegistrado.getCodigo() == codigoEmpleadoInt) {
+                    controlSesion(nombre, codigoEmpleadoInt);
+                    intent = new Intent(this, MainActivityDrawer.class);
                     startActivity(intent);
                     finish();
                 }
-            }catch(Exception e){
-                int xOffset=75;
-                int yOffset=350;
+            } catch (Exception e) {
+                int xOffset = 75;
+                int yOffset = 350;
 
-                Toast toast = Toast.makeText(contexto,getResources().
+                Toast toast = Toast.makeText(this, getResources().
                                 getText(R.string.toast_error_login),
                         Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.TOP, xOffset, yOffset);
@@ -129,17 +107,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
 
-
-    }
-    //---------------------------------------------------------------------------------------------
-
-    private Usuario crearDatosEmpleado
-            (String nombreEmpleado, String codigoEmpleadoString) {
-
-        int codigoEmpleado = Integer.parseInt(codigoEmpleadoString);
-        datosEmpleado = new Usuario(nombreEmpleado, codigoEmpleado);
-
-        return datosEmpleado;
     }
 
     //------------------------------------------------
@@ -189,8 +156,8 @@ public class LoginActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-                case R.integer.indice_icono_ir_siguiente:
-                 siguiente();
+            case R.integer.indice_icono_ir_siguiente:
+                siguiente();
                 break;
         }
         return super.onOptionsItemSelected(item);

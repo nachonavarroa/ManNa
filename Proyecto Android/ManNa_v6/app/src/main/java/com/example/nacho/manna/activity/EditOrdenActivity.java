@@ -15,6 +15,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -80,9 +81,9 @@ public class EditOrdenActivity extends AppCompatActivity {
     int yOffset;
     long ordenId;
     int colorRojo = 0;
-    int colorMarron ;
-    int colorVerde ;
-    int colorNegro ;
+    int colorMarron;
+    int colorVerde;
+    int colorNegro;
     int colorAul;
     ScrollView scrollViewPather;
     LinearLayout linearLayoutPather;
@@ -103,7 +104,7 @@ public class EditOrdenActivity extends AppCompatActivity {
         xOffset = 100;
         yOffset = 660;
 
-        textViewEstado = (TextView) findViewById(R.id.textViewEstadoEditOrden) ;
+        textViewEstado = (TextView) findViewById(R.id.textViewEstadoEditOrden);
 
         colorRojo = Color.parseColor("#FF0000");
         colorMarron = Color.parseColor("#763C28");
@@ -140,7 +141,6 @@ public class EditOrdenActivity extends AppCompatActivity {
         radioButtonRealizado = (RadioButton) findViewById(R.id.radioButtonEstado2Edit);
 
 
-
         editTextUbicacion = (EditText) findViewById(R.id.editTextUbicacionEdit);
         editTextDescripcion = (EditText) findViewById(R.id.editTextDescripcionEdit);
         editTextSintoma = (EditText) findViewById(R.id.editTextSintoma2EditOrden);
@@ -154,8 +154,8 @@ public class EditOrdenActivity extends AppCompatActivity {
 
         try {
 
-            Utilidades.loadImageFromStorage(this,"img_"+ ordenId +".jpg"
-                    ,imageViewFoto);
+            Utilidades.loadImageFromStorage(this, "img_" + ordenId + ".jpg"
+                    , imageViewFoto);
         } catch (FileNotFoundException e) {
             //no existe imagen
 
@@ -169,42 +169,45 @@ public class EditOrdenActivity extends AppCompatActivity {
         prioridadRadioButton(orden);
         estadoRadioButton(orden);
 
-        if(!permisoAdministrador()){
+        if (!Utilidades.permisoAdministrador(contexto)) {
             radioGroupPrioridad.setVisibility(View.GONE);
 
-            View viewDivisionCodigo =(View) findViewById(R.id.viewDivisionCodigo);
+            View viewDivisionCodigo = (View) findViewById(R.id.viewDivisionCodigo);
             viewDivisionCodigo.setVisibility(View.GONE);
-            View viewDivisionPrioridad =(View) findViewById(R.id.viewDivisionEditOrdenPrioridad);
+            View viewDivisionPrioridad = (View) findViewById(R.id.viewDivisionEditOrdenPrioridad);
             viewDivisionPrioridad.setVisibility(View.GONE);
-            View viewDivisionDescripcion =(View) findViewById(R.id.viewDivisionDescripcionEditOrden);
+            View viewDivisionDescripcion = (View) findViewById(R.id.viewDivisionDescripcionEditOrden);
             viewDivisionDescripcion.setVisibility(View.GONE);
 
             TextView textViewPrioridad = (TextView) findViewById(R.id.textViewPrioridadEditOrden);
-            textViewPrioridad.setText(getResources().getString(R.string.prioridad)+": "+orden.getPrioridad());
+            textViewPrioridad.setText(getResources().getString(R.string.prioridad) + ": " + orden.getPrioridad());
 
-           // editTextSintoma.setVisibility(View.INVISIBLE);
-            TextInputLayout textInputLayoutSintoma =(TextInputLayout)
+            // editTextSintoma.setVisibility(View.INVISIBLE);
+            TextInputLayout textInputLayoutSintoma = (TextInputLayout)
                     findViewById(R.id.textInputLayoutSintoma2EditOrden);
             textInputLayoutSintoma.removeAllViews();
             TextView textViewSintoma = (TextView) findViewById(R.id.textViewSintomadEditOrden);
-            textViewSintoma.setText(getResources().getString(R.string.sintoma)+": "+orden.getSintoma());
+            textViewSintoma.setText(getResources().getString(R.string.sintoma) + ": " + orden.getSintoma());
 
-            TextInputLayout textInputLayoutUbicacion =(TextInputLayout)
+            TextInputLayout textInputLayoutUbicacion = (TextInputLayout)
                     findViewById(R.id.textInputLayoutUbicacionEdit);
             textInputLayoutUbicacion.removeAllViews();
 
             //editTextUbicacion.setVisibility(View.GONE);
             TextView textViewUbicacion = (TextView) findViewById(R.id.textViewUbicacionEditOrden);
-            textViewUbicacion.setText(getResources().getString(R.string.ubicacion)+": "+orden.getUbicacion());
+            textViewUbicacion.setText(getResources().getString(R.string.ubicacion) + ": " + orden.getUbicacion());
 
 
-            TextInputLayout textInputLayoutDescripcion =(TextInputLayout)
+            TextInputLayout textInputLayoutDescripcion = (TextInputLayout)
                     findViewById(R.id.textInputLayoutDescripcionEdit);
             textInputLayoutDescripcion.removeAllViews();
 
-           // editTextDescripcion.setVisibility(View.GONE);
+            // editTextDescripcion.setVisibility(View.GONE);
             TextView textViewDescripcion = (TextView) findViewById(R.id.textViewDescripcionEditOrden);
-            textViewDescripcion.setText(getResources().getString(R.string.descripcion)+": "+orden.getDescripcion());
+            textViewDescripcion.setText(getResources().getString(R.string.descripcion) + ": " + orden.getDescripcion());
+
+            textViewDescripcion.setTextColor(ContextCompat.getColor(contexto, R.color.colorAzul));
+
 
             linearLayoutPather = (LinearLayout) findViewById(R.id.LLPrincipalEditOrden);
             linearLayoutPather.setScaleY(0.95f);
@@ -238,7 +241,7 @@ public class EditOrdenActivity extends AppCompatActivity {
 
                         break;
                 }
-              //  mensajeSeleccionado(prioridad);
+                //  mensajeSeleccionado(prioridad);
 
             }
         });
@@ -298,7 +301,7 @@ public class EditOrdenActivity extends AppCompatActivity {
                         break;
 
                 }
-               // mensajeSeleccionado(estado);
+                // mensajeSeleccionado(estado);
 
             }
         });
@@ -324,28 +327,16 @@ public class EditOrdenActivity extends AppCompatActivity {
 
         });
 
-        Utilidades.loadDesdeServidor(contexto,imageViewFoto,ordenId);
+        try {
+            Utilidades.loadImageFromStorage(this, "img_" + ordenId + ".jpg"
+                    , imageViewFoto);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         cabecera(orden);
     }
 
 
-
-    private boolean permisoAdministrador() {
-        permisoAdministrador = false;
-        AppController empleado = (AppController) this.getApplication();
-        Usuario empleadoAdmin = CrudUsuarios.login(this.getContentResolver(),
-                String.valueOf(empleado.getCodigo()), empleado.getNombre());
-        String admin = empleadoAdmin.getAdmin();
-        if (admin.equals(getResources().getString(R.string.string_si))) {
-            permisoAdministrador = true;
-
-        } else {
-
-            permisoAdministrador = false;
-
-        }
-        return permisoAdministrador;
-    }
     //Menús-----------------------------------------------------------------------------------------
 
     @Override
@@ -377,7 +368,7 @@ public class EditOrdenActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),
                         getResources().getString(R.string.string_ir_atras),
                         Toast.LENGTH_SHORT).show();
-                intent=  new Intent(getApplicationContext(), MainActivityDrawer.class);
+                intent = new Intent(getApplicationContext(), MainActivityDrawer.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -399,18 +390,23 @@ public class EditOrdenActivity extends AppCompatActivity {
     //Metodos actulizan estados de checkBox y Radiobutton con respecto a la orden editada-----------
 
 
-    private void cabecera(OrdenDeTrabajo orden){
+    private void cabecera(OrdenDeTrabajo orden) {
         TextView textViewCodigo;
         TextView textViewRef;
         TextView textViewFecha;
+        TextView textViewCreadoPor;
 
-        textViewCodigo =(TextView) findViewById(R.id.textViewCodigoEditOrden);
-        textViewRef =(TextView) findViewById(R.id.textViewReferenciaEditOrden);
-        textViewFecha =(TextView) findViewById(R.id.textViewFechaEditOrden);
+        textViewCodigo = (TextView) findViewById(R.id.textViewCodigoEditOrden);
+        textViewRef = (TextView) findViewById(R.id.textViewReferenciaEditOrden);
+        textViewFecha = (TextView) findViewById(R.id.textViewFechaEditOrden);
+        textViewCreadoPor= (TextView) findViewById(R.id.textViewFechaEditCreadoPor);
 
-        textViewCodigo.setText("Código: "+String.valueOf(orden.getId()));
-        textViewRef.setText("Referencia: "+String.valueOf(orden.getId()%9999));
-        textViewFecha.setText("Fecha: "+orden.getFecha());
+
+        textViewCodigo.setText("Código: " + String.valueOf(orden.getId()));
+        textViewRef.setText("Referencia: " + Utilidades.referencia(ordenId));
+        textViewFecha.setText("Fecha: " + orden.getFecha());
+        textViewCreadoPor.setText("Creado por: "+CrudUsuarios.buscarUsuarioEnOrden
+                (contexto,contexto.getContentResolver(),orden.getId()));
 
     }
 
@@ -466,8 +462,6 @@ public class EditOrdenActivity extends AppCompatActivity {
             radioButton.setTextColor(getResources().getColor(R.color.colorFondo));
 
 
-
-
         } else if (estadoExtraido.equals(estadoProceso)) {
             RadioButton radioButton = (RadioButton) findViewById(R.id.radioButtonEstado1Edit);
             radioButton.setChecked(true);
@@ -475,7 +469,6 @@ public class EditOrdenActivity extends AppCompatActivity {
             textViewEstado.setTextColor(colorAul);
             radioButton.setBackgroundColor(colorAul);
             radioButton.setTextColor(getResources().getColor(R.color.colorFondo));
-
 
 
         } else if (estadoExtraido.equals(estadoFinalizado)) {
@@ -549,11 +542,11 @@ public class EditOrdenActivity extends AppCompatActivity {
             orden.setDescripcion(editTextDescripcion.getText().toString());
             orden.setEstado(estado);
             orden.setImagen(foto);
-            try{
-                CrudOrdenes.updateOrdenConBitacora(getContentResolver(), orden,contexto);
-            }catch(Exception e){
-                Toast.makeText(contexto,"No existe la orden seleccionada",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(contexto,MainActivityDrawer.class);
+            try {
+                CrudOrdenes.updateOrdenConBitacora(getContentResolver(), orden, contexto);
+            } catch (Exception e) {
+                Toast.makeText(contexto, "No existe la orden seleccionada", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(contexto, MainActivityDrawer.class);
                 startActivity(intent);
                 finish();
             }

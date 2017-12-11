@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MainActivityDrawer">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs_layout_app_bar_drawer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabSelectedTextColor="@color/colorFondo"
+            app:tabIndicatorColor="@color/colorFondo2"
+            app:tabTextColor="@color/colorMarron"
+            android:background="@drawable/side_nav_bar"
+            app:tabMode="scrollable"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager_activity_drawer"
+        android:background="@color/colorFondo"
+        android:layout_width="match_parent"
+        android:layout_marginTop="105dp"
+        android:layout_height="wrap_content"/>
+
+  <!--  <include layout="@layout/content_drawe" />-->
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_app_bar_drawe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/side_nav_bar"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_mantenimiento2"/>
+
+</android.support.design.widget.CoordinatorLayout>

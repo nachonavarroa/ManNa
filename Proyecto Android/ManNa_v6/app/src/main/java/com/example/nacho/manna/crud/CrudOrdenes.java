@@ -39,12 +39,12 @@ public class CrudOrdenes {
         // String ordenId = uriResult.getLastPathSegment();
 
         String ordenId = String.valueOf(orden.getId());
-        Log.i("Nachito", "ordenId :" + ordenId);
+      //  Log.i("Nachito", "ordenId :" + ordenId);
         if (orden.getImagen() != null) {
             try {
 
                 Utilidades.storeImage(orden.getImagen(), context, "img_" + ordenId + ".jpg");
-                Log.i("Nachito", "****--**ordenId :" + ordenId);
+              //  Log.i("Nachito", "****--**ordenId :" + ordenId);
 
             } catch (IOException e) {
                 Toast.makeText(context, "No se puede guardar imagen", Toast.LENGTH_SHORT).show();
@@ -172,6 +172,7 @@ public class CrudOrdenes {
 
             return orden;
         }
+        cursor.close();
         return null;
     }
 
@@ -213,6 +214,7 @@ public class CrudOrdenes {
             //  Log.i("sincronizacion","CrudOrden_readAll Id: "+ String.valueOf(registros.get(i).getId()));
             //  Log.i("sincronizacion","CrudOrden_readAll Codigo emple: "+String.valueOf(registros.get(i).getIdEmpleado()));
         }
+        cursor.close();
         return registros;
 
     }

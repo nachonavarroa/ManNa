@@ -18,9 +18,11 @@ import com.example.nacho.manna.R;
 import com.example.nacho.manna.auxiliar.Utilidades;
 import com.example.nacho.manna.proveedorDeContenido.Contrato;
 
+import java.io.FileNotFoundException;
+
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class VerImagen extends AppCompatActivity {
+public class VerImagenActivity extends AppCompatActivity {
     long ordenId;
     ImageView imageView;
     PhotoViewAttacher  mAttacher;
@@ -30,15 +32,15 @@ public class VerImagen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_imagen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+      //  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+      //  setSupportActionBar(toolbar);
 
         //ActionBar----------------------------
         ActionBar actionBar= getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.mipmap.ic_launcher);
         actionBar.setTitle(getResources().getText(R.string.app_name));
-       // actionBar.setSubtitle(getResources().getText(R.string.subtitulo_autor));
+
         //----------------------------
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -56,7 +58,14 @@ public class VerImagen extends AppCompatActivity {
 
         ordenId = this.getIntent().getExtras().getLong(Contrato.Orden._ID);
         imageView = findViewById(R.id.imageViewOrden);
-        Utilidades.loadDesdeServidor(getApplicationContext(),imageView,ordenId);
+        actionBar.setSubtitle("img_" + ordenId + ".jpg");
+
+
+        try {
+            Utilidades.loadImageFromStorage(getApplicationContext(), "img_" + ordenId + ".jpg", imageView);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         mAttacher = new PhotoViewAttacher(imageView);
 
     }

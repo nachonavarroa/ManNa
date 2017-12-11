@@ -28,9 +28,6 @@ public class OrdenVolley {
     final static String ruta = Constantes.RUTA_SERVIDOR + "/orden";
 
 
-
-
-
     public static void getAllOrden() {
         String tag_json_obj = "getAllOrden";
         String url = ruta;
