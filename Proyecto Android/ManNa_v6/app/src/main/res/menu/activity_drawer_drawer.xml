@@ -31,6 +31,11 @@
             android:icon="@drawable/ic_nacho"
             android:title="@string/subtitulo_autor" />
 
+        <item
+            android:id="@+id/nav_salir"
+            android:icon="@drawable/ic_boton_apagado"
+            android:title="@string/out_app" />
+
     </group>
 
 </menu>

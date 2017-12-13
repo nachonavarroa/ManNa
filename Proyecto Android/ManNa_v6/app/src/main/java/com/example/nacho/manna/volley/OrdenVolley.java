@@ -1,7 +1,6 @@
 package com.example.nacho.manna.volley;
 
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -10,7 +9,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.nacho.manna.aplication.AppController;
 import com.example.nacho.manna.auxiliar.Constantes;
-import com.example.nacho.manna.auxiliar.Utilidades;
 import com.example.nacho.manna.crud.CrudBitacoraOrden;
 import com.example.nacho.manna.pojos.OrdenDeTrabajo;
 import com.example.nacho.manna.sync.Sincronizacion;
@@ -19,15 +17,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class OrdenVolley {
 
     final static String ruta = Constantes.RUTA_SERVIDOR + "/orden";
 
 
+    //----------------------------------------------------------------------------------------------
     public static void getAllOrden() {
         String tag_json_obj = "getAllOrden";
         String url = ruta;
@@ -55,6 +51,8 @@ public class OrdenVolley {
 
         AppController.getInstance().addToRequestQueue(getRequest, tag_json_obj);
     }
+
+    //--------------------------------------------------------------------------------------------------
 
     public static void addOrden(final OrdenDeTrabajo orden, final boolean conBitacora,
                                 final int idBitacora) {
@@ -101,41 +99,10 @@ public class OrdenVolley {
                 }
         );
 
-        //---------
-        final String urlPostImg = Constantes.RUTA_SERVIDOR + "/imagenes/subir/";
-        final String fieldName = "fichero";
-
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlPostImg,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }
-        )
-        {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> map = new HashMap<>();
-                map.put(fieldName, Utilidades.bitmapToString(orden.getImagen()));
-
-                return super.getParams();
-            }
-        };
-
-
-        //---------
-
         AppController.getInstance().addToRequestQueue(postRequest, tag_json_obj);
     }
 
+    //----------------------------------------------------------------------------------------------
 
     public static void updateOrden(OrdenDeTrabajo orden, final boolean conBitacora,
                                    final int idBitacora) {
@@ -180,6 +147,8 @@ public class OrdenVolley {
 
         AppController.getInstance().addToRequestQueue(putRequest, tag_json_obj);
     }
+
+    //----------------------------------------------------------------------------------------------
 
     public static void deleteOrden(long id, final boolean conBitacora, final int idBitacora) {
         String tag_json_obj = "deleteOrden";

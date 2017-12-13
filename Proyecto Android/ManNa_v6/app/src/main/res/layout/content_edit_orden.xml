@@ -22,6 +22,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/LLcabeceraEditOrden"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -50,29 +51,30 @@
 
                 <TextView
                     android:id="@+id/textViewFechaEditOrden"
+                    android:text="Fecha"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="16dp"
-                    android:text="Fecha"
                     android:textColor="@color/colorNegro"
-                    android:textSize="15dp"
+                    android:textSize="16dp"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/textViewFechaEditCreadoPor"
+                    android:text="Creado por"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="16dp"
-                    android:text="Creado por"
                     android:textColor="@color/colorNegro"
-                    android:textSize="15dp"
+                    android:textSize="16dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
             <View
-                android:id="@+id/viewDivisionCodigo"
+                android:id="@+id/viewDivisionEditOrden1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="16dp"
@@ -82,14 +84,15 @@
                 android:id="@+id/LLPrioridadcontEditOrden"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/LLPrioridadEditOrden"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="16dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -115,6 +118,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
                             android:text="@string/prioridad_muy_alta" />
 
                         <RadioButton
@@ -122,6 +126,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
                             android:text="@string/prioridad_alta" />
 
                         <RadioButton
@@ -129,6 +134,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
                             android:text="@string/prioridad_media" />
 
                         <RadioButton
@@ -136,13 +142,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
                             android:text="@string/prioridad_baja" />
 
                     </RadioGroup>
 
                 </LinearLayout>
+
                 <View
-                    android:id="@+id/viewDivisionEstado"
+                    android:id="@+id/viewDivisionEditOrden2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="16dp"
@@ -150,9 +159,10 @@
 
                 <LinearLayout
                     android:id="@+id/LLEstadoEditOrden"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="16dp"
                     android:orientation="vertical">
 
@@ -179,6 +189,7 @@
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
                             android:text="@string/estado_pendiente" />
 
                         <RadioButton
@@ -186,6 +197,7 @@
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
                             android:text="@string/estado_proceso" />
 
                         <RadioButton
@@ -193,15 +205,18 @@
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
                             android:text="@string/estado_realizado" />
 
-
                     </RadioGroup>
+
                 </LinearLayout>
+
             </LinearLayout>
 
             <View
-                android:id="@+id/viewDivisionEditOrdenPrioridad"
+                android:id="@+id/viewDivisionEditOrden3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="16dp"
@@ -224,42 +239,11 @@
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
-                <!--   <LinearLayout
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content">
-                       android:orientation="horizontal">
-
-
-                       <CheckBox
-                           android:id="@+id/checkBoxSintoma0Edit"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginLeft="40dp"
-                           android:layout_marginTop="7dp"
-                           android:text="@string/sintoma_parado" />
-
-                       <CheckBox
-                           android:id="@+id/checkBoxSintoma1Edit"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginLeft="75dp"
-                           android:layout_marginTop="7dp"
-                           android:text="@string/sintoma_rotura" />
-                   </LinearLayout>-->
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:orientation="horizontal">
-
-                    <!--   <CheckBox
-                           android:id="@+id/checkBoxSintoma2Edit"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_gravity="center_horizontal|center_vertical"
-                           android:layout_marginTop="16dp" />-->
-
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/textInputLayoutSintoma2EditOrden"
@@ -282,19 +266,12 @@
 
             </LinearLayout>
 
-         <!--   <View
-                android:id="@+id/separaUbicacionEditOrden"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/colorPrimaryDark" />-->
-
-
         </LinearLayout>
 
         <!-- Empiezan los  EditText-->
 
         <View
+            android:id="@+id/viewDivisionEditOrden4"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
@@ -343,7 +320,7 @@
             </LinearLayout>
 
             <View
-                android:id="@+id/viewDivisionDescripcionEditOrden"
+                android:id="@+id/viewDivisionEditOrden5"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="16dp"
@@ -394,6 +371,7 @@
 
         <!-- Empiezan   foto-->
         <View
+            android:id="@+id/viewDivisionEditOrden6"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
@@ -420,6 +398,7 @@
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="48dp"
                 android:orientation="vertical">
 
 
@@ -430,8 +409,8 @@
 
                     <ImageView
                         android:id="@+id/imageView_foto_conten_edit_orden"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:src="@drawable/ic_mantenimiento2" />
@@ -443,14 +422,12 @@
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/fab_margin"
                     android:layout_marginRight="@dimen/fab_margin"
-                    android:paddingBottom="48dp"
                     android:orientation="horizontal">
 
                     <ImageButton
                         android:id="@+id/imageButton_galeria_content_edit_orden"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:background="@drawable/ic_boton_redondo"
                         android:src="@drawable/ic_galeria" />
 
@@ -459,7 +436,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="64dp"
-                        android:layout_marginTop="16dp"
                         android:adjustViewBounds="false"
                         android:background="@drawable/ic_boton_redondo"
                         android:src="@drawable/ic_camera_primary_dark" />
@@ -470,6 +446,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
     </LinearLayout>
 
 </ScrollView>

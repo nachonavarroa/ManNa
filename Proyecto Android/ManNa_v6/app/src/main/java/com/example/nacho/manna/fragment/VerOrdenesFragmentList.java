@@ -28,6 +28,7 @@ import com.example.nacho.manna.R;
 import com.example.nacho.manna.crud.CrudOrdenes;
 import com.example.nacho.manna.adapter.VerOrdenesAdapter;
 import com.example.nacho.manna.aplication.AppController;
+import com.example.nacho.manna.sync.Sincronizacion;
 
 public class VerOrdenesFragmentList extends ListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -113,6 +114,8 @@ public class VerOrdenesFragmentList extends ListFragment
                     Intent intent = new Intent(getActivity(), EditOrdenActivity.class);
                     ordenId = (Long) viewselect.getTag();
                     intent.putExtra(Contrato.Orden._ID, ordenId);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP  | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    Sincronizacion.forzarSincronizacion(getContext());
                     startActivity(intent);
                     getActivity().finish();
                     break;
@@ -128,6 +131,7 @@ public class VerOrdenesFragmentList extends ListFragment
             long ordenId = (Long) viewselect.getTag();
             dialog.setTitle("Borrar");
             dialog.setMessage("¿Desea borrar esta orden?");
+            dialog.setIcon(R.mipmap.ic_launcher);
             dialog.setPositiveButton("Si", new DialogInterface.OnClickListener() {
 
                 @Override
@@ -143,6 +147,7 @@ public class VerOrdenesFragmentList extends ListFragment
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    mActionMode.finish();
                     dialog.cancel();
                 }
             });
@@ -162,7 +167,6 @@ public class VerOrdenesFragmentList extends ListFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_orden_list, container, false);
 

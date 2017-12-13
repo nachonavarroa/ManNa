@@ -8,8 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context, String name,
-                    SQLiteDatabase.CursorFactory factory, int version)
-    {
+                    SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
@@ -35,7 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE "
                 + Contrato.Usuario.NOMBRE_TABLA
-                + "(_id INTEGER PRIMARY KEY ON CONFLICT ROLLBACK AUTOINCREMENT, "
+                + "(_id INTEGER PRIMARY KEY ON CONFLICT ROLLBACK , "
                 + Contrato.Usuario.CODIGO_USUARIO + " INTEGER UNIQUE,"
                 + Contrato.Usuario.NOMBRE_USUARIO + " TEXT ,"
                 + Contrato.Usuario.ADMIN_USUARIO + " TEXT "
@@ -67,19 +66,19 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-
     void inicializarDatos(SQLiteDatabase db) {
 
-        db.execSQL("INSERT INTO " + Contrato.Usuario.NOMBRE_TABLA
-                + " (" + Contrato.Usuario.CODIGO_USUARIO + ","
-                + Contrato.Usuario.NOMBRE_USUARIO + ","
-                + Contrato.Usuario.ADMIN_USUARIO + ") "
-                + " VALUES (1234,'Admin', 'Si')");
-
+        db.execSQL(
+                "INSERT INTO " + Contrato.Usuario.NOMBRE_TABLA
+                        + " (" + Contrato.Usuario._ID+ ","
+                        + Contrato.Usuario.CODIGO_USUARIO + ","
+                        + Contrato.Usuario.NOMBRE_USUARIO + ","
+                        + Contrato.Usuario.ADMIN_USUARIO + ") "
+                        + " VALUES (1,1234,'Admin', 'Si'),(2,9999,'ManNa', 'No')"
+        );
 
 
     }
-
 
 
     @Override

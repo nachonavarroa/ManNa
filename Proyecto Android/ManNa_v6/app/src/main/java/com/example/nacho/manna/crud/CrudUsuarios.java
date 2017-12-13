@@ -229,8 +229,8 @@ public class CrudUsuarios {
 
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
 
-        final String query = "select U.Nombre_usuario from Orden O,Usuario U "
-                + "where O.id_empleado = U._id and O._id =" + idOrden;
+        final String query = "SELECT usuario.Nombre_Usuario FROM usuario INNER JOIN orden "
+               + "ON ( usuario._id = orden.id_empleado ) and (orden._id =" + idOrden+")";
 
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
 

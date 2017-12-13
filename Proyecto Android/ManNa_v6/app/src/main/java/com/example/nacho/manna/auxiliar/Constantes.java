@@ -17,4 +17,8 @@ public class Constantes {
     public static final int OPERACION_INSERTAR = 0;
     public static final int OPERACION_MODIFICAR = 1;
     public static final int OPERACION_BORRAR = 2;
+
+    //Operaciones a guardar camara
+    public static final int SACAR_FOTO = 1;
+    public static final int VER_GALRIA = 2;
 }

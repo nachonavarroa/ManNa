@@ -6,7 +6,7 @@
     <!-- -->
     <color name="colorFondoBotones">#FF5F00</color>
     <color name="colorFondo">#FFF1E6</color>
-    <color name="colorFondo2">#F8ECE0</color>
+    <color name="colorFondo2">#f5eede</color>
     <color name="colorBlanco">#FFf</color>
     <color name="colorRojo">#FF0000</color>
     <color name="colorVerde">#00FF00</color>
@@ -17,6 +17,7 @@
     <color name="colorAzul">#0000FF</color>
     <color name="colorAzulclaro">#00aaff</color>
     <color name="colorNegro">#000</color>
+    <color name="colorGris">#BDBDBD</color>
     <color name="colorNaranja">#FD9502</color>
 
 

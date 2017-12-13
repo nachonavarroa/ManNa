@@ -1,5 +1,6 @@
 package com.example.nacho.manna.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -190,16 +192,7 @@ public class MainActivityDrawer extends AppCompatActivity
                 break;
 
             case R.integer.indice_icono_oup_app:
-                Toast.makeText(getApplicationContext(), getResources()
-                        .getString(R.string.toast_app_close), Toast.LENGTH_SHORT).show();
-                Utilidades.deleteCache(this);
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        // Cuando pasen los 2.2 segundo, se cierra la aplicación
-
-                        finish();
-                    }
-                }, RETARDO_SALIDA);
+                preguntarSailr();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -221,20 +214,24 @@ public class MainActivityDrawer extends AppCompatActivity
         } else if (id == R.id.nav_ver_ordenes) {
 
             Intent intent = new Intent(getApplicationContext(), VerOrdenesActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP  | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         } else if (id == R.id.nav_ver_empleados) {
 
             Intent intent = new Intent(getApplicationContext(), VerUsuariosActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP  | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
 
         } else if (id == R.id.nav_autor) {
 
             Intent intent = new Intent(getApplicationContext(), AutorActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP  | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
 
         } else if (id == R.id.nav_ayuda) {
 
             Intent intent = new Intent(getApplicationContext(), AyudaActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP  | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
 
         } else if (id == R.id.nav_generar_empleado) {
@@ -244,10 +241,13 @@ public class MainActivityDrawer extends AppCompatActivity
                         getResources().getString(R.string.string_ir_generar_usuario),
                         Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), CrearUsuarioActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP  | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
 
             }
 
+        } else if (id == R.id.nav_salir){
+            preguntarSailr();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -259,5 +259,30 @@ public class MainActivityDrawer extends AppCompatActivity
     public String nombreUsuario() {
                String nombreUsuario = AppController.getInstance().getNombre();
         return nombreUsuario;
+    }
+    private void preguntarSailr() {
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Salir");
+        dialog.setMessage("¿ Desea salir de la aplicacion ?");
+        dialog.setIcon(R.mipmap.ic_launcher);
+        dialog.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Utilidades.deleteCache(getApplicationContext());
+                finish();
+            }
+        });
+
+        dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.cancel();
+            }
+        });
+        dialog.show();
     }
 }

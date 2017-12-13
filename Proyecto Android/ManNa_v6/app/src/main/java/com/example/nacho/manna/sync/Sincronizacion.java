@@ -59,7 +59,7 @@ public class Sincronizacion {
         recibirActualizacionesDelServidor();
         //filtro
         try {
-            Thread.sleep(800);
+            Thread.sleep(600);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

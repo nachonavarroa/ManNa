@@ -1,5 +1,6 @@
 package com.example.nacho.manna.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -41,7 +42,9 @@ public class VerOrdenesAdapter extends CursorAdapter {
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View v = inflater.inflate(R.layout.item_orden, parent, false);
-        bindView(v, context, cursor);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            bindView(v, context, cursor);
+        }
 
         return v;
     }
@@ -159,7 +162,10 @@ public class VerOrdenesAdapter extends CursorAdapter {
                 Sincronizacion.forzarSincronizacion(context);
                 Intent intent = new Intent(context, EditOrdenActivity.class);
                 intent.putExtra(Contrato.Orden._ID, Id);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP  | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 context.startActivity(intent);
+                ((Activity)context).finish();
+
             }
         });
 
@@ -169,7 +175,9 @@ public class VerOrdenesAdapter extends CursorAdapter {
             public void onClick(View view) {
                 Intent intent = new Intent(context, VerImagenActivity.class);
                 intent.putExtra(Contrato.Orden._ID, Id);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP  | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 context.startActivity(intent);
+                ((Activity)context).finish();
 
             }
         });

@@ -1,5 +1,6 @@
 package com.example.nacho.manna.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -89,7 +90,9 @@ public class VerUsuariosAdapter extends CursorAdapter {
                     Sincronizacion.forzarSincronizacion(context);
                     Intent intent = new Intent(context, EditUsuarioActivity.class);
                     intent.putExtra(Contrato.Orden._ID, ID);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP  | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     context.startActivity(intent);
+                    ((Activity) context).finish();
                 }
             }
         });
