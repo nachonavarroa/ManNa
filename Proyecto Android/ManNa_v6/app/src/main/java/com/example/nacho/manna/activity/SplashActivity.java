@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import com.example.nacho.manna.R;
 import com.example.nacho.manna.auxiliar.Constantes;
+import com.example.nacho.manna.auxiliar.Utilidades;
 import com.example.nacho.manna.sync.Sincronizacion;
 
 public class SplashActivity extends AppCompatActivity {
@@ -24,7 +25,6 @@ public class SplashActivity extends AppCompatActivity {
         actionBar.hide();
         //-------------------------------------
         contexto = this;
-
         Sincronizacion.forzarSincronizacion(getApplicationContext());
 
         new Handler().postDelayed(new Runnable() {

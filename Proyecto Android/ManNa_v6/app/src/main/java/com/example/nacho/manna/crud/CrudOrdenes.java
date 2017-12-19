@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,7 +15,9 @@ import com.example.nacho.manna.pojos.BitacoraOrden;
 import com.example.nacho.manna.proveedorDeContenido.Contrato;
 import com.example.nacho.manna.pojos.OrdenDeTrabajo;
 import com.example.nacho.manna.sync.Sincronizacion;
+import com.example.nacho.manna.volley.ImagenVoley;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -34,17 +37,18 @@ public class CrudOrdenes {
         values.put(Contrato.Orden.UBICACION, orden.getUbicacion());
         values.put(Contrato.Orden.DESCRIPCION, orden.getDescripcion());
         values.put(Contrato.Orden.ESTADO, orden.getEstado());
+        values.put(Contrato.Orden.CONTIENE_IMAGEN,orden.getContieneImagen());
 
         Uri uriResult = resolvedor.insert(uri, values);
         // String ordenId = uriResult.getLastPathSegment();
 
         String ordenId = String.valueOf(orden.getId());
-      //  Log.i("Nachito", "ordenId :" + ordenId);
+        //  Log.i("Nachito", "ordenId :" + ordenId);
         if (orden.getImagen() != null) {
             try {
 
                 Utilidades.storeImage(orden.getImagen(), context, "img_" + ordenId + ".jpg");
-              //  Log.i("Nachito", "****--**ordenId :" + ordenId);
+                //  Log.i("Nachito", "****--**ordenId :" + ordenId);
 
             } catch (IOException e) {
                 Toast.makeText(context, "No se puede guardar imagen", Toast.LENGTH_SHORT).show();
@@ -63,6 +67,7 @@ public class CrudOrdenes {
         bitacora.setOperacion(Constantes.OPERACION_INSERTAR);
 
         CrudBitacoraOrden.insert(resolvedor, bitacora);
+
         //  Log.i("Nachito","Uri :"+uri);
 
         Sincronizacion.forzarSincronizacion(contexto);
@@ -96,6 +101,7 @@ public class CrudOrdenes {
 
         CrudBitacoraOrden.insert(resolvedor, bitacora);
 
+
         Sincronizacion.forzarSincronizacion(contexto);
     }
 
@@ -111,6 +117,7 @@ public class CrudOrdenes {
         values.put(Contrato.Orden.UBICACION, orden.getUbicacion());
         values.put(Contrato.Orden.DESCRIPCION, orden.getDescripcion());
         values.put(Contrato.Orden.ESTADO, orden.getEstado());
+        values.put(Contrato.Orden.CONTIENE_IMAGEN,orden.getContieneImagen());
 
 
         resolver.update(uri, values, null, null);
@@ -135,6 +142,7 @@ public class CrudOrdenes {
         bitacora.setOperacion(Constantes.OPERACION_MODIFICAR);
 
         CrudBitacoraOrden.insert(resolvedor, bitacora);
+
         Sincronizacion.forzarSincronizacion(contexto);
     }
 
@@ -151,7 +159,8 @@ public class CrudOrdenes {
                 Contrato.Orden.SINTOMA,
                 Contrato.Orden.UBICACION,
                 Contrato.Orden.DESCRIPCION,
-                Contrato.Orden.ESTADO
+                Contrato.Orden.ESTADO,
+                Contrato.Orden.CONTIENE_IMAGEN
         };
 
         Cursor cursor = resolver.query(uri, projection, null, null, null);
@@ -168,11 +177,12 @@ public class CrudOrdenes {
             orden.setUbicacion(cursor.getString(cursor.getColumnIndex(Contrato.Orden.UBICACION)));
             orden.setDescripcion(cursor.getString(cursor.getColumnIndex(Contrato.Orden.DESCRIPCION)));
             orden.setEstado(cursor.getString(cursor.getColumnIndex(Contrato.Orden.ESTADO)));
+            orden.setContieneImagen(cursor.getInt(cursor.getColumnIndex(Contrato.Orden.CONTIENE_IMAGEN)));
 
 
             return orden;
         }
-        cursor.close();
+      //  cursor.close();
         return null;
     }
 
@@ -188,7 +198,8 @@ public class CrudOrdenes {
                 Contrato.Orden.SINTOMA,
                 Contrato.Orden.UBICACION,
                 Contrato.Orden.DESCRIPCION,
-                Contrato.Orden.ESTADO
+                Contrato.Orden.ESTADO,
+                Contrato.Orden.CONTIENE_IMAGEN
 
         };
 
@@ -207,14 +218,15 @@ public class CrudOrdenes {
             orden.setUbicacion(cursor.getString(cursor.getColumnIndex(Contrato.Orden.UBICACION)));
             orden.setDescripcion(cursor.getString(cursor.getColumnIndex(Contrato.Orden.DESCRIPCION)));
             orden.setEstado(cursor.getString(cursor.getColumnIndex(Contrato.Orden.ESTADO)));
+            orden.setContieneImagen(cursor.getInt(cursor.getColumnIndex(Contrato.Orden.CONTIENE_IMAGEN)));
             registros.add(orden);
 
         }
-        for (int i = 0; i < registros.size(); i++) {
+      //  for (int i = 0; i < registros.size(); i++) {
             //  Log.i("sincronizacion","CrudOrden_readAll Id: "+ String.valueOf(registros.get(i).getId()));
             //  Log.i("sincronizacion","CrudOrden_readAll Codigo emple: "+String.valueOf(registros.get(i).getIdEmpleado()));
-        }
-        cursor.close();
+       // }
+      //  cursor.close();
         return registros;
 
     }

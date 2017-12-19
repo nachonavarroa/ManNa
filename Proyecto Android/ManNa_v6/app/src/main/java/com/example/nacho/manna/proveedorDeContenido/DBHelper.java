@@ -26,7 +26,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 + Contrato.Orden.SINTOMA + " TEXT , "
                 + Contrato.Orden.UBICACION + " TEXT , "
                 + Contrato.Orden.DESCRIPCION + " TEXT , "
-                + Contrato.Orden.ESTADO + " TEXT "
+                + Contrato.Orden.ESTADO + " TEXT ,"
+                + Contrato.Orden.CONTIENE_IMAGEN + " INTEGER "
                 + "); "
         );
 

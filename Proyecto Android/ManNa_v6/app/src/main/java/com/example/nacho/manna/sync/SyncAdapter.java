@@ -56,6 +56,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                               ContentProviderClient arg3, SyncResult arg4) {
 		// TODO Auto-generated method stub
 
-		AppController.getInstance().getSincronizacion().sincronizar();
+		AppController.getInstance().getSincronizacion().sincronizar(getContext());
 	}
 }

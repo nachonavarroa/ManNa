@@ -34,8 +34,6 @@ import com.example.nacho.manna.sync.Sincronizacion;
 public class MainActivityDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private final int RETARDO_SALIDA = 2200; // 2.2segundos
-    private final int RETARDO_VER_DATOS = 250; // 2.2segundos
     final int MY_PERMISSIONS_REQUEST = 1;
     boolean permisoAdministrador;
 
@@ -109,11 +107,8 @@ public class MainActivityDrawer extends AppCompatActivity
             tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorFondo));
         }
 
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                viewPager.setAdapter(drawerAdapter);
-            }
-        }, RETARDO_VER_DATOS);
+
+        viewPager.setAdapter(drawerAdapter);
 
 
     }
@@ -159,7 +154,7 @@ public class MainActivityDrawer extends AppCompatActivity
 
         menu.add(Menu.NONE, R.integer.indice_icono_ayuda, Menu.NONE, R.string.string_ayuda)
                 .setIcon(R.drawable.ic_help_outline_black_24dp)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER| MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 
         menu.add(Menu.NONE, R.integer.indice_icono_sincronizacion, Menu.NONE, R.string.string_sincronizacion)
                 .setIcon(R.drawable.ic_actualizar)
@@ -195,6 +190,7 @@ public class MainActivityDrawer extends AppCompatActivity
                 preguntarSailr();
                 break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

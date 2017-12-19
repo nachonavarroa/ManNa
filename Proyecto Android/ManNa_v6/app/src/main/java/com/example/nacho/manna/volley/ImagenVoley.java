@@ -1,74 +1,49 @@
 package com.example.nacho.manna.volley;
 
-
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.util.Base64;
-import android.util.Log;
-
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.SimpleMultiPartRequest;
 import com.example.nacho.manna.aplication.AppController;
 import com.example.nacho.manna.auxiliar.Constantes;
 
-import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.Map;
+
+public class ImagenVoley  extends Constantes {
 
 
-public class ImagenVoley {
+    public static String imagenPath(Context context, long ordenId) {
 
-    final static String ruta =  Constantes.RUTA_SERVIDOR + "/imagenes/subir";
+        String imagePath = context.getFilesDir().getPath() + "/img_" + ordenId + ".jpg";
 
-    //----------------------------------------------------------------------------------------------
-    private static String convertirImgString(Bitmap image) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] imgByte = byteArrayOutputStream.toByteArray();
-        String imgString = Base64.encodeToString(imgByte, Base64.DEFAULT);
-
-        //Log.i("nachito", "ENTRO EN convertirImgString "+imgString);
-
-        return imgString;
+        return imagePath;
     }
-    //----------------------------------------------------------------------------------------------
 
-    public static void addImageServer(final Bitmap img, long IdOrden, Context context) {
-        String url = ruta;
-        String nombreFichero = "img_"+String.valueOf(IdOrden)+".jpg";
-        final String field_name ="fichero";
-        RequestQueue request = Volley.newRequestQueue(context);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+    public static void subirImagenServidor(Context context, long ordenId) {
+
+        String  imagenPath = imagenPath(context, ordenId);
+
+        AppController.getInstance().getSincronizacion().setEsperandoRespuestaDeServidor(true);
+
+        SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, RUTA_SUBIR_IMAGENES_SERVIDOR,
                 new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
 
-            @Override
-            public void onResponse(String response) {
+                       AppController.getInstance().getSincronizacion().setEsperandoRespuestaDeServidor(false);
 
-            }
-        }, new Response.ErrorListener() {
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                 AppController.getInstance().getSincronizacion().setEsperandoRespuestaDeServidor(false);
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+        });
 
-                Map<String, String> map = new HashMap<>();
-                map.put(field_name, convertirImgString(img));
-                Log.i("nachito", "ENTRO EN getParams -hast->" + map.get("fichero").toString());
+        smr.addFile("fichero", imagenPath);
 
-                return map;
-            }
-        };
-
-      request.add(stringRequest);
+        AppController.getInstance().addToRequestQueue(smr);
 
     }
 

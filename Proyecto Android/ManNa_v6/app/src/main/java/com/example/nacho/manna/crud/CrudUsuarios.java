@@ -159,7 +159,7 @@ public class CrudUsuarios {
 
             return empleado;
         }
-        cursor.close();
+      //  cursor.close();
         return null;
     }
 
@@ -189,7 +189,7 @@ public class CrudUsuarios {
             empleado.setAdmin(cursor.getString(cursor.getColumnIndex(Contrato.Usuario.ADMIN_USUARIO)));
             return empleado;
         }
-        cursor.close();
+      //  cursor.close();
         return null;
     }
 
@@ -217,7 +217,7 @@ public class CrudUsuarios {
             return empleado;
 
         }
-        cursor.close();
+      //  cursor.close();
         return null;
     }
 
@@ -240,7 +240,7 @@ public class CrudUsuarios {
             String nombre = cursor.getString(columna);
             return nombre;
         }
-        cursor.close();
+      //  cursor.close();
         return null;
     }
 
@@ -268,7 +268,7 @@ public class CrudUsuarios {
 
             registros.add(usuario);
         }
-        cursor.close();
+     //   cursor.close();
         return registros;
 
     }

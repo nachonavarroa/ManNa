@@ -36,7 +36,7 @@ import com.example.nacho.manna.crud.CrudOrdenes;
 import com.example.nacho.manna.crud.CrudUsuarios;
 import com.example.nacho.manna.pojos.OrdenDeTrabajo;
 import com.example.nacho.manna.proveedorDeContenido.Contrato;
-import com.example.nacho.manna.sync.Sincronizacion;
+import com.example.nacho.manna.volley.ImagenVoley;
 
 import java.io.FileNotFoundException;
 
@@ -56,7 +56,7 @@ public class EditOrdenActivity extends AppCompatActivity {
     Boolean validadarOk,elegirEnGaleria=false;
     Bitmap imagenCargada= null;
     long ordenId;
-    int colorRojo , colorVerde, colorNegro, colorAul;
+    int colorRojo , colorVerde, colorNegro, colorAul,contieneImagen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -410,6 +410,7 @@ public class EditOrdenActivity extends AppCompatActivity {
         editTextUbicacion.setText(orden.getUbicacion());
         editTextDescripcion.setText(orden.getDescripcion());
         editTextSintoma.setText(orden.getSintoma());
+        contieneImagen=orden.getContieneImagen();
 
     }
 
@@ -526,9 +527,12 @@ public class EditOrdenActivity extends AppCompatActivity {
             orden.setDescripcion(editTextDescripcion.getText().toString());
             orden.setEstado(estado);
             orden.setImagen(foto);
+            orden.setContieneImagen(contieneImagen);
 
             try {
                 CrudOrdenes.updateOrdenConBitacora(getContentResolver(), orden, this);
+                ImagenVoley.subirImagenServidor(getApplicationContext(),orden.getId());
+
             } catch (Exception e) {
                 Toast.makeText(this, "No existe la orden seleccionada", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MainActivityDrawer.class);

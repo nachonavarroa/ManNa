@@ -13,7 +13,6 @@ import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.nacho.manna.R;
 import com.example.nacho.manna.aplication.AppController;
@@ -31,16 +30,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.http.*;
 
-
-public class Utilidades {
-
-    final static String nombreApp = "ManNa";
-
-    //------------------------------------------------
-    //public   MultipartEntity multipartEntity
-
+public class Utilidades  extends Constantes{
 
     //--------------------------------------------------------------------------------------------
     static public void loadImageFromStorage(Context contexto, String imagenFichero, ImageView img)
@@ -79,10 +70,10 @@ public class Utilidades {
         Picasso.with(contexto).load(f).into(img);
     }
 
-    static public void loadImageDesdeServidor(Context contexto, ImageView img, long Id) {
+    static public void loadImageDesdeServidor(Context contexto, ImageView imgView, long Id) {
         Picasso.with(contexto)
                 .load(Constantes.RUTA_SERVIDOR + "/imagenes/descarga/img_" + Id + ".jpg")
-                .into(img);
+                .into(imgView);
 
 
     }
@@ -108,7 +99,7 @@ public class Utilidades {
         File carpetaManNan;
         carpetaManNan = new File(Environment.getExternalStorageDirectory()
                 + File.separator
-                + nombreApp);
+                + NOMBRE_APP);
         if (!carpetaManNan.exists()) {
             carpetaManNan.mkdir();
             return carpetaManNan;
@@ -122,7 +113,7 @@ public class Utilidades {
         File carpetaFecha;
         carpetaFecha = new File(Environment.getExternalStorageDirectory()
                 + File.separator
-                + nombreApp
+                + NOMBRE_APP
                 + File.separator
                 + fecha());
         if (!carpetaFecha.exists()) {
@@ -138,7 +129,7 @@ public class Utilidades {
         File carpetaOrden;
         carpetaOrden = new File(Environment.getExternalStorageDirectory()
                 + File.separator
-                + nombreApp
+                + NOMBRE_APP
                 + File.separator
                 + fecha()
                 + File.separator

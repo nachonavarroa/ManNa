@@ -1,12 +1,11 @@
 package com.example.nacho.manna.volley;
 
-
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.JsonArrayRequest;
+import com.android.volley.request.JsonObjectRequest;
+import com.android.volley.request.StringRequest;
 import com.example.nacho.manna.aplication.AppController;
 import com.example.nacho.manna.auxiliar.Constantes;
 import com.example.nacho.manna.crud.CrudBitacoraOrden;
@@ -70,6 +69,7 @@ public class OrdenVolley {
             jsonObject.put("ubicacion", orden.getUbicacion());
             jsonObject.put("descripcion", orden.getDescripcion());
             jsonObject.put("estado", orden.getEstado());
+            jsonObject.put("contiene_imagen",orden.getContieneImagen());
 
 
         } catch (JSONException e) {
@@ -119,6 +119,7 @@ public class OrdenVolley {
             jsonObject.put("ubicacion", orden.getUbicacion());
             jsonObject.put("descripcion", orden.getDescripcion());
             jsonObject.put("estado", orden.getEstado());
+            jsonObject.put("contiene_imagen",orden.getContieneImagen());
 
         } catch (JSONException e) {
             e.printStackTrace();

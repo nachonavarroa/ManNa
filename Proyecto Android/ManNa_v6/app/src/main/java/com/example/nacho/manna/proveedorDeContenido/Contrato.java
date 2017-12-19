@@ -25,6 +25,7 @@ public class Contrato {
         public final static String UBICACION = "Ubicacion";
         public final static String DESCRIPCION = "Descripcion";
         public final static String ESTADO = "Estado";
+        public final static String CONTIENE_IMAGEN = "Contiene_imagen";
         // -------------------------------------------------------------
 
         public final static String _fecha = "Fecha";

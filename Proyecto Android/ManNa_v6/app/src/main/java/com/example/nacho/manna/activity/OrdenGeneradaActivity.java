@@ -24,7 +24,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.nacho.manna.R;
+import com.example.nacho.manna.auxiliar.Constantes;
 import com.example.nacho.manna.auxiliar.Utilidades;
 import com.example.nacho.manna.crud.CrudOrdenes;
 import com.example.nacho.manna.crud.CrudUsuarios;
@@ -35,6 +37,7 @@ import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -100,7 +103,7 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
         introducirFechaId();
         extraeDatosUsuario();
         extraeDatosOrdenDeTrabajo();
-        generarOrden();
+        generarTextViewOrden();
         checkBoxMostrarPdf();
 
         //FloatingButtons---------------------------------------------------------------------------
@@ -146,7 +149,6 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
         textViewUbicacion = (TextView) findViewById(R.id.textViewUbicacion);
         textViewDescripcion = (TextView) findViewById(R.id.textViewDescripcion);
         fab = (FloatingActionButton) findViewById(R.id.fab_de_orden_confirmada);
-
         imageViewFoto = (ImageView) findViewById(R.id.imageButton_content_orden_generada_foto);
         imageButtonGaleria = (ImageButton) findViewById(R.id.imageButton_galeria_content_orden_generada);
         imageButtonCamara = (ImageButton) findViewById(R.id.imageButton_camara_content_orden_generada);
@@ -227,34 +229,24 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
         }
         cambioColor();
 
-        if (!OrdenConfirmada) {
-            ordenDeTrabajo.setEstado(getResources().getString(R.string.estado_pendiente));
-            Usuario usuario = CrudUsuarios.buscar(getContentResolver(),codigoOperarioString);
-            ordenDeTrabajo.setIdEmpleado(usuario.getId());
 
-            if (foto != null) {
-                ordenDeTrabajo.setImagen(foto);
-            }
+        ordenDeTrabajo.setEstado(getResources().getString(R.string.estado_pendiente));
+        Usuario usuario = CrudUsuarios.buscar(getContentResolver(), codigoOperarioString);
+        ordenDeTrabajo.setIdEmpleado(usuario.getId());
 
-            CrudOrdenes.insertOrdenConBitacora(getContentResolver(), ordenDeTrabajo, this);
-
-            Toast.makeText(contexto, getResources().
-                    getText(R.string.orden_generada_correcta), Toast.LENGTH_SHORT).show();
-
-
-            finish();
+        if (foto != null) {
+            ordenDeTrabajo.setImagen(foto);
+            ordenDeTrabajo.setContieneImagen(Constantes.SI_CONTIENE_IMAGEN);
+            ImagenVoley.subirImagenServidor(contexto, ordenDeTrabajo.getId());
         }
-        if (OrdenConfirmada) {
-            Toast.makeText(contexto, getResources().
-                    getText(R.string.orden_ya_generada), Toast.LENGTH_SHORT).show();
-            //  Intent intent = new Intent(getApplicationContext(), MainActivityDrawer.class);
-            //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        CrudOrdenes.insertOrdenConBitacora(getContentResolver(), ordenDeTrabajo, this);
 
-           // startActivity(intent);
-            finish();
-        }
+        Toast.makeText(contexto, getResources().
+                getText(R.string.orden_generada_correcta), Toast.LENGTH_SHORT).show();
 
-        OrdenConfirmada = true;
+
+        finish();
+
     }
 
 
@@ -300,11 +292,10 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
         return codigo;
     }
 
-    private void generarOrden() {
+    private void generarTextViewOrden() {
         textViewFecha.setText(getResources().getText(R.string.titulo1) + " " + fecha);
         textViewCodigo.setText(getResources().getText(R.string.titulo2) + " " + id);
         textViewNombreEmpleado.setText(getResources().getText(R.string.titulo3) + " " + nombreOperario);
-        //  textViewCodigoEmpleado.setText(getResources().getText(R.string.titulo4) + " " + "****");
         textViewPrioridad.setText(getResources().getText(R.string.titulo5) + " " + prioridad);
         textViewEstado.setText(getResources().getText(R.string.titulo6) + " " + estado);
         textViewUbicacion.setText(getResources().getText(R.string.titulo7) + " " + ubicacion);
@@ -315,7 +306,6 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
         textViewFecha.setTextColor(ContextCompat.getColor(contexto, R.color.colorAzul));
         textViewCodigo.setTextColor(ContextCompat.getColor(contexto, R.color.colorAzul));
         textViewNombreEmpleado.setTextColor(ContextCompat.getColor(contexto, R.color.colorAzul));
-        // textViewCodigoEmpleado.setTextColor(ContextCompat.getColor(contexto, R.color.colorAzul));
         textViewPrioridad.setTextColor(ContextCompat.getColor(contexto, R.color.colorAzul));
         textViewEstado.setTextColor(ContextCompat.getColor(contexto, R.color.colorAzul));
         textViewUbicacion.setTextColor(ContextCompat.getColor(contexto, R.color.colorAzul));
@@ -361,7 +351,7 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
         carpetaApp = Utilidades.crearCarpetaApp();
         carpetaFecha = Utilidades.crearCarpetaFecha();
         carpetaOrden = Utilidades.crearCarpetaOrden(ot);
-        Log.i("nachito","path fichero pdf"+path);
+        Log.i("nachito", "path fichero pdf" + path);
 
         try {
 
@@ -441,7 +431,6 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
                     imageViewFoto.setImageURI(uri);
                     foto = ((BitmapDrawable) imageViewFoto.getDrawable()).getBitmap();
 
-
                 } else {
                     //"Usuario cancela"
                 }
@@ -458,9 +447,6 @@ public class OrdenGeneradaActivity extends AppCompatActivity {
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
-
-    //subir foto--------
-
 
 }
 

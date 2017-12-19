@@ -19,18 +19,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import com.example.nacho.manna.activity.EditOrdenActivity;
-import com.example.nacho.manna.auxiliar.Utilidades;
-import com.example.nacho.manna.crud.CrudUsuarios;
-import com.example.nacho.manna.pojos.Usuario;
-import com.example.nacho.manna.proveedorDeContenido.Contrato;
 import com.example.nacho.manna.R;
-import com.example.nacho.manna.crud.CrudOrdenes;
+import com.example.nacho.manna.activity.EditOrdenActivity;
 import com.example.nacho.manna.adapter.VerOrdenesAdapter;
-import com.example.nacho.manna.aplication.AppController;
+import com.example.nacho.manna.auxiliar.Utilidades;
+import com.example.nacho.manna.crud.CrudOrdenes;
+import com.example.nacho.manna.proveedorDeContenido.Contrato;
 import com.example.nacho.manna.sync.Sincronizacion;
 
-public class VerOrdenesFragmentList extends ListFragment
+public class VerOrdenesPendientesFragmentList extends ListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
 
@@ -40,7 +37,7 @@ public class VerOrdenesFragmentList extends ListFragment
     ActionMode mActionMode;
     View viewselect;
 
-    public VerOrdenesFragmentList() {
+    public VerOrdenesPendientesFragmentList() {
     }
 
 
@@ -48,7 +45,7 @@ public class VerOrdenesFragmentList extends ListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        Sincronizacion.forzarSincronizacion(getContext());
+
     }
 
     @Override
@@ -194,8 +191,9 @@ public class VerOrdenesFragmentList extends ListFragment
 
         Uri baseUri = Contrato.Orden.CONTENT_URI;
         String selection = null;
+        String where =Contrato.Orden.ESTADO+" = "+"'Pendiente'";
         CursorLoader cursorLoader =new CursorLoader(getActivity(), baseUri, campos,
-                selection, null, null);
+                where, null, null);
 
         return cursorLoader;
     }

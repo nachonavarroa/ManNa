@@ -53,9 +53,38 @@ public class DrawerFragment extends Fragment {
                 FragmentTransaction transactionOrdenes = getFragmentManager().beginTransaction();
                 transactionOrdenes.add(R.id.frameLayout_fragment_drawer_ver_ordenes,verOrdenesFragmentList);
                 transactionOrdenes.commit();
+
                 break;
 
             case 1:
+                view = inflater.inflate(R.layout.fragment_drawer_ver_ordenes_pendientes,container,false);
+                VerOrdenesPendientesFragmentList verOrdenesFragmentListPend = new VerOrdenesPendientesFragmentList();
+                FragmentTransaction transactionOrdenesPendientes = getFragmentManager().beginTransaction();
+                transactionOrdenesPendientes.add(R.id.frameLayout_fragment_drawer_ver_ordenes_pendientes,verOrdenesFragmentListPend);
+                transactionOrdenesPendientes.commit();
+
+                break;
+
+            case 2:
+                view = inflater.inflate(R.layout.fragment_drawer_ver_ordenes_proceso,container,false);
+                VerOrdenesProcesoFragmentList verOrdenesProcesoFragmentList = new VerOrdenesProcesoFragmentList();
+                FragmentTransaction transactionOrdenesProceso = getFragmentManager().beginTransaction();
+                transactionOrdenesProceso.add(R.id.frameLayout_fragment_drawer_ver_ordenes_proceso,verOrdenesProcesoFragmentList);
+                transactionOrdenesProceso.commit();
+
+                break;
+
+            case 3:
+                view = inflater.inflate(R.layout.fragment_drawer_ver_ordenes_realizado,container,false);
+                VerOrdenesRealizadoFragmentList verOrdenesRealizadoFragmentList = new VerOrdenesRealizadoFragmentList();
+                FragmentTransaction transactionOrdenesRealizado = getFragmentManager().beginTransaction();
+                transactionOrdenesRealizado.add(R.id.frameLayout_fragment_drawer_ver_ordenes_realizado,verOrdenesRealizadoFragmentList);
+                transactionOrdenesRealizado.commit();
+
+
+                break;
+
+            case 4:
                 view = inflater.inflate(R.layout.fragment_drawer_ver_usuarios,container,false);
                 VerUsuariosFragmentList verEmpleadosFragmentList = new VerUsuariosFragmentList();
                 FragmentTransaction transactionEmpleados = getFragmentManager().beginTransaction();
@@ -63,7 +92,7 @@ public class DrawerFragment extends Fragment {
                 transactionEmpleados.commit();
                 break;
 
-            case 2:
+            case 5:
                 view = inflater.inflate(R.layout.fragment_drawer_ayuda, container, false);
                 TextView textViewfragmentoTituloAyuda =
                         view.findViewById(R.id.textView_fragmen_drawer_titulo_ayuda);
@@ -80,7 +109,7 @@ public class DrawerFragment extends Fragment {
 
                 break;
 
-            case 3:
+            case 6:
                 view = inflater.inflate(R.layout.activity_autor, container, false);
                 FragmentTransaction transactionAutor = getFragmentManager().beginTransaction();
                 transactionAutor.commit();
@@ -97,24 +126,6 @@ public class DrawerFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-/*
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach (context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException (context.toString ()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach ();
-        mListener = null;
-    }
-*/
 
     public interface OnFragmentInteractionListener {
 

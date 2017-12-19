@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,11 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.nacho.manna.R;
 import com.example.nacho.manna.activity.EditOrdenActivity;
 import com.example.nacho.manna.activity.VerImagenActivity;
+import com.example.nacho.manna.auxiliar.Constantes;
 import com.example.nacho.manna.auxiliar.Utilidades;
+import com.example.nacho.manna.crud.CrudOrdenes;
 import com.example.nacho.manna.crud.CrudUsuarios;
+import com.example.nacho.manna.pojos.OrdenDeTrabajo;
 import com.example.nacho.manna.proveedorDeContenido.Contrato;
 import com.example.nacho.manna.sync.Sincronizacion;
 
@@ -32,6 +36,8 @@ public class VerOrdenesAdapter extends CursorAdapter {
     int color;
     ProgressBar progressBar;
     ImageView imageViewFoto;
+    OrdenDeTrabajo orden;
+
 
     public VerOrdenesAdapter(Context context) {
         super(context, null, false);
@@ -54,15 +60,15 @@ public class VerOrdenesAdapter extends CursorAdapter {
 
     public void bindView(View view, final Context context, Cursor cursor) {
 
-        final long Id = cursor.getLong(cursor.getColumnIndex(Contrato.Orden._ID));
+        final long IdOrden = cursor.getLong(cursor.getColumnIndex(Contrato.Orden._ID));
         String fecha = cursor.getString(cursor.getColumnIndex(Contrato.Orden.FECHA));
         String prioridad = cursor.getString(cursor.getColumnIndex(Contrato.Orden.PRIORIDAD));
         String sintoma = cursor.getString(cursor.getColumnIndex(Contrato.Orden.SINTOMA));
         String ubicacion = cursor.getString(cursor.getColumnIndex(Contrato.Orden.UBICACION));
         String descripcion = cursor.getString(cursor.getColumnIndex(Contrato.Orden.DESCRIPCION));
         String estado = cursor.getString(cursor.getColumnIndex(Contrato.Orden.ESTADO));
-        String referencia =  Utilidades.referencia(Id);
-        String nombre = CrudUsuarios.buscarUsuarioEnOrden(context,context.getContentResolver(),Id);
+        String referencia = Utilidades.referencia(IdOrden);
+        String nombre = CrudUsuarios.buscarUsuarioEnOrden(context, context.getContentResolver(), IdOrden);
 
 
         TextView textViewRef = (TextView) view.findViewById(R.id.textView_item_orden_referencia);
@@ -71,11 +77,11 @@ public class VerOrdenesAdapter extends CursorAdapter {
         TextView textViewFecha = (TextView) view.findViewById(R.id.textView_item_orden_fecha);
         textViewFecha.setText(Contrato.Orden._fecha + ": " + fecha);
 
-        TextView textViewNombre = (TextView)  view.findViewById(R.id.textView_item_orden_nombreEmpleado);
-        textViewNombre.setText("Creado por: "+nombre);
+        TextView textViewNombre = (TextView) view.findViewById(R.id.textView_item_orden_nombreEmpleado);
+        textViewNombre.setText("Creado por: " + nombre);
 
         TextView textViewCodigo = (TextView) view.findViewById(R.id.textView_item_orden_codigo);
-        textViewCodigo.setText(Contrato.Orden._codigoOrden + ": " + Long.toString(Id));
+        textViewCodigo.setText(Contrato.Orden._codigoOrden + ": " + Long.toString(IdOrden));
 
         TextView textViewPrioridad = (TextView) view.findViewById(R.id.textView_item_orden_prioridad);
         textViewPrioridad.setText(Contrato.Orden._prioridad_ + ": " + prioridad);
@@ -109,44 +115,52 @@ public class VerOrdenesAdapter extends CursorAdapter {
             color = ContextCompat.getColor(context, R.color.colorVerdeDark);
         }
 
+//--------------------
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBarImagenOrden);
+        progressBar.setVisibility(View.GONE);
 
-        int x = 0;
+        orden = CrudOrdenes.readRecord(context.getContentResolver(), IdOrden);
+      //  Log.i("Nachito","ID : "+IdOrden);
 
-        progressBar= (ProgressBar) view.findViewById(R.id.progressBarImagenOrden);
-
+        int contieneImagen=0;
+        int imagenEnStorage = 0;
 
         try {
-            Utilidades.loadImageFromStorage(context, "img_" + Id + ".jpg", imageViewFoto);
-            Bitmap controlImagen = ((BitmapDrawable) imageViewFoto.getDrawable()).getBitmap();
+            contieneImagen = orden.getContieneImagen();
+            Utilidades.loadImageFromStorage(context, "img_" + IdOrden + ".jpg", imageViewFoto);
+            Bitmap imagenEnImageView = ((BitmapDrawable) imageViewFoto.getDrawable()).getBitmap();
 
-            if (controlImagen.getByteCount()>0){
-                x = 1;
+            if (imagenEnImageView.getByteCount() > 0) {
+                imagenEnStorage = 1;
             }
+
         } catch (Exception e) {
-            x = -1;
+            imagenEnStorage = -1;
+
         }
+
         try {
-            if (x == -1){
-              //  Utilidades.loadImageFromStorage(context, "img_" + Id + ".jpg", imageViewfoto);
-
-                Utilidades.loadImageDesdeServidor(context, imageViewFoto, Id);
-                Bitmap bitmap = ((BitmapDrawable) imageViewFoto.getDrawable()).getBitmap();
-                Utilidades.storeImage(bitmap, context, "img_" + Id + ".jpg");
+            if (contieneImagen == Constantes.SI_CONTIENE_IMAGEN && imagenEnStorage == -1) {
                 progressBar.setVisibility(View.VISIBLE);
-               // Toast.makeText(context,"Descargando imagen",Toast.LENGTH_SHORT).show();
-
+                Utilidades.loadImageDesdeServidor(context, imageViewFoto, IdOrden);
+                Bitmap bitmap = ((BitmapDrawable) imageViewFoto.getDrawable()).getBitmap();
+                Utilidades.storeImage(bitmap, context, "img_" + IdOrden + ".jpg");
             }
-
-            Bitmap img =(Utilidades.loadImgeFromStorageReturnBitmap(context,"img_" + Id + ".jpg"));
+            Bitmap img =(Utilidades.loadImgeFromStorageReturnBitmap(context,"img_" + IdOrden + ".jpg"));
             if(img!=null) {
                 progressBar.setVisibility(View.GONE);
             }
 
-
-
         } catch (Exception e) {
+            e.printStackTrace();
             imageViewFoto.setImageDrawable(null);
         }
+
+
+
+
+
+//---------------------
 
         int lenghtRef = referencia.length();
 
@@ -161,10 +175,10 @@ public class VerOrdenesAdapter extends CursorAdapter {
             public void onClick(View view) {
                 Sincronizacion.forzarSincronizacion(context);
                 Intent intent = new Intent(context, EditOrdenActivity.class);
-                intent.putExtra(Contrato.Orden._ID, Id);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP  | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra(Contrato.Orden._ID, IdOrden);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 context.startActivity(intent);
-                ((Activity)context).finish();
+                ((Activity) context).finish();
 
             }
         });
@@ -174,15 +188,23 @@ public class VerOrdenesAdapter extends CursorAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, VerImagenActivity.class);
-                intent.putExtra(Contrato.Orden._ID, Id);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP  | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra(Contrato.Orden._ID, IdOrden);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 context.startActivity(intent);
-                ((Activity)context).finish();
+                ((Activity) context).finish();
 
             }
         });
 
-        view.setTag(Id);
+
+        view.setTag(IdOrden);
+
+    }
+
+
+
+    public static void recibirImagenesServidor() {
+
 
     }
 }

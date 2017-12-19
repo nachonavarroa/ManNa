@@ -15,12 +15,13 @@ public class OrdenDeTrabajo implements Parcelable {
     private String ubicacion;
     private String descripcion;
     private String estado;
+    private int contieneImagen;
     private Bitmap imagen;
 
 
     public OrdenDeTrabajo(long id, int idEmpleado, String fecha,
                           String prioridad, String sintoma, String ubicacion,
-                          String descripcion, String estado) {
+                          String descripcion, String estado,int contieneImagen) {
         this.id = id;
         this.idEmpleado = idEmpleado;
         this.fecha = fecha;
@@ -29,6 +30,8 @@ public class OrdenDeTrabajo implements Parcelable {
         this.ubicacion = ubicacion;
         this.descripcion = descripcion;
         this.estado = estado;
+        this.contieneImagen= contieneImagen;
+
     }
 
     public OrdenDeTrabajo() {
@@ -40,6 +43,7 @@ public class OrdenDeTrabajo implements Parcelable {
         this.ubicacion = Constantes.SIN_VALOR_STRING;
         this.descripcion = Constantes.SIN_VALOR_STRING;
         this.estado =  Constantes.SIN_VALOR_STRING;
+        this.contieneImagen = Constantes.SIN_VALOR_INT;
         this.imagen = null;
     }
 
@@ -54,6 +58,7 @@ public class OrdenDeTrabajo implements Parcelable {
         ubicacion = in.readString();
         descripcion = in.readString();
         estado = in.readString();
+        contieneImagen = in.readInt();
     }
 
     public static final Creator<OrdenDeTrabajo> CREATOR = new Creator<OrdenDeTrabajo>() {
@@ -141,6 +146,14 @@ public class OrdenDeTrabajo implements Parcelable {
         this.descripcion = descripcion;
     }
 
+    public int getContieneImagen() {
+        return contieneImagen;
+    }
+
+    public void setContieneImagen(int contieneImagen) {
+        this.contieneImagen = contieneImagen;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -156,6 +169,7 @@ public class OrdenDeTrabajo implements Parcelable {
         dest.writeString(ubicacion);
         dest.writeString(descripcion);
         dest.writeString(estado);
+        dest.writeInt(contieneImagen);
 
 
     }

@@ -50,7 +50,7 @@ public class VerUsuariosAdapter extends CursorAdapter {
         int codigoEmpleado = cursor.getInt(cursor.getColumnIndex(Contrato.Usuario.CODIGO_USUARIO));
         String nombreEmpleado = cursor.getString(cursor.getColumnIndex(Contrato.Usuario.NOMBRE_USUARIO));
         String admin = cursor.getString(cursor.getColumnIndex(Contrato.Usuario.ADMIN_USUARIO));
-        String empl = "Usuario: ";
+
 
         if (admin.equals(context.getResources().getText(R.string.string_si)))
             admin = "Usuario administrador";
@@ -58,13 +58,19 @@ public class VerUsuariosAdapter extends CursorAdapter {
 
 
         TextView textViewNombreEmpleado = (TextView) view.findViewById(R.id.textView_item_empleado_nombre);
-        textViewNombreEmpleado.setText(empl + nombreEmpleado);
+        textViewNombreEmpleado.setText(nombreEmpleado);
+
 
         TextView textViewAdminEmpleado = (TextView) view.findViewById(R.id.textView_item_empleado_admin);
+
+        textViewAdminEmpleado.setVisibility(View.VISIBLE);
 
         if (Utilidades.permisoAdministrador(context)) {
             textViewAdminEmpleado.setText(admin);
         } else {
+            textViewAdminEmpleado.setVisibility(View.GONE);
+        }
+        if(textViewAdminEmpleado.getText().length()<1){
             textViewAdminEmpleado.setVisibility(View.GONE);
         }
 

@@ -32,7 +32,7 @@ public class ProveedorContenido extends ContentProvider {
     public DBHelper dbHelper;
 
    public static final String DATABASE_NAME = "Manna.db";
-   public static final int DATABASE_VERSION = 63;
+   public static final int DATABASE_VERSION = 65;
 
     private static final String ORDEN_TABLE_NAME = Contrato.Orden.NOMBRE_TABLA;
     private static final String EMPLEADO_TABLE_NAME = Contrato.Usuario.NOMBRE_TABLA;

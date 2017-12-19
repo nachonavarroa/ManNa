@@ -9,7 +9,7 @@
     tools:context=".activity.MainActivityDrawer">
 
     <FrameLayout
-        android:id="@+id/frameLayout_fragment_drawer_ver_ordenes"
+        android:id="@+id/frameLayout_fragment_drawer_ver_ordenes_pendientes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">

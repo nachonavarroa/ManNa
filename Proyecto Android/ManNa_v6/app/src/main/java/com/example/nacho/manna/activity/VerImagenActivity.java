@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -41,6 +42,7 @@ public class VerImagenActivity extends AppCompatActivity {
         actionBar.setIcon(R.mipmap.ic_launcher);
         actionBar.setTitle(getResources().getText(R.string.app_name));
 
+
         //----------------------------
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -58,7 +60,7 @@ public class VerImagenActivity extends AppCompatActivity {
 
         ordenId = this.getIntent().getExtras().getLong(Contrato.Orden._ID);
         imageView = findViewById(R.id.imageViewOrden);
-        actionBar.setSubtitle("img_" + ordenId + ".jpg");
+        actionBar.setSubtitle(Html.fromHtml("<font color='#FFFffff'>img_" + ordenId + ".jpg </font>"));
 
 
         try {

@@ -10,12 +10,14 @@ import android.text.TextUtils;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.cache.LruImageCache;
+import com.android.volley.cache.plus.ImageCache;
+import com.android.volley.cache.plus.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.example.nacho.manna.auxiliar.Constantes;
 import com.example.nacho.manna.proveedorDeContenido.Contrato;
 import com.example.nacho.manna.sync.Sincronizacion;
-import com.example.nacho.manna.volley.Utils.LruBitmapCache;
+/*import com.example.nacho.manna.volley.Utils.LruBitmapCache;*/
 
 
 public class AppController extends Application {
@@ -70,7 +72,8 @@ public class AppController extends Application {
         getRequestQueue();
         if (mImageLoader == null) {
             mImageLoader = new ImageLoader(this.mRequestQueue,
-                    new LruBitmapCache());
+                   // new LruBitmapCache());
+            (ImageCache) new LruImageCache());
         }
         return this.mImageLoader;
     }

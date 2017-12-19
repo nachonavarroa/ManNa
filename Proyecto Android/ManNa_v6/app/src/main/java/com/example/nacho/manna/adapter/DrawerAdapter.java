@@ -21,7 +21,7 @@ public class DrawerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 7;
     }
 
     @Override
@@ -33,11 +33,16 @@ public class DrawerAdapter extends FragmentPagerAdapter {
             case 0:
                 return tabsDrawer.getVerOrdenes();
             case 1:
-                return tabsDrawer.getVerEmpleados();
+                return tabsDrawer.getVerOrdenesPendientes();
             case 2:
-                return tabsDrawer.getAyuda();
-
+                return tabsDrawer.getVerOrdenesProceso();
             case 3:
+                return tabsDrawer.getVerOrdenesRealizado();
+            case 4:
+                return tabsDrawer.getVerEmpleados();
+            case 5:
+                return tabsDrawer.getAyuda();
+            case 6:
                 return tabsDrawer.getAutor();
 
 

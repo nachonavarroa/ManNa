@@ -4,9 +4,9 @@ package com.example.nacho.manna.sync;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.nacho.manna.auxiliar.Constantes;
+import com.example.nacho.manna.auxiliar.Utilidades;
 import com.example.nacho.manna.crud.CrudBitacoraOrden;
 import com.example.nacho.manna.crud.CrudBitacoraUsuario;
 import com.example.nacho.manna.crud.CrudOrdenes;
@@ -30,7 +30,6 @@ public class Sincronizacion {
     private static Context contexto;
     private static boolean esperandoRespuestaDeServidor = false;
 
-
     public Sincronizacion(Context contexto) {
         this.resolvedor = contexto.getContentResolver();
         this.contexto = contexto;
@@ -48,8 +47,10 @@ public class Sincronizacion {
         Sincronizacion.esperandoRespuestaDeServidor = esperandoRespuestaDeServidor;
     }
 
-    public synchronized boolean sincronizar() {
+    public synchronized boolean sincronizar(Context context) {
         //   Log.i("sincronizacion", "SINCRONIZAR");
+
+       Utilidades.deleteCache(context);
 
         if (isEsperandoRespuestaDeServidor()) {
             return true;
@@ -59,7 +60,7 @@ public class Sincronizacion {
         recibirActualizacionesDelServidor();
         //filtro
         try {
-            Thread.sleep(600);
+            Thread.sleep(800);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -68,8 +69,9 @@ public class Sincronizacion {
     }
 
     public static void forzarSincronizacion(Context contexto) {
+
         Sincronizacion sync = new Sincronizacion(contexto);
-        sync.sincronizar();
+        sync.sincronizar(contexto);
     }
 
     public static void enviarActualizacionesAlServidor() {
@@ -78,13 +80,9 @@ public class Sincronizacion {
     }
 
     public static void recibirActualizacionesDelServidor() {
+
         recibirActualizacionesOrdenDelServidor();
         recibirActualizacionesUsuarioDelServidor();
-
-
-    }
-
-    public static void enviarActualizacionesImagenAlServidor() {
 
 
     }
@@ -127,6 +125,7 @@ public class Sincronizacion {
             switch (bitacora.getOperacion()) {
                 case Constantes.OPERACION_INSERTAR:
                     try {
+
                         orden = CrudOrdenes.readRecord(resolvedor, bitacora.getID_Orden());
                         OrdenVolley.addOrden(orden, true, bitacora.getID());
 
@@ -157,8 +156,11 @@ public class Sincronizacion {
         ArrayList<BitacoraOrden> bitacora;
         bitacora = CrudBitacoraOrden.readAll(resolvedor);
         // Log.i("nachito", "size bitacora" + String.valueOf(bitacora.size()));
-        if (bitacora.size() == 0)
+        if (bitacora.size() == 0){
             OrdenVolley.getAllOrden();
+
+        }
+
 
     }
 
@@ -202,7 +204,8 @@ public class Sincronizacion {
                         objJson.getString("sintoma"),
                         objJson.getString("ubicacion"),
                         objJson.getString("descripcion"),
-                        objJson.getString("estado"))
+                        objJson.getString("estado"),
+                        objJson.getInt("contiene_imagen") )
                 );
 
             }
