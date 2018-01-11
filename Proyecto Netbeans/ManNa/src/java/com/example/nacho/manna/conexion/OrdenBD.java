@@ -39,7 +39,8 @@ public class OrdenBD {
                 registro.setUbicacion(rs.getString("Ubicacion"));
                 registro.setDescripcion(rs.getString("Descripcion"));
                 registro.setEstado(rs.getString("Estado"));
-
+                registro.setContiene_imagen(rs.getInt("Contiene_imagen"));
+                
                 registros.add(registro);
             }
             return registros;
@@ -83,6 +84,7 @@ public class OrdenBD {
                 registro.setUbicacion(rs.getString("Ubicacion"));
                 registro.setDescripcion(rs.getString("Descripcion"));
                 registro.setEstado(rs.getString("Estado"));
+                registro.setContiene_imagen(rs.getInt("Contiene_imagen"));
 
                 return registro;
             }
@@ -113,7 +115,7 @@ public class OrdenBD {
             String query;
 
             query = "INSERT INTO orden (_id,id_empleado, Fecha, "
-                    + "Prioridad, Sintoma, Ubicacion, Descripcion, Estado) "
+                    + "Prioridad, Sintoma, Ubicacion, Descripcion, Estado,Contiene_imagen) "
                     + "VALUES ("
                     + orden.getId() + ", "
                     + orden.getIdEmpleado()
@@ -122,7 +124,9 @@ public class OrdenBD {
                     + "'" + orden.getSintoma() + "', "
                     + "'" + orden.getUbicacion() + "', "
                     + "'" + orden.getDescripcion() + "', "
-                    + "'" + orden.getEstado() + "' )";
+                    + "'" + orden.getEstado() + "', "
+                    +  orden.getContiene_imagen() 
+                    +" )" ;
 
             ps = conexion.prepareStatement(query);
             ps.executeUpdate();

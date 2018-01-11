@@ -18,26 +18,45 @@ public class ProveedorContenido extends ContentProvider {
     private final static int ORDENES_ONE_REG = 1;
     private final static int ORDENES_ALL_REGS = 2;
 
-    private final static int EMPLEADO_ONE_REG = 3;
-    private final static int EMPLEADO_ALL_REGS = 4;
+    private final static int USUARIO_ONE_REG = 3;
+    private final static int USUARIO_ALL_REGS = 4;
 
-    private final static int BITACORA_ORDEN_ONE_REG = 5;
-    private final static int BITACORA_ORDEN_ALL_REGS = 6;
+    private final static int TAREA_ONE_REG = 5;
+    private final static int TAREA_ALL_REGS = 6;
 
-    private final static int BITACORA_USUARIO_ONE_REG = 7;
-    private final static int BITACORA_USUARIO_ALL_REGS = 8;
+    private final static int OPERARIOS_ONE_REG = 7;
+    private final static int OPERARIOS_ALL_REGS = 8;
+
+    private final static int BITACORA_ORDEN_ONE_REG = 9;
+    private final static int BITACORA_ORDEN_ALL_REGS = 10;
+
+    private final static int BITACORA_USUARIO_ONE_REG = 11;
+    private final static int BITACORA_USUARIO_ALL_REGS = 12;
+
+    private final static int BITACORA_TAREA_ONE_REG = 13;
+    private final static int BITACORA_TAREA_ALL_REGS = 14;
+
+    private final static int BITACORA_OPERARIOS_ONE_REG = 15;
+    private final static int BITACORA_OPERARIOS_ALL_REGS = 16;
 
 
     private SQLiteDatabase sqLiteDatabase;
     public DBHelper dbHelper;
 
-   public static final String DATABASE_NAME = "Manna.db";
-   public static final int DATABASE_VERSION = 65;
+    public static final String DATABASE_NAME = "Manna.db";
+    public static final int DATABASE_VERSION = 692;
 
     private static final String ORDEN_TABLE_NAME = Contrato.Orden.NOMBRE_TABLA;
-    private static final String EMPLEADO_TABLE_NAME = Contrato.Usuario.NOMBRE_TABLA;
+    private static final String USUARIO_TABLE_NAME = Contrato.Usuario.NOMBRE_TABLA;
+
+    private static final String TAREA_TABLE_NAME = Contrato.Tarea.NOMBRE_TABLA;
+    private static final String OPRERARIOS_TABLE_NAME = Contrato.Operarios.NOMBRE_TABLA;
+
     private static final String BITACORA_ORDEN_TABLE_NAME = Contrato.BitacoraOrden.NOMBRE_TABLA;
     private static final String BITACORA_USUARIO_TABLE_NAME = Contrato.BitacoraUsuario.NOMBRE_TABLA;
+
+    private static final String BITACORA_TAREA_TABLE_NAME = Contrato.BitacoraTarea.NOMBRE_TABLA;
+    private static final String BITACORA_OPERARIOS_TABLE_NAME = Contrato.BitacoraOperarios.NOMBRE_TABLA;
 
     private static final UriMatcher mUriMatcher = new UriMatcher(0);
     private static final SparseArray<String> sMimeTypes;
@@ -47,14 +66,26 @@ public class ProveedorContenido extends ContentProvider {
         mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.Orden.NOMBRE_TABLA, ORDENES_ALL_REGS);
         mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.Orden.NOMBRE_TABLA + "/#", ORDENES_ONE_REG);
 
-        mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.Usuario.NOMBRE_TABLA, EMPLEADO_ALL_REGS);
-        mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.Usuario.NOMBRE_TABLA + "/#", EMPLEADO_ONE_REG);
+        mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.Usuario.NOMBRE_TABLA, USUARIO_ALL_REGS);
+        mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.Usuario.NOMBRE_TABLA + "/#", USUARIO_ONE_REG);
+
+        mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.Tarea.NOMBRE_TABLA, TAREA_ALL_REGS);
+        mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.Tarea.NOMBRE_TABLA + "/#", TAREA_ONE_REG);
+
+        mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.Operarios.NOMBRE_TABLA, OPERARIOS_ALL_REGS);
+        mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.Operarios.NOMBRE_TABLA + "/#", OPERARIOS_ALL_REGS);
 
         mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.BitacoraOrden.NOMBRE_TABLA, BITACORA_ORDEN_ALL_REGS);
         mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.BitacoraOrden.NOMBRE_TABLA + "/#", BITACORA_ORDEN_ONE_REG);
 
         mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.BitacoraUsuario.NOMBRE_TABLA, BITACORA_USUARIO_ALL_REGS);
         mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.BitacoraUsuario.NOMBRE_TABLA + "/#", BITACORA_USUARIO_ONE_REG);
+
+        mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.BitacoraTarea.NOMBRE_TABLA, BITACORA_TAREA_ALL_REGS);
+        mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.BitacoraTarea.NOMBRE_TABLA + "/#", BITACORA_TAREA_ONE_REG);
+
+        mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.BitacoraOperarios.NOMBRE_TABLA, BITACORA_OPERARIOS_ALL_REGS);
+        mUriMatcher.addURI(Contrato.AUTHORITY, Contrato.BitacoraOperarios.NOMBRE_TABLA + "/#", BITACORA_OPERARIOS_ONE_REG);
 
         sMimeTypes = new SparseArray<String>();
 
@@ -64,11 +95,23 @@ public class ProveedorContenido extends ContentProvider {
         sMimeTypes.put(ORDENES_ONE_REG, "vnd.android.cursor.item/vnd." + Contrato.AUTHORITY + "."
                 + Contrato.Orden.NOMBRE_TABLA);
 
-        sMimeTypes.put(EMPLEADO_ALL_REGS, "vnd.android.cursor.dir/vnd." + Contrato.AUTHORITY + "."
+        sMimeTypes.put(USUARIO_ALL_REGS, "vnd.android.cursor.dir/vnd." + Contrato.AUTHORITY + "."
                 + Contrato.Usuario.NOMBRE_TABLA);
 
-        sMimeTypes.put(EMPLEADO_ONE_REG, "vnd.android.cursor.item/vnd." + Contrato.AUTHORITY + "."
+        sMimeTypes.put(USUARIO_ONE_REG, "vnd.android.cursor.item/vnd." + Contrato.AUTHORITY + "."
                 + Contrato.Usuario.NOMBRE_TABLA);
+
+        sMimeTypes.put(TAREA_ALL_REGS, "vnd.android.cursor.dir/vnd." + Contrato.AUTHORITY + "."
+                + Contrato.Tarea.NOMBRE_TABLA);
+
+        sMimeTypes.put(TAREA_ONE_REG, "vnd.android.cursor.item/vnd." + Contrato.AUTHORITY + "."
+                + Contrato.Tarea.NOMBRE_TABLA);
+
+        sMimeTypes.put(OPERARIOS_ALL_REGS, "vnd.android.cursor.dir/vnd." + Contrato.AUTHORITY + "."
+                + Contrato.Operarios.NOMBRE_TABLA);
+
+        sMimeTypes.put(OPERARIOS_ONE_REG, "vnd.android.cursor.item/vnd." + Contrato.AUTHORITY + "."
+                + Contrato.Operarios.NOMBRE_TABLA);
 
         sMimeTypes.put(BITACORA_ORDEN_ALL_REGS, "vnd.android.cursor.dir/vnd." + Contrato.AUTHORITY + "."
                 + Contrato.BitacoraOrden.NOMBRE_TABLA);
@@ -81,6 +124,18 @@ public class ProveedorContenido extends ContentProvider {
 
         sMimeTypes.put(BITACORA_USUARIO_ONE_REG, "vnd.android.cursor.item/vnd." + Contrato.AUTHORITY + "."
                 + Contrato.BitacoraUsuario.NOMBRE_TABLA);
+
+        sMimeTypes.put(BITACORA_TAREA_ALL_REGS, "vnd.android.cursor.dir/vnd." + Contrato.AUTHORITY + "."
+                + Contrato.BitacoraTarea.NOMBRE_TABLA);
+
+        sMimeTypes.put(BITACORA_TAREA_ONE_REG, "vnd.android.cursor.item/vnd." + Contrato.AUTHORITY + "."
+                + Contrato.BitacoraTarea.NOMBRE_TABLA);
+
+        sMimeTypes.put(BITACORA_OPERARIOS_ALL_REGS, "vnd.android.cursor.dir/vnd." + Contrato.AUTHORITY + "."
+                + Contrato.BitacoraOperarios.NOMBRE_TABLA);
+
+        sMimeTypes.put(BITACORA_OPERARIOS_ONE_REG, "vnd.android.cursor.item/vnd." + Contrato.AUTHORITY + "."
+                + Contrato.BitacoraOperarios.NOMBRE_TABLA);
     }
 
     public ProveedorContenido() {
@@ -109,18 +164,38 @@ public class ProveedorContenido extends ContentProvider {
                         + uri.getLastPathSegment();
                 table = ORDEN_TABLE_NAME;
                 break;
+
             case ORDENES_ALL_REGS:
                 table = ORDEN_TABLE_NAME;
                 break;
-            case EMPLEADO_ONE_REG:
+            case USUARIO_ONE_REG:
                 if (null == selection) selection = "";
                 selection += Contrato.Usuario._ID + " = "
                         + uri.getLastPathSegment();
-                table = EMPLEADO_TABLE_NAME;
+                table = USUARIO_TABLE_NAME;
                 break;
-            case EMPLEADO_ALL_REGS:
-                table = EMPLEADO_TABLE_NAME;
+            case USUARIO_ALL_REGS:
+                table = USUARIO_TABLE_NAME;
                 break;
+            case TAREA_ONE_REG:
+                if (null == selection) selection = "";
+                selection += Contrato.Tarea._ID + " = "
+                        + uri.getLastPathSegment();
+                table = TAREA_TABLE_NAME;
+                break;
+            case TAREA_ALL_REGS:
+                table = TAREA_TABLE_NAME;
+                break;
+            case OPERARIOS_ONE_REG:
+                if (null == selection) selection = "";
+                selection += Contrato.Operarios._ID + " = "
+                        + uri.getLastPathSegment();
+                table = OPRERARIOS_TABLE_NAME;
+                break;
+            case OPERARIOS_ALL_REGS:
+                table = OPRERARIOS_TABLE_NAME;
+                break;
+
             case BITACORA_ORDEN_ONE_REG:
                 if (null == selection) selection = "";
                 selection += Contrato.BitacoraOrden._ID + " = "
@@ -138,6 +213,24 @@ public class ProveedorContenido extends ContentProvider {
                 break;
             case BITACORA_USUARIO_ALL_REGS:
                 table = BITACORA_USUARIO_TABLE_NAME;
+                break;
+            case BITACORA_TAREA_ONE_REG:
+                if (null == selection) selection = "";
+                selection += Contrato.BitacoraTarea._ID + " = "
+                        + uri.getLastPathSegment();
+                table = BITACORA_TAREA_TABLE_NAME;
+                break;
+            case BITACORA_TAREA_ALL_REGS:
+                table = BITACORA_TAREA_TABLE_NAME;
+                break;
+            case BITACORA_OPERARIOS_ONE_REG:
+                if (null == selection) selection = "";
+                selection += Contrato.BitacoraOperarios._ID + " = "
+                        + uri.getLastPathSegment();
+                table = BITACORA_OPERARIOS_TABLE_NAME;
+                break;
+            case BITACORA_OPERARIOS_ALL_REGS:
+                table = BITACORA_OPERARIOS_TABLE_NAME;
                 break;
 
         }
@@ -165,14 +258,26 @@ public class ProveedorContenido extends ContentProvider {
             case ORDENES_ALL_REGS:
                 table = Contrato.Orden.NOMBRE_TABLA;
                 break;
-            case EMPLEADO_ALL_REGS:
+            case USUARIO_ALL_REGS:
                 table = Contrato.Usuario.NOMBRE_TABLA;
+                break;
+            case TAREA_ALL_REGS:
+                table = Contrato.Tarea.NOMBRE_TABLA;
+                break;
+            case OPERARIOS_ALL_REGS:
+                table = Contrato.Operarios.NOMBRE_TABLA;
                 break;
             case BITACORA_ORDEN_ALL_REGS:
                 table = Contrato.BitacoraOrden.NOMBRE_TABLA;
                 break;
             case BITACORA_USUARIO_ALL_REGS:
                 table = Contrato.BitacoraUsuario.NOMBRE_TABLA;
+                break;
+            case BITACORA_TAREA_ALL_REGS:
+                table = Contrato.BitacoraTarea.NOMBRE_TABLA;
+                break;
+            case BITACORA_OPERARIOS_ALL_REGS:
+                table = Contrato.BitacoraOperarios.NOMBRE_TABLA;
                 break;
         }
 
@@ -209,18 +314,42 @@ public class ProveedorContenido extends ContentProvider {
                 qb.setTables(Contrato.Orden.NOMBRE_TABLA);
 
                 break;
-            case EMPLEADO_ONE_REG:
+            case USUARIO_ONE_REG:
                 if (null == selection) selection = "";
                 selection += Contrato.Usuario._ID + " = " + uri.getLastPathSegment();
                 qb.setTables(Contrato.Usuario.NOMBRE_TABLA);
 
                 break;
-            case EMPLEADO_ALL_REGS:
-                if (TextUtils.isEmpty(sortOrder))
-                    sortOrder = Contrato.Usuario.NOMBRE_USUARIO + " asc";
+            case USUARIO_ALL_REGS:
+                if (TextUtils.isEmpty(sortOrder)) sortOrder = Contrato.Usuario.NOMBRE_USUARIO + " asc";
                 qb.setTables(Contrato.Usuario.NOMBRE_TABLA);
 
                 break;
+
+            case TAREA_ONE_REG:
+                if (null == selection) selection = "";
+                selection += Contrato.Tarea._ID + " = " + uri.getLastPathSegment();
+                qb.setTables(Contrato.Tarea.NOMBRE_TABLA);
+
+                break;
+            case TAREA_ALL_REGS:
+                if (TextUtils.isEmpty(sortOrder)) sortOrder = Contrato.Tarea.ID_ORDEN + " asc";
+                qb.setTables(Contrato.Tarea.NOMBRE_TABLA);
+
+                break;
+            case OPERARIOS_ONE_REG:
+                if (null == selection) selection = "";
+                selection += Contrato.Operarios._ID + " = " + uri.getLastPathSegment();
+                qb.setTables(Contrato.Operarios.NOMBRE_TABLA);
+
+                break;
+            case OPERARIOS_ALL_REGS:
+                if (TextUtils.isEmpty(sortOrder))
+                    sortOrder = Contrato.Operarios._ID+ " asc";
+                qb.setTables(Contrato.Operarios.NOMBRE_TABLA);
+
+                break;
+
             case BITACORA_ORDEN_ONE_REG:
                 if (null == selection) selection = "";
                 selection += Contrato.BitacoraOrden._ID + " = " + uri.getLastPathSegment();
@@ -228,8 +357,7 @@ public class ProveedorContenido extends ContentProvider {
 
                 break;
             case BITACORA_ORDEN_ALL_REGS:
-                if (TextUtils.isEmpty(sortOrder))
-                    sortOrder = Contrato.BitacoraOrden.OPERACION + " asc";
+                if (TextUtils.isEmpty(sortOrder)) sortOrder = Contrato.BitacoraOrden.OPERACION + " asc";
                 qb.setTables(Contrato.BitacoraOrden.NOMBRE_TABLA);
 
                 break;
@@ -241,9 +369,31 @@ public class ProveedorContenido extends ContentProvider {
 
                 break;
             case BITACORA_USUARIO_ALL_REGS:
-                if (TextUtils.isEmpty(sortOrder))
-                    sortOrder = Contrato.BitacoraUsuario.OPERACION + " asc";
+                if (TextUtils.isEmpty(sortOrder)) sortOrder = Contrato.BitacoraUsuario.OPERACION + " asc";
                 qb.setTables(Contrato.BitacoraUsuario.NOMBRE_TABLA);
+
+                break;
+
+            case BITACORA_TAREA_ONE_REG:
+                if (null == selection) selection = "";
+                selection += Contrato.BitacoraTarea._ID + " = " + uri.getLastPathSegment();
+                qb.setTables(Contrato.BitacoraTarea.NOMBRE_TABLA);
+
+                break;
+            case BITACORA_TAREA_ALL_REGS:
+                if (TextUtils.isEmpty(sortOrder)) sortOrder = Contrato.BitacoraTarea.OPERACION + " asc";
+                qb.setTables(Contrato.BitacoraTarea.NOMBRE_TABLA);
+
+                break;
+            case BITACORA_OPERARIOS_ONE_REG:
+                if (null == selection) selection = "";
+                selection += Contrato.BitacoraOperarios._ID + " = " + uri.getLastPathSegment();
+                qb.setTables(Contrato.BitacoraOperarios.NOMBRE_TABLA);
+
+                break;
+            case BITACORA_OPERARIOS_ALL_REGS:
+                if (TextUtils.isEmpty(sortOrder)) sortOrder = Contrato.BitacoraOperarios.OPERACION + " asc";
+                qb.setTables(Contrato.BitacoraOperarios.NOMBRE_TABLA);
 
                 break;
         }
@@ -272,15 +422,35 @@ public class ProveedorContenido extends ContentProvider {
             case ORDENES_ALL_REGS:
                 table = ORDEN_TABLE_NAME;
                 break;
-            case EMPLEADO_ONE_REG:
+            case USUARIO_ONE_REG:
                 if (null == selection) selection = "";
                 selection += Contrato.Usuario._ID + " = "
                         + uri.getLastPathSegment();
-                table = EMPLEADO_TABLE_NAME;
+                table = USUARIO_TABLE_NAME;
                 break;
-            case EMPLEADO_ALL_REGS:
-                table = EMPLEADO_TABLE_NAME;
+            case USUARIO_ALL_REGS:
+                table = USUARIO_TABLE_NAME;
                 break;
+            case TAREA_ONE_REG:
+                if (null == selection) selection = "";
+                selection += Contrato.Tarea._ID + " = "
+                        + uri.getLastPathSegment();
+                table = TAREA_TABLE_NAME;
+                break;
+            case TAREA_ALL_REGS:
+                table = TAREA_TABLE_NAME;
+                break;
+
+            case OPERARIOS_ONE_REG:
+                if (null == selection) selection = "";
+                selection += Contrato.Operarios._ID + " = "
+                        + uri.getLastPathSegment();
+                table = OPRERARIOS_TABLE_NAME;
+                break;
+            case OPERARIOS_ALL_REGS:
+                table = OPRERARIOS_TABLE_NAME;
+                break;
+
             case BITACORA_ORDEN_ONE_REG:
                 if (null == selection) selection = "";
                 selection += Contrato.BitacoraOrden._ID + " = "
@@ -298,6 +468,24 @@ public class ProveedorContenido extends ContentProvider {
                 break;
             case BITACORA_USUARIO_ALL_REGS:
                 table = BITACORA_USUARIO_TABLE_NAME;
+                break;
+            case BITACORA_TAREA_ONE_REG:
+                if (null == selection) selection = "";
+                selection += Contrato.BitacoraTarea._ID + " = "
+                        + uri.getLastPathSegment();
+                table = BITACORA_TAREA_TABLE_NAME;
+                break;
+            case BITACORA_TAREA_ALL_REGS:
+                table = BITACORA_TAREA_TABLE_NAME;
+                break;
+            case BITACORA_OPERARIOS_ONE_REG:
+                if (null == selection) selection = "";
+                selection += Contrato.BitacoraOperarios._ID + " = "
+                        + uri.getLastPathSegment();
+                table = BITACORA_OPERARIOS_TABLE_NAME;
+                break;
+            case BITACORA_OPERARIOS_ALL_REGS:
+                table = BITACORA_OPERARIOS_TABLE_NAME;
                 break;
         }
 

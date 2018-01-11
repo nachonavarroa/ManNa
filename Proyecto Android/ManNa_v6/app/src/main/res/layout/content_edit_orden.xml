@@ -314,6 +314,7 @@
                         android:layout_margin="20dp"
                         android:maxLength="80"
                         android:maxLines="3"
+                        android:inputType="textMultiLine|textCapSentences"
                         android:textColorHint="@color/colorNegro" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -355,7 +356,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
-                        android:inputType="textCapSentences"
+                        android:inputType="textMultiLine|textCapSentences"
                         android:maxLength="350"
                         android:maxLines="10"
                         android:overScrollMode="always"

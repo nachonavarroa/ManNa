@@ -42,6 +42,27 @@ public class DBHelper extends SQLiteOpenHelper {
                 + "); "
         );
 
+        //Tabla Tarea-----------------------------------------------------------------------------
+
+        db.execSQL("CREATE TABLE "
+                + Contrato.Tarea.NOMBRE_TABLA
+                + "(_id LONG PRIMARY KEY ON CONFLICT ROLLBACK , "
+                + Contrato.Tarea.ID_ORDEN + " LONG ,"
+                + Contrato.Tarea.FECHA_INICIO + " TEXT ,"
+                + Contrato.Tarea.FECHA_FIN + " TEXT ,"
+                + Contrato.Tarea.DESCRIPCION + " TEXT "
+                + "); "
+        );
+        //Tabla operarios-----------------------------------------------------------------------------
+
+        db.execSQL("CREATE TABLE "
+                + Contrato.Operarios.NOMBRE_TABLA
+                + "(_id INTEGER PRIMARY KEY ON CONFLICT ROLLBACK AUTOINCREMENT, "
+                + Contrato.Operarios.ID_TAREA + " LONG ,"
+                + Contrato.Operarios.ID_USUARIO + " INTEGER "
+                + "); "
+        );
+
         //Tabla BitacoraOrden----------------------------------------------------------------------------
 
         db.execSQL("CREATE TABLE "
@@ -61,6 +82,26 @@ public class DBHelper extends SQLiteOpenHelper {
                 + Contrato.BitacoraUsuario.OPERACION + " INTEGER "
                 + "); "
         );
+        //Tabla BitacoraTarea----------------------------------------------------------------------------
+
+        db.execSQL("CREATE TABLE "
+                + Contrato.BitacoraTarea.NOMBRE_TABLA
+                + "(_id INTEGER PRIMARY KEY ON CONFLICT ROLLBACK , "
+                + Contrato.BitacoraTarea.ID_TAREA + " INTEGER ,"
+                + Contrato.BitacoraTarea.OPERACION + " INTEGER "
+                + "); "
+        );
+
+        //Tabla BitacoraOperarios----------------------------------------------------------------------------
+
+        db.execSQL("CREATE TABLE "
+                + Contrato.BitacoraOperarios.NOMBRE_TABLA
+                + "(_id INTEGER PRIMARY KEY ON CONFLICT ROLLBACK , "
+                + Contrato.BitacoraOperarios.ID_OPERARIOS + " INTEGER ,"
+                + Contrato.BitacoraOperarios.OPERACION + " INTEGER "
+                + "); "
+        );
+        //-------------------------------------------------------------------------------
 
         inicializarDatos(db);
 
@@ -87,8 +128,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL("DROP TABLE IF EXISTS " + Contrato.Orden.NOMBRE_TABLA);
         db.execSQL("DROP TABLE IF EXISTS " + Contrato.Usuario.NOMBRE_TABLA);
+        db.execSQL("DROP TABLE IF EXISTS " + Contrato.Tarea.NOMBRE_TABLA);
+        db.execSQL("DROP TABLE IF EXISTS " + Contrato.Operarios.NOMBRE_TABLA);
         db.execSQL("DROP TABLE IF EXISTS " + Contrato.BitacoraOrden.NOMBRE_TABLA);
         db.execSQL("DROP TABLE IF EXISTS " + Contrato.BitacoraUsuario.NOMBRE_TABLA);
+        db.execSQL("DROP TABLE IF EXISTS " + Contrato.BitacoraTarea.NOMBRE_TABLA);
+        db.execSQL("DROP TABLE IF EXISTS " + Contrato.BitacoraOperarios.NOMBRE_TABLA);
 
         onCreate(db);
     }

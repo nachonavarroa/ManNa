@@ -6,7 +6,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Nacho
  */
-//@XmlRootElement
+
+@XmlRootElement
+
 public class Usuario {
 
     private int id;

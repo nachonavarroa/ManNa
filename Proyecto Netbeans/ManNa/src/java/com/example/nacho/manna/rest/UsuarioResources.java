@@ -117,7 +117,7 @@ public class UsuarioResources {
         } catch (SQLException e) {
             //e.printStackTrace();
             return Response.status(Response.Status.SEE_OTHER).entity("No se pudo "
-                    + "Actualizar Orden: "
+                    + "Actualizar Usiario: "
                     + usuario.getId()).build();
         }
     }

@@ -176,6 +176,7 @@
     <string name="title_activity_edit">EditActivity</string>
     <string name="title_activity_ver_estado_ordenes">VerEstadoOrdenesActivity</string>
     <string name="title_activity_ver_imagen">VerImagen</string>
+    <string name="title_activity_tarea">TareaActivity</string>
 
 
 </resources>

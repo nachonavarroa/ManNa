@@ -28,7 +28,6 @@ public class DescripcionOrdenActivity extends AppCompatActivity
     EditText editTextUbicacion;
     EditText editTextDescripcion;
     TextView textViewNombreEmpleado;
-   // TextView textViewCodigoEmpleado;
     TextView textViewPrioridadSeleccionado;
     TextView textViewEstadoselec;
     Usuario datosEmpleados;
@@ -88,7 +87,7 @@ public class DescripcionOrdenActivity extends AppCompatActivity
     }
 
     private void iciciarTextAndButton() {
-       // textViewCodigoEmpleado = (TextView) findViewById(R.id.textViewCodigoEmpleadoDEscripcionOrden);
+
         textViewNombreEmpleado = (TextView) findViewById(R.id.textViewNombreEmpleadoDescripcionOrden);
         textViewPrioridadSeleccionado = (TextView) findViewById(R.id.textViePrioridadSelec);
         textViewEstadoselec = (TextView) findViewById(R.id.textViewEstadoSelec);
@@ -102,11 +101,11 @@ public class DescripcionOrdenActivity extends AppCompatActivity
         String nombEmpleado = getResources().getText(R.string.titulo3)
                 + "  " + datosEmpleados.getNombre();
 
-       // String codigoEmpleado = getResources().getText(R.string.titulo4) + "  " + "****";
+
         String prioridadSeleccionado = getResources().getText(R.string.titulo5) + " " + ordenDeTrabajo.getPrioridad();
         String estadoSelecionada = getResources().getText(R.string.titulo6) + " " + ordenDeTrabajo.getSintoma();
 
-       // textViewCodigoEmpleado.setText(codigoEmpleado);
+
         textViewNombreEmpleado.setText(nombEmpleado);
         textViewEstadoselec.setText(estadoSelecionada);
         textViewPrioridadSeleccionado.setText(prioridadSeleccionado);

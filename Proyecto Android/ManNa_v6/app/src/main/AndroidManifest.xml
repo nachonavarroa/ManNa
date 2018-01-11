@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CLEAR_APP_CACHE"/>
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
 
     <application
         android:name=".aplication.AppController"
@@ -130,15 +130,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.nacho.manna.activity.MainActivityDrawer" />
         </activity>
-
         <activity
             android:name=".activity.EditUsuarioActivity"
             android:configChanges="screenSize|orientation" />
-
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="screenSize|orientation" />
-
         <activity
             android:name=".activity.VerImagenActivity"
             android:label="@string/title_activity_ver_imagen"
@@ -148,6 +145,17 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.nacho.manna.activity.MainActivityDrawer" />
+        </activity>
+
+        <activity
+            android:name=".activity.TareaActivity"
+            android:label="@string/title_activity_tarea"
+            android:parentActivityName=".activity.MainActivityDrawer">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.nacho.manna.activity.MainActivityDrawer" />
+
 
         </activity>
 

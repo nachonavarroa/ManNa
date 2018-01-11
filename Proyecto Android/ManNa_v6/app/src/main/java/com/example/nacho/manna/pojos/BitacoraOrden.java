@@ -17,9 +17,9 @@ public class BitacoraOrden {
         this.setOperacion(Constantes.SIN_VALOR_INT);
     }
 
-    public BitacoraOrden(int ID, int ID_Ciclo, int operacion) {
+    public BitacoraOrden(int ID, int ID_orden, int operacion) {
         this.setID(ID);
-        this.setID_Orden(ID_Ciclo);
+        this.setID_Orden(ID_orden);
         this.setOperacion(operacion);
     }
 

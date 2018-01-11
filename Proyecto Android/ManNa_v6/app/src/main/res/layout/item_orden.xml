@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/LLOrden"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,18 +9,19 @@
         android:id="@+id/cabeceara"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="12dp"
-        android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
         android:orientation="horizontal">
 
 
         <LinearLayout
             android:id="@+id/LLimagenItemOrden"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:minWidth="70dp"
             android:orientation="vertical">
 
             <ImageView
@@ -33,26 +33,23 @@
                 android:paddingTop="5dp" />
 
 
-
-
             <ImageView
                 android:id="@+id/imageView_item_orden_imgen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center" />
-
-
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp" />
 
 
             <ProgressBar
-                android:layout_marginTop="-30dp"
                 android:id="@+id/progressBarImagenOrden"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="-30dp"
 
                 />
+
 
         </LinearLayout>
 
@@ -87,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/colorNegro" />
+
             <TextView
                 android:id="@+id/textView_item_orden_nombreEmpleado"
                 android:layout_width="wrap_content"
@@ -97,12 +95,13 @@
         </LinearLayout>
 
     </LinearLayout>
-<View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:layout_marginLeft="14dp"
-    android:layout_marginRight="5dp"
-    android:background="@color/colorPrimary"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="12dp"
+        android:background="@color/colorPrimary" />
 
     <LinearLayout
 
@@ -131,7 +130,6 @@
             android:textColor="@color/colorNegro" />
 
 
-
         <TextView
             android:id="@+id/textView_item_orden_estado"
             android:layout_width="wrap_content"
@@ -158,9 +156,62 @@
     </LinearLayout>
 
 
+    <LinearLayout
+        android:id="@+id/LL_item_orden_TrabajoRealizadoTarea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="12dp"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <View
+            android:id="@+id/view_item_orden_TrabajoRealizadoTarea"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary" />
+        <TextView
+            android:id="@+id/textView_item_orden_fecha_inicio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/colorNegro" />
+        <TextView
+            android:id="@+id/textView_item_orden_fecha_fin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/colorNegro" />
+
+        <TextView
+            android:id="@+id/textView_item_orden_trabajoRealizado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/colorNegro" />
+
+        <TextView
+            android:id="@+id/textView_item_orden_operarios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/colorNegro" />
+
+
+
+
+
+    </LinearLayout>
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:background="@color/colorPrimaryDark"/>
+        android:background="@color/colorPrimaryDark" />
 
 </LinearLayout>

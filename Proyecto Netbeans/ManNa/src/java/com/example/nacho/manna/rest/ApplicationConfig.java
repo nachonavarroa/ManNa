@@ -28,7 +28,9 @@ public class ApplicationConfig extends Application {
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.example.nacho.manna.rest.ImagenesResources.class);
+        resources.add(com.example.nacho.manna.rest.OperariosResources.class);
         resources.add(com.example.nacho.manna.rest.OrdenResources.class);
+        resources.add(com.example.nacho.manna.rest.TareaResources.class);
         resources.add(com.example.nacho.manna.rest.UsuarioResources.class);
     }
     

@@ -99,6 +99,7 @@ public class EditOrdenActivity extends AppCompatActivity {
     }
 
     //fin onCreate----------------------------------------------------------------------------------
+
     //Menús-----------------------------------------------------------------------------------------
 
     @Override
@@ -386,6 +387,7 @@ public class EditOrdenActivity extends AppCompatActivity {
         try {
             if (!imagenCargada.equals(((BitmapDrawable) imageViewFoto.getDrawable()).getBitmap()) ) {
                 cambioEnOrden = true;
+
             }
         }catch (Exception e) {
 
@@ -527,8 +529,14 @@ public class EditOrdenActivity extends AppCompatActivity {
             orden.setDescripcion(editTextDescripcion.getText().toString());
             orden.setEstado(estado);
             orden.setImagen(foto);
-            orden.setContieneImagen(contieneImagen);
+            try {
+                if (!imagenCargada.equals(((BitmapDrawable) imageViewFoto.getDrawable()).getBitmap()) ) {
+                    contieneImagen= 1;
+                }
+            }catch (Exception e) {
 
+            }
+            orden.setContieneImagen(contieneImagen);
             try {
                 CrudOrdenes.updateOrdenConBitacora(getContentResolver(), orden, this);
                 ImagenVoley.subirImagenServidor(getApplicationContext(),orden.getId());

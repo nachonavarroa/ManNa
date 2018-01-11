@@ -47,17 +47,40 @@ public class Contrato {
         // Table column
         public final static String CODIGO_USUARIO = "Codigo_usuario";
         public final static String NOMBRE_USUARIO = "Nombre_usuario";
-        public final static String ADMIN_USUARIO = "Admin";
+        public final static String ADMIN_USUARIO  = "Admin";
 
         // -------------------------------------------------------------
         public final static String _codigoUsuario = "Código usuario";
         public final static String _nombreUsuario = "Nombre usuario";
-        public final static String _adminUsario = "Administrador";
+        public final static String _adminUsario   = "Administrador";
+
+
+    }
+    //Tabla Tarea-----------------------------------------------------------------------------------
+    public static class Tarea implements BaseColumns {
+        public final static String NOMBRE_TABLA = "Tarea";
+        public final static Uri CONTENT_URI =
+                Uri.parse("content://" + AUTHORITY + "/" + NOMBRE_TABLA);
+        // Table column
+        public  final static  String ID_ORDEN ="Id_Orden";
+        public  final static  String FECHA_INICIO ="Fecha_inicio";
+        public  final static  String FECHA_FIN ="Fecha_fin";
+        public  final static  String DESCRIPCION ="Descripcion";
+
+    }
+    //Tabla Operarios-----------------------------------------------------------------------------------
+    public static class Operarios implements BaseColumns {
+        public final static String NOMBRE_TABLA = "Operarios";
+        public final static Uri CONTENT_URI =
+                Uri.parse("content://" + AUTHORITY + "/" + NOMBRE_TABLA);
+        // Table column
+        public  final static  String ID_TAREA ="Id_tarea";
+        public  final static  String ID_USUARIO ="Id_usuario";
 
 
     }
 
-    //Tabla BitacoraOrden--------------------------------------------------------------------------------
+    //Tabla BitacoraOrden---------------------------------------------------------------------------
 
     public static class BitacoraOrden implements BaseColumns {
 
@@ -72,7 +95,7 @@ public class Contrato {
 
     }
 
-    //Tabla BitacoraUsuario--------------------------------------------------------------------------------
+    //Tabla BitacoraUsuario-------------------------------------------------------------------------
 
     public static class BitacoraUsuario implements BaseColumns {
 
@@ -82,6 +105,36 @@ public class Contrato {
                 Uri.parse("content://" + AUTHORITY + "/" + NOMBRE_TABLA);
         // Table column
         public final static String ID_USUARIO = "id_usuario";
+        public final static String OPERACION = "Operacion";
+
+
+    }
+
+    //Tabla BitacoraTarea-------------------------------------------------------------------------
+
+    public static class BitacoraTarea implements BaseColumns {
+
+        public final static String NOMBRE_TABLA = "BitacoraTarea";
+
+        public final static Uri CONTENT_URI =
+                Uri.parse("content://" + AUTHORITY + "/" + NOMBRE_TABLA);
+        // Table column
+        public final static String ID_TAREA = "id_tarea";
+        public final static String OPERACION = "Operacion";
+
+
+    }
+
+    //Tabla BitacoraOperarios-------------------------------------------------------------------------
+
+    public static class BitacoraOperarios implements BaseColumns {
+
+        public final static String NOMBRE_TABLA = "BitacoraOperarios";
+
+        public final static Uri CONTENT_URI =
+                Uri.parse("content://" + AUTHORITY + "/" + NOMBRE_TABLA);
+        // Table column
+        public final static String ID_OPERARIOS = "id_operarios";
         public final static String OPERACION = "Operacion";
 
 

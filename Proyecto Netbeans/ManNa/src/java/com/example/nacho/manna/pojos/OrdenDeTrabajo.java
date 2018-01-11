@@ -19,13 +19,14 @@ public class OrdenDeTrabajo {
     private String ubicacion;
     private String descripcion;
     private String estado;
+    private int contiene_imagen;
 
     public OrdenDeTrabajo() {
     }
 
     public OrdenDeTrabajo(long id, int idEmpleado, String fecha,
              String prioridad, String sintoma,String ubicacion, 
-             String descripcion, String estado) {
+             String descripcion, String estado,int contiene_imagen) {
         this.id = id;
         this.idEmpleado = idEmpleado;
         this.fecha = fecha;
@@ -34,6 +35,7 @@ public class OrdenDeTrabajo {
         this.ubicacion = ubicacion;
         this.descripcion = descripcion;
         this.estado = estado;
+        this.contiene_imagen = contiene_imagen;
     }
 
     public long getId() {
@@ -99,6 +101,14 @@ public class OrdenDeTrabajo {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public int getContiene_imagen() {
+        return contiene_imagen;
+    }
+
+    public void setContiene_imagen(int contiene_imagen) {
+        this.contiene_imagen = contiene_imagen;
     }
    
     

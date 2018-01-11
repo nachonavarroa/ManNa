@@ -159,7 +159,7 @@ public class CrudUsuarios {
 
             return empleado;
         }
-      //  cursor.close();
+        //  cursor.close();
         return null;
     }
 
@@ -189,7 +189,7 @@ public class CrudUsuarios {
             empleado.setAdmin(cursor.getString(cursor.getColumnIndex(Contrato.Usuario.ADMIN_USUARIO)));
             return empleado;
         }
-      //  cursor.close();
+        //  cursor.close();
         return null;
     }
 
@@ -217,7 +217,7 @@ public class CrudUsuarios {
             return empleado;
 
         }
-      //  cursor.close();
+        //  cursor.close();
         return null;
     }
 
@@ -230,7 +230,7 @@ public class CrudUsuarios {
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
 
         final String query = "SELECT usuario.Nombre_Usuario FROM usuario INNER JOIN orden "
-               + "ON ( usuario._id = orden.id_empleado ) and (orden._id =" + idOrden+")";
+                + "ON ( usuario._id = orden.id_empleado ) and (orden._id =" + idOrden + ")";
 
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
 
@@ -240,7 +240,75 @@ public class CrudUsuarios {
             String nombre = cursor.getString(columna);
             return nombre;
         }
-      //  cursor.close();
+        //  cursor.close();
+        return null;
+    }
+
+    static public ArrayList<String> buscarOperariosTarea(Context context, ContentResolver resolver, long idOrden) {
+
+        DBHelper dbHelper = new DBHelper(context, ProveedorContenido.DATABASE_NAME,
+                null, ProveedorContenido.DATABASE_VERSION);
+
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+
+        final String query = "SELECT usuario.Nombre_Usuario " +
+                "FROM orden " +
+                "INNER JOIN usuario " +
+                "INNER JOIN tarea " +
+                "INNER JOIN operarios ON operarios.id_usuario = usuario._id " +
+                "and tarea._id = operarios.id_tarea " +
+                "and tarea.id_orden = orden._id " +
+                "and tarea.id_orden =" + idOrden;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        ArrayList<String> operarios = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            String nombre = cursor.getString(cursor.getColumnIndex(Contrato.Usuario.NOMBRE_USUARIO));
+            operarios.add(nombre);
+
+
+        }
+        return operarios;
+
+    }
+
+    static public String buscarFechaInicioTarea(Context context, ContentResolver resolver, long idOrden) {
+
+        DBHelper dbHelper = new DBHelper(context, ProveedorContenido.DATABASE_NAME,
+                null, ProveedorContenido.DATABASE_VERSION);
+
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+
+        final String query = "select fecha_inicio from Tarea  where id_orden = " + idOrden ;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            String fechaInicio = cursor.getString(cursor.getColumnIndex(Contrato.Tarea.FECHA_INICIO));
+            return fechaInicio;
+        }
+        //  cursor.close();
+        return null;
+    }
+
+    static public String buscarFechaFinTarea(Context context, ContentResolver resolver, long idOrden) {
+
+        DBHelper dbHelper = new DBHelper(context, ProveedorContenido.DATABASE_NAME,
+                null, ProveedorContenido.DATABASE_VERSION);
+
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+
+        final String query = "select fecha_fin from Tarea  where id_orden = " + idOrden ;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            String fechaFin = cursor.getString(cursor.getColumnIndex(Contrato.Tarea.FECHA_FIN));
+            return fechaFin;
+        }
+        //  cursor.close();
         return null;
     }
 
@@ -268,7 +336,7 @@ public class CrudUsuarios {
 
             registros.add(usuario);
         }
-     //   cursor.close();
+        //   cursor.close();
         return registros;
 
     }

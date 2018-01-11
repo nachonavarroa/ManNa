@@ -3,13 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/conexion/OrdenBD.java</file>
-            <file>file:/C:/xampp/htdocs/ManNa/ManNa/web/index.jsp</file>
-            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/pojos/OrdenDeTrabajo.java</file>
-            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/rest/OrdenResources.java</file>
+            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/rest/UsuarioResources.java</file>
+            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/conexion/TareaBD.java</file>
+            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/conexion/OperariosBD.java</file>
+            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/rest/OperariosResources.java</file>
+            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/conexion/UsuarioBD.java</file>
+            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/pojos/Operarios.java</file>
+            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/rest/TareaResources.java</file>
+            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/pojos/Tarea.java</file>
             <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/pojos/Usuario.java</file>
-            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/rest/ImagenesResources.java</file>
-            <file>file:/C:/xampp/htdocs/ManNa/ManNa/src/java/com/example/nacho/manna/conexion/ConexionBD.java</file>
         </group>
     </open-files>
 </project-private>
