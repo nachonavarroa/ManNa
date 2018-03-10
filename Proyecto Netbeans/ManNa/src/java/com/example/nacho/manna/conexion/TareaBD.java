@@ -22,11 +22,11 @@ public class TareaBD {
 
     static final private String NOMBRE_TABLA = "tarea ";
 
-    static final private String ID = "_id";
+    static final private String ID = "id";
     static final private String ID_ORDEN = "id_orden";
-    static final private String FECHA_INICIO = "Fecha_inicio";
-    static final private String FECHA_FIN = "Fecha_fin";
-     static final private String DESCRIPCION = "Descripcion";
+    static final private String FECHA_INICIO = "fecha_inicio";
+    static final private String FECHA_FIN = "fecha_fin";
+     static final private String DESCRIPCION = "descripcion";
 
     static final private String SELECT = "SELECT * FROM ";
     static final private String INSERT = "INSERT INTO ";

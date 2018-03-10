@@ -74,9 +74,11 @@ public class OperariosResources {
     }
 
     // Añadir Registro.--------------------------------------------------------- 
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    
     public Response addOperarios(Operarios operarios) {
         try {
            

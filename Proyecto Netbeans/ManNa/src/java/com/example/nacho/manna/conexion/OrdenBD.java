@@ -13,6 +13,15 @@ import java.util.List;
  * @author Nacho
  */
 public class OrdenBD {
+    static String ID = "id";
+    static String ID_EMPLEADO = "idEmpleado";
+    static String FECHA = "fecha";
+    static String PRIORIDAD = "prioridad";
+    static String SINTOMA = "sintoma";
+    static String UBICACION = "ubicacion";
+    static String DESCRIPCION = "descripcion";
+    static String ESTADO = "estado";
+    static String CONTIENE_IMAGEN = "contiene_imagen";
 
     //Extraer todas las órdenes-------------------------------------------------
     static public List<OrdenDeTrabajo> getAllOrden() throws Exception {
@@ -31,16 +40,16 @@ public class OrdenBD {
             while (rs.next()) {
                 OrdenDeTrabajo registro = new OrdenDeTrabajo();
 
-                registro.setId(rs.getLong("_id"));
-                registro.setIdEmpleado(rs.getInt("id_empleado"));
-                registro.setFecha(rs.getString("Fecha"));
-                registro.setPrioridad(rs.getString("Prioridad"));
-                registro.setSintoma(rs.getString("Sintoma"));
-                registro.setUbicacion(rs.getString("Ubicacion"));
-                registro.setDescripcion(rs.getString("Descripcion"));
-                registro.setEstado(rs.getString("Estado"));
-                registro.setContiene_imagen(rs.getInt("Contiene_imagen"));
-                
+                registro.setId(rs.getLong(ID));
+                registro.setIdEmpleado(rs.getInt(ID_EMPLEADO));
+                registro.setFecha(rs.getString(FECHA));
+                registro.setPrioridad(rs.getString(PRIORIDAD));
+                registro.setSintoma(rs.getString(SINTOMA));
+                registro.setUbicacion(rs.getString(UBICACION));
+                registro.setDescripcion(rs.getString(DESCRIPCION));
+                registro.setEstado(rs.getString(ESTADO));
+                registro.setContiene_imagen(rs.getInt(CONTIENE_IMAGEN));
+
                 registros.add(registro);
             }
             return registros;
@@ -68,7 +77,7 @@ public class OrdenBD {
         ResultSet rs = null;
 
         try {
-            ps = conexion.prepareStatement("SELECT * FROM orden WHERE _id = "
+            ps = conexion.prepareStatement("SELECT * FROM orden WHERE  id = "
                     + id);
             rs = ps.executeQuery();
 
@@ -76,15 +85,15 @@ public class OrdenBD {
 
                 OrdenDeTrabajo registro = new OrdenDeTrabajo();
 
-                registro.setId(rs.getLong("_id"));
-                registro.setIdEmpleado(rs.getInt("id_empleado"));
-                registro.setFecha(rs.getString("Fecha"));
-                registro.setPrioridad(rs.getString("Prioridad"));
-                registro.setSintoma(rs.getString("Sintoma"));
-                registro.setUbicacion(rs.getString("Ubicacion"));
-                registro.setDescripcion(rs.getString("Descripcion"));
-                registro.setEstado(rs.getString("Estado"));
-                registro.setContiene_imagen(rs.getInt("Contiene_imagen"));
+                registro.setId(rs.getLong(ID));
+                registro.setIdEmpleado(rs.getInt(ID_EMPLEADO));
+                registro.setFecha(rs.getString(FECHA));
+                registro.setPrioridad(rs.getString(PRIORIDAD));
+                registro.setSintoma(rs.getString(SINTOMA));
+                registro.setUbicacion(rs.getString(UBICACION));
+                registro.setDescripcion(rs.getString(DESCRIPCION));
+                registro.setEstado(rs.getString(ESTADO));
+                registro.setContiene_imagen(rs.getInt(CONTIENE_IMAGEN));
 
                 return registro;
             }
@@ -114,8 +123,8 @@ public class OrdenBD {
         try {
             String query;
 
-            query = "INSERT INTO orden (_id,id_empleado, Fecha, "
-                    + "Prioridad, Sintoma, Ubicacion, Descripcion, Estado,Contiene_imagen) "
+            query = "INSERT INTO orden ( id,idEmpleado, fecha, "
+                    + "prioridad, sintoma, ubicacion, descripcion, estado,contiene_imagen) "
                     + "VALUES ("
                     + orden.getId() + ", "
                     + orden.getIdEmpleado()
@@ -125,8 +134,8 @@ public class OrdenBD {
                     + "'" + orden.getUbicacion() + "', "
                     + "'" + orden.getDescripcion() + "', "
                     + "'" + orden.getEstado() + "', "
-                    +  orden.getContiene_imagen() 
-                    +" )" ;
+                    + orden.getContiene_imagen()
+                    + " )";
 
             ps = conexion.prepareStatement(query);
             ps.executeUpdate();
@@ -154,13 +163,13 @@ public class OrdenBD {
         try {
             String query;
             query = "UPDATE orden SET "
-                    + "id_empleado = " + orden.getIdEmpleado() + ", "
-                    + "Fecha = '" + orden.getFecha() + "' , "
-                    + "Prioridad = '" + orden.getPrioridad() + "' , "
-                    + "Sintoma = '" + orden.getSintoma() + "', "
-                    + "Ubicacion = '" + orden.getUbicacion() + "', "
-                    + "Descripcion = '" + orden.getDescripcion() + "', "
-                    + "Estado= '" + orden.getEstado() + "' "
+                    + ID_EMPLEADO + " = " + orden.getIdEmpleado() + ", "
+                    + FECHA + " = " + orden.getFecha() + "' , "
+                    + "prioridad = '" + orden.getPrioridad() + "' , "
+                    + "sintoma = '" + orden.getSintoma() + "', "
+                    + "ubicacion = '" + orden.getUbicacion() + "', "
+                    + "descripcion = '" + orden.getDescripcion() + "', "
+                    + "estado= '" + orden.getEstado() + "' "
                     + "WHERE  _id = " + orden.getId() + ";";
 
             ps = conexion.prepareStatement(query);
@@ -188,7 +197,7 @@ public class OrdenBD {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            ps = conexion.prepareStatement("DELETE FROM orden  WHERE _id = "
+            ps = conexion.prepareStatement("DELETE FROM orden  WHERE  id = "
                     + id);
 
             ps.executeUpdate();

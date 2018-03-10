@@ -21,7 +21,7 @@ public class OperariosBD {
 
     static final private String NOMBRE_TABLA = "operarios ";
 
-    static final private String ID = "_id";
+    static final private String ID = "id";
     static final private String ID_TAREA = "id_tarea";
     static final private String ID_USUARIO = "id_usuario";
 
@@ -119,6 +119,7 @@ public class OperariosBD {
 
         try {
             String query;
+            //INSERT INTO `operarios`(`id`, `id_tarea`, `id_usuario`) VALUES (1,1,1)
 
             query = INSERT + NOMBRE_TABLA
                     + " ("
@@ -158,6 +159,7 @@ public class OperariosBD {
         ResultSet rs = null;
         try {
             String query;
+            //UPDATE `operarios` SET `id_tarea`=55,`id_usuario`=34 WHERE id =25
             query = UPDATE + NOMBRE_TABLA + SET
                    // + ID + " = " + operarios.getId() + ", "
                     + ID_TAREA + " = " + operarios.getId_tarea() + " , "
@@ -183,7 +185,7 @@ public class OperariosBD {
         }
     }
 
-    //Borrar un operarios---------------------------------------------------------
+    //Borrar un operarios-------------------------------------------------------
     static public void deleteOperaios(int id) throws SQLException {
         Connection conexion = ConexionBD.getConexion();
         PreparedStatement ps = null;
