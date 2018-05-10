@@ -212,8 +212,8 @@ public class TareaActivity extends AppCompatActivity {
             operarios.setId_tarea(idOrden);
             operarios.setId_usuario(usuario.getId());
 
-            Log.i("nachito", "operarios id_tarea: " + String.valueOf(operarios.getId_tarea()));
-            Log.i("nachito", "operarios id_usuario: " + String.valueOf(operarios.getId_usuario()));
+            Log.i("nachito", "TareaActivity: operarios id_tarea: " + String.valueOf(operarios.getId_tarea()));
+            Log.i("nachito", "TareaActivity: operarios id_usuario: " + String.valueOf(operarios.getId_usuario()));
 
             CrudOperarios.insertOperariosConBitacora(getContentResolver(),operarios,this);
         }
@@ -244,7 +244,7 @@ public class TareaActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             existeTarea = false;
-            Log.i("nachito","1-No Existe tarea (Exception e)");
+            Log.i("nachito","TareaActivity: 1-No Existe tarea (Exception e)");
         }
 
         return existeTarea;
